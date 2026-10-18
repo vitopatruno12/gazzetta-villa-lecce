@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 280" role="img" aria-label="Stemma della Città di Lecce">
+  <!-- Corona murale -->
+  <g fill="#c9a227" stroke="#8a7018" stroke-width="1.2">
+    <path d="M40 58 L40 38 L55 38 L55 48 L70 48 L70 30 L85 30 L85 48 L100 48 L100 28 L120 28 L120 48 L135 48 L135 30 L150 30 L150 48 L165 48 L165 38 L180 38 L180 58 Z"/>
+    <rect x="38" y="56" width="144" height="10" rx="1"/>
+  </g>
+  <!-- Scudo sannitico argento -->
+  <path d="M40 72 H180 V165 C180 210 140 248 110 262 C80 248 40 210 40 165 Z"
+        fill="#f4f4f0" stroke="#1a1a1a" stroke-width="3"/>
+  <!-- Leccio -->
+  <g>
+    <path d="M108 210 V118" stroke="#3d2a14" stroke-width="7" stroke-linecap="round"/>
+    <ellipse cx="110" cy="105" rx="48" ry="42" fill="#2f6b3a"/>
+    <ellipse cx="88" cy="118" rx="28" ry="22" fill="#357a42"/>
+    <ellipse cx="132" cy="118" rx="28" ry="22" fill="#357a42"/>
+    <ellipse cx="110" cy="88" rx="30" ry="24" fill="#3d8a4c"/>
+    <!-- Ghiande -->
+    <circle cx="92" cy="100" r="3.5" fill="#c9a227"/>
+    <circle cx="128" cy="98" r="3.5" fill="#c9a227"/>
+    <circle cx="110" cy="78" r="3.5" fill="#c9a227"/>
+    <circle cx="100" cy="120" r="3" fill="#c9a227"/>
+    <circle cx="122" cy="122" r="3" fill="#c9a227"/>
+  </g>
+  <!-- Lupa nera passante -->
+  <g fill="#1a1a1a">
+    <ellipse cx="118" cy="175" rx="28" ry="12"/>
+    <circle cx="145" cy="168" r="9"/>
+    <path d="M150 164 L162 158 L158 168 Z"/>
+    <rect x="98" y="182" width="5" height="16" rx="1"/>
+    <rect x="110" y="183" width="5" height="15" rx="1"/>
+    <rect x="122" y="182" width="5" height="16" rx="1"/>
+    <rect x="134" y="183" width="5" height="15" rx="1"/>
+    <path d="M92 178 Q85 170 88 188" stroke="#1a1a1a" stroke-width="3" fill="none"/>
+  </g>
+</svg>

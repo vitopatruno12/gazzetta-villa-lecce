@@ -1,0 +1,300 @@
+:root {
+  --ink: #111111;
+  --paper: #ffffff;
+  --paper-alt: #f7f7f7;
+  --red: #c8102e;
+  --red-dark: #9e0c24;
+  --rule: #d0d0d0;
+  --rule-strong: #111111;
+  --muted: #666666;
+  --sponsored: #8a5a00;
+  --font-display: 'Libre Baskerville', Georgia, 'Times New Roman', serif;
+  --font-body: 'Source Sans 3', 'Segoe UI', sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  color: var(--ink);
+  background: var(--paper);
+  min-height: 100vh;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--red);
+}
+
+/* —— Barra superiore data —— */
+.top-bar {
+  background: var(--ink);
+  color: #fff;
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 0.4rem 0;
+}
+
+.top-bar .inner {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+/* —— Testata stile quotidiano —— */
+.site-masthead {
+  background: var(--paper);
+  border-bottom: 3px solid var(--rule-strong);
+  padding: 1rem 0 0.85rem;
+  text-align: center;
+}
+
+.masthead-brand {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(0.55rem, 1.8vw, 1.15rem);
+  color: var(--ink);
+}
+
+.masthead-brand:hover {
+  color: var(--ink);
+}
+
+.masthead-text {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(1.35rem, 4.2vw, 2.85rem);
+  letter-spacing: -0.02em;
+  line-height: 0.95;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.masthead-text-left {
+  text-align: right;
+}
+
+.masthead-text-right {
+  text-align: left;
+}
+
+.masthead-text-sub {
+  display: block;
+  font-size: 0.72em;
+  color: var(--red);
+  margin-top: 0.12em;
+  letter-spacing: 0.01em;
+}
+
+.stemma-lecce {
+  width: clamp(64px, 10vw, 96px);
+  height: auto;
+  flex-shrink: 0;
+  display: block;
+}
+
+.site-tagline {
+  color: var(--muted);
+  font-size: 0.78rem;
+  margin: 0.55rem 0 0;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* —— Menu —— */
+.site-nav {
+  border-bottom: 1px solid var(--rule);
+  background: var(--paper);
+  padding: 0;
+}
+
+.site-nav .navbar-nav {
+  width: 100%;
+  justify-content: center;
+}
+
+.site-nav .nav-link {
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  font-size: 0.78rem;
+  color: var(--ink) !important;
+  padding: 0.85rem 1rem !important;
+  border-bottom: 3px solid transparent;
+}
+
+.site-nav .nav-link.active,
+.site-nav .nav-link:hover {
+  color: var(--red) !important;
+  border-bottom-color: var(--red);
+}
+
+.navbar-toggler {
+  border-color: var(--rule) !important;
+}
+
+/* —— Homepage layout giornalistico —— */
+.home-wrap {
+  padding-top: 1.25rem;
+  padding-bottom: 2rem;
+}
+
+.section-kicker {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--red);
+  margin-bottom: 0.35rem;
+}
+
+.hero-article {
+  border-bottom: 1px solid var(--rule);
+  padding-bottom: 1.25rem;
+  margin-bottom: 1.25rem;
+}
+
+.hero-article h2 {
+  font-family: var(--font-display);
+  font-size: clamp(1.7rem, 3.4vw, 2.55rem);
+  font-weight: 700;
+  line-height: 1.15;
+  margin: 0 0 0.5rem;
+}
+
+.hero-article .deck {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  color: var(--muted);
+  font-style: italic;
+  margin: 0;
+}
+
+.article-card {
+  border-bottom: 1px solid var(--rule);
+  padding-bottom: 1rem;
+  margin-bottom: 0.25rem;
+}
+
+.article-card h3 {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 700;
+  line-height: 1.3;
+  margin: 0.2rem 0 0.35rem;
+}
+
+.meta {
+  color: var(--muted);
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.badge-type {
+  background: transparent !important;
+  color: var(--red) !important;
+  border: 1px solid var(--red);
+  border-radius: 0 !important;
+  font-weight: 700;
+  font-size: 0.65rem !important;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.badge-sponsored {
+  background: #fff4d6 !important;
+  color: var(--sponsored) !important;
+  border-radius: 0 !important;
+}
+
+.sidebar-block {
+  border-top: 3px solid var(--ink);
+  padding-top: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.sidebar-block h2 {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin-bottom: 0.85rem;
+}
+
+.sidebar-block li {
+  border-bottom: 1px solid var(--rule);
+  padding: 0.65rem 0;
+}
+
+.sidebar-block li:last-child {
+  border-bottom: 0;
+}
+
+.ad-slot {
+  border: 1px solid var(--rule);
+  background: var(--paper-alt);
+  padding: 0.75rem;
+  text-align: center;
+}
+
+.ad-slot .ad-label {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  margin-bottom: 0.4rem;
+}
+
+.ad-slot a {
+  color: var(--red);
+  font-weight: 600;
+}
+
+.sponsored-feed {
+  border-left: 3px solid #e0b35a;
+  background: #fffaf0;
+  padding: 0.85rem 1rem;
+  margin-bottom: 1rem;
+  text-align: left;
+}
+
+.article-body {
+  font-size: 1.12rem;
+  line-height: 1.75;
+  white-space: pre-wrap;
+}
+
+.site-footer {
+  margin-top: 2rem;
+  border-top: 3px solid var(--ink);
+  padding: 1.25rem 0;
+  color: var(--muted);
+  font-size: 0.85rem;
+  background: var(--paper-alt);
+}
+
+@media (max-width: 575.98px) {
+  .masthead-brand {
+    flex-wrap: wrap;
+  }
+
+  .masthead-text {
+    font-size: clamp(1.2rem, 7vw, 1.7rem);
+  }
+
+  .site-nav .nav-link {
+    border-bottom: 0;
+    text-align: center;
+  }
+}
