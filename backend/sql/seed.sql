@@ -14,10 +14,13 @@ INSERT INTO ad_slots (code, name, description, width, height) VALUES
 ('feed-sponsored', 'Feed sponsorizzati', 'Card native nel flusso news', NULL, NULL),
 ('mobile-sticky', 'Mobile sticky', 'Banner fisso in basso su mobile', 320, 50);
 
-INSERT INTO companies (name, slug, website, city, email) VALUES
-('Bar del Parco', 'bar-del-parco', 'https://example.com/bar', 'Lecce', 'info@bardelparco.local'),
-('Farmacia Centro', 'farmacia-centro', 'https://example.com/farmacia', 'Lecce', 'info@farmacia.local'),
-('Ristorante Salento', 'ristorante-salento', 'https://example.com/ristorante', 'Lecce', 'prenota@ristorante.local');
+INSERT INTO companies (name, slug, website, city, email, logo_url) VALUES
+('Bar del Parco', 'bar-del-parco', 'https://example.com/bar', 'Lecce', 'info@bardelparco.local', NULL),
+('Farmacia Centro', 'farmacia-centro', 'https://example.com/farmacia', 'Lecce', 'info@farmacia.local', NULL),
+('Ristorante Salento', 'ristorante-salento', 'https://example.com/ristorante', 'Lecce', 'prenota@ristorante.local', NULL),
+('Le Mani in Pasta', 'le-mani-in-pasta', NULL, 'Lecce', NULL, '/pubblicita/le-mani-in-pasta.jpg'),
+('Gazza Ladra', 'gazza-ladra', NULL, 'Lecce', NULL, '/pubblicita/gazza-ladra.jpg'),
+('Le Mucche Volanti', 'le-mucche-volanti', NULL, 'Lecce', NULL, '/pubblicita/le-mucche-volanti.jpg');
 
 INSERT INTO articles (slug, title, subtitle, body, type, status, location, event_start, is_sponsored, published_at) VALUES
 (

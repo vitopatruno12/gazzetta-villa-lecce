@@ -22,6 +22,7 @@ CREATE TABLE articles (
   status       TEXT NOT NULL DEFAULT 'draft'
                CHECK (status IN ('draft', 'published', 'archived')),
   cover_url    TEXT,
+  video_url    TEXT,
   location     TEXT,
   event_start  DATE,
   event_end    DATE,

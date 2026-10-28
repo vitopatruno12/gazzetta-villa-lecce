@@ -6,7 +6,7 @@ export default function CompaniesPage() {
   const [rows, setRows] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  const [form, setForm] = useState({ name: '', city: '', website: '', email: '' });
+  const [form, setForm] = useState({ name: '', city: '', website: '', email: '', logo_url: '' });
 
   const load = () =>
     api
@@ -23,7 +23,7 @@ export default function CompaniesPage() {
     setError('');
     try {
       await api.post('/api/companies', form);
-      setForm({ name: '', city: '', website: '', email: '' });
+      setForm({ name: '', city: '', website: '', email: '', logo_url: '' });
       load();
     } catch (err) {
       setError(err.message);
@@ -65,6 +65,13 @@ export default function CompaniesPage() {
               placeholder="Email"
               value={form.email}
               onChange={(e) => setForm({ ...form, email: e.target.value })}
+            />
+          </div>
+          <div className="col-md-3">
+            <Form.Control
+              placeholder="URL logo"
+              value={form.logo_url}
+              onChange={(e) => setForm({ ...form, logo_url: e.target.value })}
             />
           </div>
           <div className="col-md-1">

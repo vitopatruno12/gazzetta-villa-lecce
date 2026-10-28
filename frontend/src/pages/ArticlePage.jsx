@@ -3,6 +3,8 @@ import { Badge, Container, Spinner } from 'react-bootstrap';
 import { Link, useParams } from 'react-router-dom';
 import { apiGet } from '../api/client';
 import AdSlot from '../components/AdSlot';
+import FacebookVideo from '../components/FacebookVideo';
+import { PROJECT_ARTICLE_SLUG, PROJECT_PATH } from '../data/project';
 
 export default function ArticlePage() {
   const { slug } = useParams();
@@ -59,10 +61,17 @@ export default function ArticlePage() {
       {article.company_name && (
         <p className="small text-muted">In collaborazione con {article.company_name}</p>
       )}
-      {article.cover_url && (
-        <img src={article.cover_url} alt="" className="img-fluid rounded mb-4" />
+      {article.video_url ? (
+        <FacebookVideo url={article.video_url} />
+      ) : (
+        article.cover_url && <img src={article.cover_url} alt="" className="img-fluid rounded mb-4" />
       )}
       <div className="article-body mb-4">{article.body}</div>
+      {article.slug === PROJECT_ARTICLE_SLUG && (
+        <p className="project-callout">
+          <Link to={PROJECT_PATH}>La presentazione del progetto</Link>
+        </p>
+      )}
       <AdSlot code="article-below" />
       <p className="mt-4">
         <Link to="/">← Tutte le notizie</Link>

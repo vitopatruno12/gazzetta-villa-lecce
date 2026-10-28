@@ -15,6 +15,7 @@ const empty = {
   is_sponsored: false,
   company_id: '',
   cover_url: '',
+  video_url: '',
 };
 
 export default function ArticleEditPage() {
@@ -156,6 +157,14 @@ export default function ArticleEditPage() {
         <Form.Group className="mb-3">
           <Form.Label>URL copertina</Form.Label>
           <Form.Control value={form.cover_url || ''} onChange={set('cover_url')} />
+        </Form.Group>
+        <Form.Group className="mb-3">
+          <Form.Label>Link video Facebook</Form.Label>
+          <Form.Control
+            value={form.video_url || ''}
+            onChange={set('video_url')}
+            placeholder="https://www.facebook.com/watch/?v=..."
+          />
         </Form.Group>
         <Button type="submit">Salva</Button>
       </Form>

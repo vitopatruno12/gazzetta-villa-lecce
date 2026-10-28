@@ -29,7 +29,7 @@ router.get('/', async (req, res) => {
   params.push(Number(offset) || 0);
 
   const { rows } = await query(
-    `SELECT id, slug, title, subtitle, type, cover_url, location, event_start, event_end,
+    `SELECT id, slug, title, subtitle, type, cover_url, video_url, location, event_start, event_end,
             is_sponsored, company_id, published_at, created_at
      FROM articles
      WHERE ${where.join(' AND ')}
@@ -76,9 +76,9 @@ router.post('/', requireAuth, async (req, res) => {
 
   const { rows } = await query(
     `INSERT INTO articles
-      (slug, title, subtitle, body, type, status, cover_url, location, event_start, event_end,
+      (slug, title, subtitle, body, type, status, cover_url, video_url, location, event_start, event_end,
        is_sponsored, company_id, author_id, published_at)
-     VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14)
+     VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15)
      RETURNING *`,
     [
       slug,
@@ -88,6 +88,7 @@ router.post('/', requireAuth, async (req, res) => {
       b.type || 'notizia',
       status,
       b.cover_url || null,
+      b.video_url || null,
       b.location || null,
       b.event_start || null,
       b.event_end || null,
@@ -114,9 +115,9 @@ router.put('/:id', requireAuth, async (req, res) => {
   const { rows } = await query(
     `UPDATE articles SET
       title = $1, subtitle = $2, body = $3, type = $4, status = $5, cover_url = $6,
-      location = $7, event_start = $8, event_end = $9, is_sponsored = $10,
-      company_id = $11, published_at = $12, updated_at = NOW()
-     WHERE id = $13
+      video_url = $7, location = $8, event_start = $9, event_end = $10, is_sponsored = $11,
+      company_id = $12, published_at = $13, updated_at = NOW()
+     WHERE id = $14
      RETURNING *`,
     [
       b.title ?? prev.title,
@@ -125,6 +126,7 @@ router.put('/:id', requireAuth, async (req, res) => {
       b.type ?? prev.type,
       status,
       b.cover_url ?? prev.cover_url,
+      b.video_url !== undefined ? b.video_url || null : prev.video_url,
       b.location ?? prev.location,
       b.event_start ?? prev.event_start,
       b.event_end ?? prev.event_end,

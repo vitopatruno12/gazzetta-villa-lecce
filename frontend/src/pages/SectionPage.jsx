@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Badge, Container, Spinner } from 'react-bootstrap';
 import { Link, useParams } from 'react-router-dom';
 import { apiGet } from '../api/client';
+import FacebookVideo from '../components/FacebookVideo';
 
 export default function SectionPage() {
   const { type } = useParams();
@@ -28,11 +29,13 @@ export default function SectionPage() {
       ) : (
         <ul className="list-unstyled">
           {articles.map((a) => (
-            <li key={a.id} className="mb-3 pb-3 border-bottom">
+            <li key={a.id} className="news-item">
               <Badge className="badge-type me-2">{a.type}</Badge>
               <Link to={`/articolo/${a.slug}`} className="fw-semibold fs-5">
                 {a.title}
               </Link>
+              {a.subtitle && <p className="text-muted mb-2 mt-1">{a.subtitle}</p>}
+              {a.video_url && <FacebookVideo url={a.video_url} />}
             </li>
           ))}
         </ul>

@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="360" height="88" viewBox="0 0 360 88" role="img" aria-label="Ristorante Salento">
+  <rect width="360" height="88" fill="#ffffff"/>
+  <path d="M22 58c8-18 28-18 36 0" fill="none" stroke="#111111" stroke-width="2"/>
+  <path d="M30 42c4 6 16 6 20 0" fill="none" stroke="#c8102e" stroke-width="2"/>
+  <text x="72" y="42" font-family="Georgia, serif" font-size="22" font-weight="700" fill="#111111">Ristorante Salento</text>
+  <text x="72" y="62" font-family="Georgia, serif" font-size="12" letter-spacing="2" fill="#666666">LECCE</text>
+</svg>

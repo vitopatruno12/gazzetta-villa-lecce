@@ -8,6 +8,8 @@ Thumbs.db
 backend/uploads/*
 !backend/uploads/.gitkeep
 backend/.pglite-data/
+backend/.pglite-data-broken/
+frontend/public/progetto/nuovo-volto-villa.mp4
 .vite/
 coverage/
 _archive_legacy/

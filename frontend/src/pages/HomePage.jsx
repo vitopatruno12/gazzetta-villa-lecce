@@ -3,6 +3,9 @@ import { Badge, Col, Container, Row, Spinner } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { apiGet } from '../api/client';
 import AdSlot from '../components/AdSlot';
+import SponsorBanners from '../components/SponsorBanners';
+import FacebookVideo from '../components/FacebookVideo';
+import { PROJECT_ARTICLE_SLUG, PROJECT_PATH } from '../data/project';
 
 function formatDate(value) {
   if (!value) return '';
@@ -47,6 +50,7 @@ export default function HomePage() {
 
   return (
     <Container className="home-wrap">
+      <SponsorBanners />
       <Row className="g-4">
         <Col lg={8}>
           {hero && (
@@ -62,6 +66,12 @@ export default function HomePage() {
                 <Link to={`/articolo/${hero.slug}`}>{hero.title}</Link>
               </h2>
               {hero.subtitle && <p className="deck">{hero.subtitle}</p>}
+              {hero.video_url && <FacebookVideo url={hero.video_url} />}
+              {hero.slug === PROJECT_ARTICLE_SLUG && (
+                <p className="project-callout">
+                  <Link to={PROJECT_PATH}>La presentazione del progetto</Link>
+                </p>
+              )}
             </article>
           )}
 
