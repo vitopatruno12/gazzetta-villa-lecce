@@ -36,7 +36,8 @@ export default function ProfilePage() {
   }
 
   return (
-    <Container className="py-4 info-page">
+    <Container className="py-4">
+      <div className="info-page">
       <div className="section-kicker">Cliente</div>
       <h1 className="page-title">Il tuo profilo</h1>
       <p className="social-lead">
@@ -58,6 +59,7 @@ export default function ProfilePage() {
       <button className="paper-button" type="button" onClick={onLogout}>
         Esci
       </button>
+      </div>
     </Container>
   );
 }

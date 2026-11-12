@@ -44,9 +44,10 @@ export default function JoinPage() {
   }
 
   return (
-    <Container className="py-4 info-page">
-      <div className="section-kicker">Adesione</div>
-      <h1 className="page-title">Modulo di adesione</h1>
+    <Container className="py-4">
+      <div className="info-page">
+      <div className="section-kicker">Registrazione</div>
+      <h1 className="page-title">Modulo di registrazione</h1>
       <p className="social-lead">
         Registrati con i dati dell’attività. Dopo l’invio trovi il profilo nella tua pagina cliente.
       </p>
@@ -134,6 +135,7 @@ export default function JoinPage() {
       <p className="paper-form-note">
         Hai già un profilo? <Link to="/accedi">Accedi</Link>
       </p>
+      </div>
     </Container>
   );
 }

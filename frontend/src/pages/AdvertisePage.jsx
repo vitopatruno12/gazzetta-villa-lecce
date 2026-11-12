@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom';
 
 export default function AdvertisePage() {
   return (
-    <Container className="py-4 info-page">
+    <Container className="py-4">
+      <div className="info-page">
       <div className="section-kicker">Pubblicità</div>
       <h1 className="page-title">Fai pubblicità</h1>
       <p className="social-lead">
@@ -18,6 +19,7 @@ export default function AdvertisePage() {
           Vedi i partner
         </Link>
       </p>
+      </div>
     </Container>
   );
 }

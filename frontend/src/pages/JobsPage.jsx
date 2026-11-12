@@ -2,7 +2,8 @@ import { Container } from 'react-bootstrap';
 
 export default function JobsPage() {
   return (
-    <Container className="py-4 info-page">
+    <Container className="py-4">
+      <div className="info-page">
       <div className="section-kicker">Redazione</div>
       <h1 className="page-title">Lavora con noi</h1>
       <p className="social-lead">
@@ -15,6 +16,7 @@ export default function JobsPage() {
       <p>
         Le proposte si valutano in redazione per le sezioni Cronaca, Eventi e Avvisi.
       </p>
+      </div>
     </Container>
   );
 }

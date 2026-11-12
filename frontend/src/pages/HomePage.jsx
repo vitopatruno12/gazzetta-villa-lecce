@@ -7,6 +7,8 @@ import SponsorBanners from '../components/SponsorBanners';
 import FacebookVideo from '../components/FacebookVideo';
 import { PROJECT_ARTICLE_SLUG, PROJECT_PATH } from '../data/project';
 
+const NATALE_SLUG = 'un-natale-in-villa';
+
 function formatDate(value) {
   if (!value) return '';
   return new Date(value).toLocaleDateString('it-IT', {
@@ -45,8 +47,10 @@ export default function HomePage() {
     );
   }
 
-  const [hero, ...rest] = articles;
-  const side = articles.slice(0, 6);
+  const spotlight = articles.find((article) => article.slug === NATALE_SLUG);
+  const news = articles.filter((article) => article.slug !== NATALE_SLUG);
+  const [hero, ...rest] = news;
+  const side = [spotlight, ...news].filter(Boolean).slice(0, 6);
   const groups = [
     { type: 'notizia', title: 'Cronaca', to: '/sezione/notizia' },
     { type: 'evento', title: 'Eventi', to: '/sezione/evento' },
@@ -60,10 +64,38 @@ export default function HomePage() {
 
   return (
     <Container className="home-wrap">
-      <div className="home-frame">
         <div className="home-frame-banners">
           <SponsorBanners />
         </div>
+        {spotlight && (
+          <article className="home-highlight">
+            <Link className="home-highlight-poster" to={`/articolo/${spotlight.slug}`}>
+              <img src={spotlight.cover_url} alt="Locandina Natale in Villa 2026" />
+            </Link>
+            <div className="home-highlight-copy">
+              <div className="section-kicker">In evidenza · 5 dicembre 2026 – 6 gennaio 2027</div>
+              <h2>
+                <Link to={`/articolo/${spotlight.slug}`}>{spotlight.title}</Link>
+              </h2>
+              <p>
+                Dal 5 dicembre 2026 al 6 gennaio 2027 la Villa Comunale di Lecce accoglie mercatini,
+                musica, laboratori e famiglie: dal Villaggio di Babbo Natale agli spettacoli con i
+                falchi, fino alla passeggiata con i pony ogni domenica.
+              </p>
+              <ul className="home-highlight-points">
+                <li>Mercatini di Natale e Villaggio di Babbo Natale</li>
+                <li>Laboratori di cartapesta, argilla e creta</li>
+                <li>Musica live e jam session</li>
+                <li>Spettacolo con i falchi</li>
+                <li>Ogni venerdì: Yoga e Fitness</li>
+                <li>Ogni domenica: Passeggiata con i pony</li>
+              </ul>
+              <Link className="home-highlight-more" to={`/articolo/${spotlight.slug}`}>
+                Scopri il programma completo
+              </Link>
+            </div>
+          </article>
+        )}
         <Row className="home-columns g-0">
         <Col lg={8} className="home-main">
           {hero && (
@@ -117,7 +149,7 @@ export default function HomePage() {
                         <Link to={`/articolo/${a.slug}`}>{a.title}</Link>
                       </h3>
                       {a.subtitle && <p className="text-muted small mb-1">{a.subtitle}</p>}
-                      <p className="text-muted small mb-0">{formatDate(a.published_at)}</p>
+                      <p className="text-muted small mb-0">{formatDate(a.event_start || a.published_at)}</p>
                     </article>
                   </Col>
                 ))}
@@ -143,7 +175,6 @@ export default function HomePage() {
           </section>
         </Col>
         </Row>
-      </div>
     </Container>
   );
 }

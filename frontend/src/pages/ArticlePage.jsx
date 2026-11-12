@@ -1,10 +1,18 @@
 import { useEffect, useState } from 'react';
-import { Badge, Container, Spinner } from 'react-bootstrap';
+import { Badge, Col, Container, Row, Spinner } from 'react-bootstrap';
 import { Link, useParams } from 'react-router-dom';
 import { apiGet } from '../api/client';
 import AdSlot from '../components/AdSlot';
 import FacebookVideo from '../components/FacebookVideo';
+import PageAside from '../components/PageAside';
 import { PROJECT_ARTICLE_SLUG, PROJECT_PATH } from '../data/project';
+
+const BACK = {
+  evento: { to: '/sezione/evento', label: 'Torna agli eventi' },
+  notizia: { to: '/sezione/notizia', label: 'Torna alla cronaca' },
+  avviso: { to: '/sezione/avviso', label: 'Torna agli avvisi' },
+  sponsorizzato: { to: '/sponsor', label: 'Torna ai partner' },
+};
 
 function galleryOf(article) {
   if (!article?.gallery_urls) return [];
@@ -47,14 +55,22 @@ export default function ArticlePage() {
     );
   }
 
+  const back = BACK[article.type] || { to: '/', label: 'Torna alla home' };
+
   return (
-    <Container className="py-4" style={{ maxWidth: 760 }}>
+    <Container className="sheet-wrap">
+      <Row className="g-0 sheet-columns">
+      <Col lg={8} className="sheet-main">
+      <div className="article-sheet">
+      <p className="mb-3">
+        <Link className="back-link" to={back.to}>{back.label}</Link>
+      </p>
       <div className="meta mb-2">
         <Badge className="badge-type me-2">{article.type}</Badge>
         {(article.is_sponsored || article.type === 'sponsorizzato') && (
           <Badge className="badge-sponsored me-2">Contenuto sponsorizzato</Badge>
         )}
-        {article.published_at && (
+        {article.published_at && !article.event_start && (
           <span>
             {new Date(article.published_at).toLocaleDateString('it-IT', {
               day: 'numeric',
@@ -115,9 +131,15 @@ export default function ArticlePage() {
         </p>
       )}
       <AdSlot code="article-below" />
-      <p className="mt-4">
-        <Link to="/">← Tutte le notizie</Link>
+      <p className="mt-4 mb-0">
+        <Link className="back-link" to={back.to}>{back.label}</Link>
       </p>
+      </div>
+      </Col>
+      <Col lg={4} className="sheet-side">
+        <PageAside excludeSlug={article.slug} activeTo={back.to} />
+      </Col>
+      </Row>
     </Container>
   );
 }

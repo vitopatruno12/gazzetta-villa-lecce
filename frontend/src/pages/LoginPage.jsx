@@ -21,7 +21,7 @@ export default function LoginPage() {
     try {
       const session = await apiPost('/api/auth/login', { email, password });
       if (session.user.role !== 'cliente') {
-        setError('Questo accesso è riservato ai clienti. Usa il modulo di adesione.');
+        setError('Questo accesso è riservato ai clienti. Usa il modulo di registrazione.');
         return;
       }
       login(session);
@@ -34,10 +34,11 @@ export default function LoginPage() {
   }
 
   return (
-    <Container className="py-4 info-page">
+    <Container className="py-4">
+      <div className="info-page">
       <div className="section-kicker">Accesso</div>
       <h1 className="page-title">Accedi</h1>
-      <p className="social-lead">Entra per vedere il profilo della tua adesione.</p>
+      <p className="social-lead">Entra per vedere il tuo profilo.</p>
       <form className="paper-form" onSubmit={onSubmit}>
         <label htmlFor="login-email">Email</label>
         <input
@@ -65,8 +66,9 @@ export default function LoginPage() {
         </button>
       </form>
       <p className="paper-form-note">
-        Non sei ancora iscritto? <Link to="/adesione">Compila il modulo di adesione</Link>
+        Non sei ancora iscritto? <Link to="/adesione">Compila il modulo di registrazione</Link>
       </p>
+      </div>
     </Container>
   );
 }

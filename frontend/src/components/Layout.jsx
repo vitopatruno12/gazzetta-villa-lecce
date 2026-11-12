@@ -142,12 +142,26 @@ export default function Layout() {
       <div className="top-bar">
         <Container>
           <div className="inner">
+            <div className="top-lead">
+            <button
+              type="button"
+              className={`nav-burger${menuOpen ? ' is-open' : ''}`}
+              aria-label={menuOpen ? 'Chiudi menu' : 'Apri menu'}
+              aria-expanded={menuOpen}
+              aria-controls="side-menu"
+              onClick={() => setMenuOpen((value) => !value)}
+            >
+              <span />
+              <span />
+              <span />
+            </button>
             <div className="top-place">
               <span>{todayLabel()}</span>
               <span className="top-place-pair">
                 <span>Lecce</span>
                 <span>Lecce e provincia</span>
               </span>
+            </div>
             </div>
             <div className="top-tools">
               <SearchLens />
@@ -158,7 +172,7 @@ export default function Layout() {
               ) : (
                 <>
                   <Link className="top-login" to="/adesione">
-                    Adesione
+                    Registrazione
                   </Link>
                   <Link className="top-login" to="/accedi">
                     Accedi
@@ -176,16 +190,13 @@ export default function Layout() {
             <span className="masthead-text masthead-text-left">Gazzetta</span>
             <img
               className="stemma-lecce"
-              src="/assets/stemma-lecce.png"
-              alt="Stemma della Città di Lecce"
-              width="88"
-              height="112"
+              src="/assets/stemma-villa.png?v=2"
+              alt="Villa Comunale di Lecce"
+              width="112"
+              height="141"
             />
             <span className="masthead-text masthead-text-right">
-              <span>
-                della <span className="masthead-villa">Villa</span>
-              </span>
-              <span className="masthead-text-sub">di Lecce</span>
+              della <span className="masthead-villa">Villa</span>
             </span>
             <span className="masthead-rule masthead-rule-left" aria-hidden="true" />
             <span className="masthead-rule masthead-rule-right" aria-hidden="true" />
@@ -197,19 +208,6 @@ export default function Layout() {
 
       <Navbar className="site-nav sticky-top">
         <Container className="site-nav-inner">
-          <button
-            type="button"
-            className={`nav-burger${menuOpen ? ' is-open' : ''}`}
-            aria-label={menuOpen ? 'Chiudi menu' : 'Apri menu'}
-            aria-expanded={menuOpen}
-            aria-controls="side-menu"
-            onClick={() => setMenuOpen((value) => !value)}
-          >
-            <span />
-            <span />
-            <span />
-          </button>
-
           <Nav className="site-nav-links">
             <Nav.Link as={NavLink} to="/" end>
               Home
@@ -245,7 +243,7 @@ export default function Layout() {
         <AdSlot code="header-leaderboard" className="mb-3" />
       </Container>
 
-      <main>
+      <main className="page-shell">
         <Outlet />
       </main>
 
