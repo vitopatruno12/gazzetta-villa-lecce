@@ -37,6 +37,7 @@ const SPONSOR_LOGOS = [
   ['le-mani-in-pasta', 'Le Mani in Pasta', '/pubblicita/le-mani-in-pasta.jpg'],
   ['gazza-ladra', 'Gazza Ladra', '/pubblicita/gazza-ladra.jpg'],
   ['le-mucche-volanti', 'Le Mucche Volanti', '/pubblicita/le-mucche-volanti.jpg'],
+  ['quarta-caffe', 'Quarta Caffè', '/pubblicita/quarta-caffe.png'],
 ];
 
 async function ensureCompanyLogos() {
@@ -95,6 +96,91 @@ export async function initDb() {
 
   await ensureArticleVideo();
   await ensureCompanyLogos();
+  await ensureJemSectionEvent();
+  await ensureTrhThisEvent();
+  await ensureClientAccounts();
+}
+
+async function ensureClientAccounts() {
+  const columns = ['first_name', 'last_name', 'company_name', 'vat_number', 'city', 'address'];
+  for (const column of columns) {
+    await queryImpl(`ALTER TABLE users ADD COLUMN IF NOT EXISTS ${column} TEXT`);
+  }
+  await queryImpl('ALTER TABLE users DROP CONSTRAINT IF EXISTS users_role_check');
+  await queryImpl(
+    `ALTER TABLE users ADD CONSTRAINT users_role_check
+     CHECK (role IN ('admin', 'editor', 'cliente'))`
+  );
+}
+
+const JEM_BODY = `Il gruppo musicale Jem Section arriva ai Giardini pubblici Giuseppe Garibaldi. Dal 5 al 10 novembre 2026 le serate si svolgono nella Villa Comunale di Lecce.
+
+Tappe e serate
+5 novembre — Giardini pubblici Giuseppe Garibaldi
+6 novembre — Giardini pubblici Giuseppe Garibaldi
+7 novembre — Giardini pubblici Giuseppe Garibaldi
+8 novembre — Giardini pubblici Giuseppe Garibaldi
+9 novembre — Giardini pubblici Giuseppe Garibaldi
+10 novembre — Giardini pubblici Giuseppe Garibaldi`;
+
+async function ensureJemSectionEvent() {
+  const fields = [
+    'jem-section-giardini-garibaldi',
+    'Jem Section ai Giardini pubblici Giuseppe Garibaldi',
+    'Tappe e serate dal 5 al 10 novembre',
+    JEM_BODY,
+    'Giardini pubblici Giuseppe Garibaldi, Lecce',
+    '2026-11-05',
+    '2026-11-10',
+  ];
+  await queryImpl(
+    `UPDATE articles
+     SET slug = $1, title = $2, subtitle = $3, body = $4, location = $5,
+         event_start = $6, event_end = $7, type = 'evento', status = 'published'
+     WHERE slug IN ($1, 'jaeim-secion-giardini-garibaldi')`,
+    fields
+  );
+  await queryImpl(
+    `INSERT INTO articles
+       (slug, title, subtitle, body, type, status, location, event_start, event_end, published_at)
+     VALUES ($1, $2, $3, $4, 'evento', 'published', $5, $6, $7, NOW())
+     ON CONFLICT (slug) DO NOTHING`,
+    fields
+  );
+}
+
+const TRH_PHOTOS = [
+  '/eventi/trh-this/01.jpg',
+  '/eventi/trh-this/02.jpg',
+  '/eventi/trh-this/03.jpg',
+  '/eventi/trh-this/04.jpg',
+  '/eventi/trh-this/05.jpg',
+  '/eventi/trh-this/06.jpg',
+];
+
+async function ensureTrhThisEvent() {
+  await queryImpl('ALTER TABLE articles ADD COLUMN IF NOT EXISTS gallery_urls TEXT');
+  await queryImpl(
+    `INSERT INTO articles
+       (slug, title, subtitle, body, type, status, cover_url, gallery_urls, published_at)
+     VALUES ($1, $2, $3, $4, 'evento', 'published', $5, $6, NOW())
+     ON CONFLICT (slug) DO UPDATE
+       SET title = EXCLUDED.title,
+           subtitle = EXCLUDED.subtitle,
+           body = EXCLUDED.body,
+           type = 'evento',
+           status = 'published',
+           cover_url = EXCLUDED.cover_url,
+           gallery_urls = EXCLUDED.gallery_urls`,
+    [
+      'trh-this',
+      'TRH This',
+      'Gruppo musicale',
+      'Il gruppo musicale TRH This in concerto. Chitarra, tromba, basso e batteria.',
+      TRH_PHOTOS[0],
+      JSON.stringify(TRH_PHOTOS),
+    ]
+  );
 }
 
 export { pool };

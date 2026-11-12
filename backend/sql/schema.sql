@@ -7,7 +7,13 @@ CREATE TABLE users (
   email         TEXT NOT NULL UNIQUE,
   password_hash TEXT NOT NULL,
   name          TEXT NOT NULL,
-  role          TEXT NOT NULL DEFAULT 'editor' CHECK (role IN ('admin', 'editor')),
+  role          TEXT NOT NULL DEFAULT 'editor' CHECK (role IN ('admin', 'editor', 'cliente')),
+  first_name    TEXT,
+  last_name     TEXT,
+  company_name  TEXT,
+  vat_number    TEXT,
+  city          TEXT,
+  address       TEXT,
   created_at    TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
@@ -22,6 +28,7 @@ CREATE TABLE articles (
   status       TEXT NOT NULL DEFAULT 'draft'
                CHECK (status IN ('draft', 'published', 'archived')),
   cover_url    TEXT,
+  gallery_urls TEXT,
   video_url    TEXT,
   location     TEXT,
   event_start  DATE,

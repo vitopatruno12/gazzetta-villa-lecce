@@ -3,7 +3,7 @@ import multer from 'multer';
 import path from 'path';
 import fs from 'fs';
 import { fileURLToPath } from 'url';
-import { requireAuth } from '../middleware/auth.js';
+import { requireStaff } from '../middleware/auth.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const uploadRoot = path.resolve(
@@ -39,7 +39,7 @@ const upload = multer({
 
 const router = Router();
 
-router.post('/upload', requireAuth, upload.single('file'), (req, res) => {
+router.post('/upload', requireStaff, upload.single('file'), (req, res) => {
   if (!req.file) return res.status(400).json({ error: 'File mancante' });
   res.status(201).json({
     url: `/uploads/${req.file.filename}`,

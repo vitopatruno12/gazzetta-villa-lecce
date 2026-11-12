@@ -9,6 +9,7 @@ backend/uploads/*
 !backend/uploads/.gitkeep
 backend/.pglite-data/
 backend/.pglite-data-broken/
+backend/.pglite-data-broken-*/
 frontend/public/progetto/nuovo-volto-villa.mp4
 .vite/
 coverage/

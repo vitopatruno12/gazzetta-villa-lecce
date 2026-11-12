@@ -9,6 +9,10 @@ import ProjectPage from './pages/ProjectPage';
 import ProjectPhotosPage from './pages/ProjectPhotosPage';
 import AdvertisePage from './pages/AdvertisePage';
 import JobsPage from './pages/JobsPage';
+import LoginPage from './pages/LoginPage';
+import JoinPage from './pages/JoinPage';
+import ProfilePage from './pages/ProfilePage';
+import SearchPage from './pages/SearchPage';
 export default function App() {
   return (
     <Routes>
@@ -22,6 +26,10 @@ export default function App() {
         <Route path="progetto/foto" element={<ProjectPhotosPage />} />
         <Route path="fai-pubblicita" element={<AdvertisePage />} />
         <Route path="lavora-con-noi" element={<JobsPage />} />
+        <Route path="accedi" element={<LoginPage />} />
+        <Route path="adesione" element={<JoinPage />} />
+        <Route path="profilo" element={<ProfilePage />} />
+        <Route path="cerca" element={<SearchPage />} />
       </Route>
     </Routes>
   );

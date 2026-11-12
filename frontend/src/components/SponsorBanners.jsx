@@ -15,7 +15,7 @@ export default function SponsorBanners() {
 
   return (
     <section className="sponsor-banners" aria-label="Banner delle società sponsor">
-      <div className="ad-label">Pubblicità</div>
+      <h2 className="section-head">Pubblicità</h2>
       <div className="sponsor-banner-row">
         {companies.map((company) => (
           <Link className="sponsor-banner" to="/sponsor" key={company.id}>

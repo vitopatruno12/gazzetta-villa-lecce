@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import slugify from 'slugify';
 import { query } from '../db.js';
-import { requireAuth } from '../middleware/auth.js';
+import { requireStaff } from '../middleware/auth.js';
 
 const router = Router();
 
@@ -13,12 +13,12 @@ router.get('/', async (_req, res) => {
   res.json(rows);
 });
 
-router.get('/admin/all', requireAuth, async (_req, res) => {
+router.get('/admin/all', requireStaff, async (_req, res) => {
   const { rows } = await query('SELECT * FROM companies ORDER BY name');
   res.json(rows);
 });
 
-router.post('/', requireAuth, async (req, res) => {
+router.post('/', requireStaff, async (req, res) => {
   const b = req.body || {};
   if (!b.name) return res.status(400).json({ error: 'Nome obbligatorio' });
   const slug =
@@ -46,7 +46,7 @@ router.post('/', requireAuth, async (req, res) => {
   res.status(201).json(rows[0]);
 });
 
-router.put('/:id', requireAuth, async (req, res) => {
+router.put('/:id', requireStaff, async (req, res) => {
   const b = req.body || {};
   const { rows } = await query(
     `UPDATE companies SET
@@ -76,7 +76,7 @@ router.put('/:id', requireAuth, async (req, res) => {
   res.json(rows[0]);
 });
 
-router.delete('/:id', requireAuth, async (req, res) => {
+router.delete('/:id', requireStaff, async (req, res) => {
   const result = await query('DELETE FROM companies WHERE id = $1', [req.params.id]);
   if (result.rowCount === 0) return res.status(404).json({ error: 'Azienda non trovata' });
   res.status(204).end();

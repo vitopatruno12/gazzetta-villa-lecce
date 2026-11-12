@@ -15,7 +15,7 @@ export default function SponsorsPage() {
 
   return (
     <Container className="py-4">
-      <h1 className="h2 mb-2" style={{ fontFamily: 'Libre Baskerville, Georgia, serif', fontWeight: 700 }}>
+      <h1 className="h2 mb-2" style={{ fontWeight: 700 }}>
         Partner e attività locali
       </h1>
       <p className="text-muted mb-4">
@@ -28,7 +28,7 @@ export default function SponsorsPage() {
           {companies
             .filter((c) => c.logo_url)
             .map((c) => (
-              <Col md={4} key={c.id}>
+              <Col md={6} lg={3} key={c.id}>
                 <Card className="h-100 border-0 shadow-sm partner-card">
                   <Card.Body className="text-center">
                     <img className="partner-logo" src={c.logo_url} alt={`Logo ${c.name}`} />

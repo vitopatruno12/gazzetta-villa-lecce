@@ -54,6 +54,17 @@ app.use((err, _req, res, _next) => {
 });
 
 await initDb();
-app.listen(port, () => {
+
+const server = app.listen(port, () => {
   console.log(`API testata in ascolto su http://localhost:${port}`);
+});
+
+server.on('error', (err) => {
+  if (err.code === 'EADDRINUSE') {
+    console.error(
+      `Porta ${port} già in uso. Chiudi il processo precedente oppure cambia PORT nel file .env.`
+    );
+    process.exit(1);
+  }
+  throw err;
 });

@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { query } from '../db.js';
-import { requireAuth } from '../middleware/auth.js';
+import { requireStaff } from '../middleware/auth.js';
 
 const router = Router();
 
@@ -39,12 +39,12 @@ router.post('/events', async (req, res) => {
   res.status(201).json({ ok: true });
 });
 
-router.get('/slots', requireAuth, async (_req, res) => {
+router.get('/slots', requireStaff, async (_req, res) => {
   const { rows } = await query('SELECT * FROM ad_slots ORDER BY code');
   res.json(rows);
 });
 
-router.get('/campaigns', requireAuth, async (_req, res) => {
+router.get('/campaigns', requireStaff, async (_req, res) => {
   const { rows } = await query(
     `SELECT ca.*, co.name AS company_name
      FROM ad_campaigns ca
@@ -54,7 +54,7 @@ router.get('/campaigns', requireAuth, async (_req, res) => {
   res.json(rows);
 });
 
-router.post('/campaigns', requireAuth, async (req, res) => {
+router.post('/campaigns', requireStaff, async (req, res) => {
   const b = req.body || {};
   if (!b.company_id || !b.name) {
     return res.status(400).json({ error: 'company_id e name obbligatori' });
@@ -68,7 +68,7 @@ router.post('/campaigns', requireAuth, async (req, res) => {
   res.status(201).json(rows[0]);
 });
 
-router.put('/campaigns/:id', requireAuth, async (req, res) => {
+router.put('/campaigns/:id', requireStaff, async (req, res) => {
   const b = req.body || {};
   const { rows } = await query(
     `UPDATE ad_campaigns SET
@@ -85,7 +85,7 @@ router.put('/campaigns/:id', requireAuth, async (req, res) => {
   res.json(rows[0]);
 });
 
-router.get('/creatives', requireAuth, async (_req, res) => {
+router.get('/creatives', requireStaff, async (_req, res) => {
   const { rows } = await query(
     `SELECT cr.*, s.code AS slot_code, ca.name AS campaign_name
      FROM ad_creatives cr
@@ -96,7 +96,7 @@ router.get('/creatives', requireAuth, async (_req, res) => {
   res.json(rows);
 });
 
-router.post('/creatives', requireAuth, async (req, res) => {
+router.post('/creatives', requireStaff, async (req, res) => {
   const b = req.body || {};
   if (!b.campaign_id || !b.slot_id) {
     return res.status(400).json({ error: 'campaign_id e slot_id obbligatori' });
@@ -120,7 +120,7 @@ router.post('/creatives', requireAuth, async (req, res) => {
   res.status(201).json(rows[0]);
 });
 
-router.get('/stats', requireAuth, async (_req, res) => {
+router.get('/stats', requireStaff, async (_req, res) => {
   const { rows } = await query(
     `SELECT cr.id, cr.title, s.code AS slot_code,
             COUNT(*) FILTER (WHERE e.event_type = 'impression') AS impressions,

@@ -20,3 +20,12 @@ export function requireAdmin(req, res, next) {
   }
   next();
 }
+
+export function requireStaff(req, res, next) {
+  requireAuth(req, res, () => {
+    if (req.user.role !== 'admin' && req.user.role !== 'editor') {
+      return res.status(403).json({ error: 'Solo la redazione' });
+    }
+    next();
+  });
+}

@@ -20,7 +20,8 @@ INSERT INTO companies (name, slug, website, city, email, logo_url) VALUES
 ('Ristorante Salento', 'ristorante-salento', 'https://example.com/ristorante', 'Lecce', 'prenota@ristorante.local', NULL),
 ('Le Mani in Pasta', 'le-mani-in-pasta', NULL, 'Lecce', NULL, '/pubblicita/le-mani-in-pasta.jpg'),
 ('Gazza Ladra', 'gazza-ladra', NULL, 'Lecce', NULL, '/pubblicita/gazza-ladra.jpg'),
-('Le Mucche Volanti', 'le-mucche-volanti', NULL, 'Lecce', NULL, '/pubblicita/le-mucche-volanti.jpg');
+('Le Mucche Volanti', 'le-mucche-volanti', NULL, 'Lecce', NULL, '/pubblicita/le-mucche-volanti.jpg'),
+('Quarta Caffè', 'quarta-caffe', NULL, 'Lecce', NULL, '/pubblicita/quarta-caffe.png');
 
 INSERT INTO articles (slug, title, subtitle, body, type, status, location, event_start, is_sponsored, published_at) VALUES
 (
@@ -58,6 +59,41 @@ INSERT INTO articles (slug, title, subtitle, body, type, status, location, event
   CURRENT_DATE + 12,
   FALSE,
   NOW() - INTERVAL '6 hours'
+);
+
+INSERT INTO articles (slug, title, subtitle, body, type, status, location, event_start, event_end, published_at) VALUES
+(
+  'jem-section-giardini-garibaldi',
+  'Jem Section ai Giardini pubblici Giuseppe Garibaldi',
+  'Tappe e serate dal 5 al 10 novembre',
+  'Il gruppo musicale Jem Section arriva ai Giardini pubblici Giuseppe Garibaldi. Dal 5 al 10 novembre 2026 le serate si svolgono nella Villa Comunale di Lecce.
+
+Tappe e serate
+5 novembre — Giardini pubblici Giuseppe Garibaldi
+6 novembre — Giardini pubblici Giuseppe Garibaldi
+7 novembre — Giardini pubblici Giuseppe Garibaldi
+8 novembre — Giardini pubblici Giuseppe Garibaldi
+9 novembre — Giardini pubblici Giuseppe Garibaldi
+10 novembre — Giardini pubblici Giuseppe Garibaldi',
+  'evento',
+  'published',
+  'Giardini pubblici Giuseppe Garibaldi, Lecce',
+  DATE '2026-11-05',
+  DATE '2026-11-10',
+  NOW()
+);
+
+INSERT INTO articles (slug, title, subtitle, body, type, status, cover_url, gallery_urls, published_at) VALUES
+(
+  'trh-this',
+  'TRH This',
+  'Gruppo musicale',
+  'Il gruppo musicale TRH This in concerto. Chitarra, tromba, basso e batteria.',
+  'evento',
+  'published',
+  '/eventi/trh-this/01.jpg',
+  '["/eventi/trh-this/01.jpg","/eventi/trh-this/02.jpg","/eventi/trh-this/03.jpg","/eventi/trh-this/04.jpg","/eventi/trh-this/05.jpg","/eventi/trh-this/06.jpg"]',
+  NOW()
 );
 
 -- Campagna attiva + creatività di esempio

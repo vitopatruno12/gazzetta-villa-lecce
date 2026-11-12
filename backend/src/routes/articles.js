@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import slugify from 'slugify';
 import { query } from '../db.js';
-import { requireAuth } from '../middleware/auth.js';
+import { requireStaff } from '../middleware/auth.js';
 
 const router = Router();
 
@@ -53,7 +53,7 @@ router.get('/slug/:slug', async (req, res) => {
 });
 
 /** Admin: tutti gli articoli */
-router.get('/admin/all', requireAuth, async (req, res) => {
+router.get('/admin/all', requireStaff, async (req, res) => {
   const { rows } = await query(
     `SELECT id, slug, title, type, status, is_sponsored, published_at, updated_at
      FROM articles
@@ -62,13 +62,13 @@ router.get('/admin/all', requireAuth, async (req, res) => {
   res.json(rows);
 });
 
-router.get('/admin/:id', requireAuth, async (req, res) => {
+router.get('/admin/:id', requireStaff, async (req, res) => {
   const { rows } = await query('SELECT * FROM articles WHERE id = $1', [req.params.id]);
   if (!rows[0]) return res.status(404).json({ error: 'Articolo non trovato' });
   res.json(rows[0]);
 });
 
-router.post('/', requireAuth, async (req, res) => {
+router.post('/', requireStaff, async (req, res) => {
   const b = req.body || {};
   const slug = b.slug || makeSlug(b.title);
   const status = b.status || 'draft';
@@ -101,7 +101,7 @@ router.post('/', requireAuth, async (req, res) => {
   res.status(201).json(rows[0]);
 });
 
-router.put('/:id', requireAuth, async (req, res) => {
+router.put('/:id', requireStaff, async (req, res) => {
   const b = req.body || {};
   const { rows: existing } = await query('SELECT * FROM articles WHERE id = $1', [req.params.id]);
   if (!existing[0]) return res.status(404).json({ error: 'Articolo non trovato' });
@@ -139,7 +139,7 @@ router.put('/:id', requireAuth, async (req, res) => {
   res.json(rows[0]);
 });
 
-router.delete('/:id', requireAuth, async (req, res) => {
+router.delete('/:id', requireStaff, async (req, res) => {
   const result = await query('DELETE FROM articles WHERE id = $1', [req.params.id]);
   if (result.rowCount === 0) return res.status(404).json({ error: 'Articolo non trovato' });
   res.status(204).end();

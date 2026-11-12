@@ -21,3 +21,14 @@ export async function apiPost(path, body) {
   }
   return res.json();
 }
+
+export async function apiAuthGet(path, token) {
+  const res = await fetch(`${BASE}${path}`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    throw new Error(err.error || `Errore ${res.status}`);
+  }
+  return res.json();
+}
