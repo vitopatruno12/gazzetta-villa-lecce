@@ -1,5 +1,5 @@
 import { useEffect, useId, useRef } from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import SocialIcon from './SocialIcon';
 import { BROADCASTS, SOCIALS } from '../data/social';
 
@@ -11,10 +11,9 @@ const SECTIONS = [
 ];
 
 const VILLA = [
-  { to: '/progetto', label: 'Il progetto' },
+  { to: '/progetto', label: 'Il progetto', end: true },
   { to: '/progetto/foto', label: 'Foto' },
   { to: '/sponsor', label: 'Partner' },
-  { to: '/social', label: 'Social' },
 ];
 
 export default function SideMenu({ open, onClose }) {
@@ -114,7 +113,7 @@ export default function SideMenu({ open, onClose }) {
           <ul>
             {VILLA.map((item) => (
               <li key={item.to}>
-                <NavLink to={item.to} onClick={onClose}>
+                <NavLink to={item.to} end={item.end} onClick={onClose}>
                   {item.label}
                 </NavLink>
               </li>
@@ -156,9 +155,6 @@ export default function SideMenu({ open, onClose }) {
               </a>
             ))}
           </div>
-          <Link to="/social" className="side-menu-social-page" onClick={onClose}>
-            Tutti i canali
-          </Link>
         </div>
       </aside>
     </div>

@@ -34,7 +34,6 @@ const FOOTER_COLUMNS = [
     links: [
       { href: 'https://radiorama.online/', label: 'Radio Rama' },
       { href: 'https://trnews.it/', label: 'Tele Rama' },
-      { to: '/social', label: 'Social' },
     ],
   },
 ];
@@ -187,16 +186,16 @@ export default function Layout() {
       <header className="site-masthead">
         <Container>
           <Link to="/" className="masthead-brand">
-            <span className="masthead-text masthead-text-left">Gazzetta</span>
+            <span className="masthead-text masthead-text-left">LA VILLA</span>
             <img
               className="stemma-lecce"
-              src="/assets/stemma-villa.png?v=2"
-              alt="Villa Comunale di Lecce"
-              width="112"
-              height="141"
+              src="/assets/logo-villa-comunale.png"
+              alt="La Villa Comunale di Lecce"
+              width="124"
+              height="124"
             />
             <span className="masthead-text masthead-text-right">
-              della <span className="masthead-villa">Villa</span>
+              <span className="masthead-villa">COMUNALE</span>
             </span>
             <span className="masthead-rule masthead-rule-left" aria-hidden="true" />
             <span className="masthead-rule masthead-rule-right" aria-hidden="true" />
@@ -212,7 +211,7 @@ export default function Layout() {
             <Nav.Link as={NavLink} to="/" end>
               Home
             </Nav.Link>
-            <Nav.Link as={NavLink} to="/progetto">
+            <Nav.Link as={NavLink} to="/progetto" end>
               Il progetto
             </Nav.Link>
             <Nav.Link as={NavLink} to="/progetto/foto">
@@ -229,9 +228,6 @@ export default function Layout() {
             </Nav.Link>
             <Nav.Link as={NavLink} to="/sponsor">
               Partner
-            </Nav.Link>
-            <Nav.Link as={NavLink} to="/social">
-              Social
             </Nav.Link>
           </Nav>
         </Container>
@@ -270,8 +266,8 @@ export default function Layout() {
 
           <div className="footer-brand-row">
             <p className="footer-brand">
-              Gazzetta
-              <span className="footer-brand-place">della Villa di Lecce</span>
+              La Villa Comunale
+              <span className="footer-brand-place">di Lecce</span>
             </p>
             <div className="footer-social">
               {SOCIALS.map((item) => (
@@ -311,7 +307,7 @@ export default function Layout() {
           </div>
 
           <p className="footer-legal">
-            © {new Date().getFullYear()} Gazzetta della Villa di Lecce. I contenuti sponsorizzati sono
+            © {new Date().getFullYear()} La Villa Comunale di Lecce. I contenuti sponsorizzati sono
             sempre etichettati.
           </p>
         </Container>

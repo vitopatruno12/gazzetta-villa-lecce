@@ -278,10 +278,10 @@ a:hover {
 .masthead-brand {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
-  column-gap: clamp(0.85rem, 2vw, 1.35rem);
-  row-gap: 0.42rem;
+  column-gap: clamp(0.85rem, 2vw, 1.45rem);
+  row-gap: 0.45rem;
   align-items: center;
-  width: min(100%, 980px);
+  width: min(100%, 1120px);
   margin-inline: auto;
   color: var(--ink);
 }
@@ -293,9 +293,10 @@ a:hover {
 .masthead-text {
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: clamp(1.35rem, 4.2vw, 2.85rem);
-  letter-spacing: -0.02em;
+  font-size: clamp(1.35rem, 4.3vw, 3.35rem);
+  letter-spacing: 0.01em;
   line-height: 0.95;
+  white-space: nowrap;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -316,7 +317,7 @@ a:hover {
 }
 
 .masthead-villa {
-  color: #e6b000;
+  color: var(--ink);
 }
 
 .masthead-text-sub {
@@ -346,7 +347,7 @@ a:hover {
 .stemma-lecce {
   grid-column: 2;
   grid-row: 1;
-  width: clamp(84px, 12.5vw, 124px);
+  width: clamp(92px, 13vw, 132px);
   height: auto;
   justify-self: center;
   display: block;
@@ -1776,11 +1777,11 @@ h1.section-head {
 
 @media (max-width: 575.98px) {
   .masthead-brand {
-    column-gap: 0.55rem;
+    column-gap: 0.5rem;
     width: 100%;
   }
 
   .masthead-text {
-    font-size: clamp(1.2rem, 7vw, 1.7rem);
+    font-size: clamp(1.05rem, 5.6vw, 1.55rem);
   }
 }
