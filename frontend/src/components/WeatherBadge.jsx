@@ -94,13 +94,10 @@ export default function WeatherBadge() {
       role="status"
       aria-label={`Meteo a Lecce: ${weather.temp} gradi, ${weather.label}, minima ${weather.min}, massima ${weather.max}`}
     >
-      <WeatherIcon kind={weather.kind} />
       <span className="masthead-weather-temp">{weather.temp}°</span>
+      <WeatherIcon kind={weather.kind} />
       <span className="masthead-weather-meta">
-        <span>{weather.label}</span>
-        <span>
-          Lecce · min {weather.min}° max {weather.max}°
-        </span>
+        <strong>Lecce</strong> - {weather.label} · min {weather.min}° max {weather.max}°
       </span>
     </p>
   );
