@@ -56,11 +56,16 @@ export default function ArticlePage() {
 
   useEffect(() => {
     setLoading(true);
+    window.scrollTo(0, 0);
     apiGet(`/api/articles/slug/${slug}`)
       .then(setArticle)
       .catch((e) => setError(e.message))
       .finally(() => setLoading(false));
   }, [slug]);
+
+  useEffect(() => {
+    if (!loading) window.scrollTo(0, 0);
+  }, [loading, slug]);
 
   if (loading) {
     return (

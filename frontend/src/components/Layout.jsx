@@ -2,7 +2,6 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { Container, Nav, Navbar } from 'react-bootstrap';
 import { flushSync } from 'react-dom';
 import { Link, NavLink, Outlet, useLocation, useNavigate, useSearchParams } from 'react-router-dom';
-import AdSlot from './AdSlot';
 import SideMenu from './SideMenu';
 import SocialIcon from './SocialIcon';
 import WeatherBadge from './WeatherBadge';
@@ -113,9 +112,11 @@ function usePageTurn() {
       document.startViewTransition(() => {
         flushSync(() => {
           navigate(next);
+          window.scrollTo(0, 0);
         });
       }).finished.finally(() => {
         turnedByView.current = false;
+        window.scrollTo(0, 0);
       });
     };
 
@@ -166,6 +167,11 @@ export default function Layout() {
       document.removeEventListener('keydown', onEscape);
     };
   }, [eventsDropdownOpen, closeEventsDropdown]);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname, location.search, location.key]);
+
   return (
     <div
       className={cssTurn ? 'newspaper-sheet newspaper-sheet-fallback' : 'newspaper-sheet'}
@@ -335,10 +341,6 @@ export default function Layout() {
       </Navbar>
 
       <SideMenu open={menuOpen} onClose={closeMenu} />
-
-      <Container className="mt-3">
-        <AdSlot code="header-leaderboard" className="mb-3" />
-      </Container>
 
       <main className="page-shell">
         <Outlet />

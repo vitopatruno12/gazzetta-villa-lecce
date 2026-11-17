@@ -8,8 +8,8 @@ INSERT INTO users (email, password_hash, name, role) VALUES
 );
 
 INSERT INTO ad_slots (code, name, description, width, height) VALUES
-('header-leaderboard', 'Header leaderboard', 'Banner orizzontale sotto la testata', 728, 90),
-('sidebar-home', 'Sidebar home', 'Colonna destra homepage', 300, 250),
+('header-leaderboard', 'Header leaderboard', 'Banner orizzontale sotto la testata', 970, 180),
+('sidebar-home', 'Sidebar home', 'Riquadro pubblicità in colonna destra', 300, 250),
 ('article-below', 'Sotto articolo', 'Dopo il corpo della notizia', 728, 90),
 ('feed-sponsored', 'Feed sponsorizzati', 'Card native nel flusso news', NULL, NULL),
 ('mobile-sticky', 'Mobile sticky', 'Banner fisso in basso su mobile', 320, 50);
@@ -236,3 +236,48 @@ FROM ad_campaigns c
 JOIN companies co ON co.id = c.company_id
 JOIN ad_slots s ON s.code = 'feed-sponsored'
 WHERE co.slug = 'bar-del-parco';
+
+-- Banner società rotanti nel riquadro sidebar
+INSERT INTO ad_campaigns (company_id, name, status, starts_at, ends_at, priority)
+SELECT id, 'Display · Quarta Caffè', 'active', NOW() - INTERVAL '1 day', NOW() + INTERVAL '90 days', 20
+FROM companies WHERE slug = 'quarta-caffe';
+
+INSERT INTO ad_campaigns (company_id, name, status, starts_at, ends_at, priority)
+SELECT id, 'Display · Le Mani in Pasta', 'active', NOW() - INTERVAL '1 day', NOW() + INTERVAL '90 days', 18
+FROM companies WHERE slug = 'le-mani-in-pasta';
+
+INSERT INTO ad_campaigns (company_id, name, status, starts_at, ends_at, priority)
+SELECT id, 'Display · Gazza Ladra', 'active', NOW() - INTERVAL '1 day', NOW() + INTERVAL '90 days', 16
+FROM companies WHERE slug = 'gazza-ladra';
+
+INSERT INTO ad_campaigns (company_id, name, status, starts_at, ends_at, priority)
+SELECT id, 'Display · Le Mucche Volanti', 'active', NOW() - INTERVAL '1 day', NOW() + INTERVAL '90 days', 14
+FROM companies WHERE slug = 'le-mucche-volanti';
+
+INSERT INTO ad_creatives (campaign_id, slot_id, title, image_url, click_url, kind, active)
+SELECT c.id, s.id, 'Quarta Caffè', '/pubblicita/quarta-caffe.png', '/sponsor', 'banner', TRUE
+FROM ad_campaigns c
+JOIN companies co ON co.id = c.company_id
+JOIN ad_slots s ON s.code = 'sidebar-home'
+WHERE co.slug = 'quarta-caffe' AND c.name = 'Display · Quarta Caffè';
+
+INSERT INTO ad_creatives (campaign_id, slot_id, title, image_url, click_url, kind, active)
+SELECT c.id, s.id, 'Le Mani in Pasta', '/pubblicita/le-mani-in-pasta.jpg', '/sponsor', 'banner', TRUE
+FROM ad_campaigns c
+JOIN companies co ON co.id = c.company_id
+JOIN ad_slots s ON s.code = 'sidebar-home'
+WHERE co.slug = 'le-mani-in-pasta' AND c.name = 'Display · Le Mani in Pasta';
+
+INSERT INTO ad_creatives (campaign_id, slot_id, title, image_url, click_url, kind, active)
+SELECT c.id, s.id, 'Gazza Ladra', '/pubblicita/gazza-ladra.jpg', '/sponsor', 'banner', TRUE
+FROM ad_campaigns c
+JOIN companies co ON co.id = c.company_id
+JOIN ad_slots s ON s.code = 'sidebar-home'
+WHERE co.slug = 'gazza-ladra' AND c.name = 'Display · Gazza Ladra';
+
+INSERT INTO ad_creatives (campaign_id, slot_id, title, image_url, click_url, kind, active)
+SELECT c.id, s.id, 'Le Mucche Volanti', '/pubblicita/le-mucche-volanti.jpg', '/sponsor', 'banner', TRUE
+FROM ad_campaigns c
+JOIN companies co ON co.id = c.company_id
+JOIN ad_slots s ON s.code = 'sidebar-home'
+WHERE co.slug = 'le-mucche-volanti' AND c.name = 'Display · Le Mucche Volanti';

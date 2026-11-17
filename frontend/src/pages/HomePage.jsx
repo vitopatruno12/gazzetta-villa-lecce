@@ -19,6 +19,19 @@ function formatDate(value) {
   });
 }
 
+function startOfToday() {
+  const day = new Date();
+  day.setHours(0, 0, 0, 0);
+  return day;
+}
+
+function pickNextEvent(articles) {
+  const today = startOfToday();
+  return articles
+    .filter((article) => article.event_start && new Date(article.event_start) >= today)
+    .sort((a, b) => new Date(a.event_start) - new Date(b.event_start))[0];
+}
+
 export default function HomePage() {
   const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -67,10 +80,18 @@ export default function HomePage() {
     { type: 'evento', title: 'Eventi', to: '/sezione/evento' },
     { type: 'avviso', title: 'Avvisi', to: '/sezione/avviso' },
   ]
-    .map((group) => ({
-      ...group,
-      articles: rest.filter((article) => article.type === group.type).slice(0, 6),
-    }))
+    .map((group) => {
+      const items = rest.filter((article) => article.type === group.type);
+      const nextEvent = group.type === 'evento' ? pickNextEvent(items) : null;
+      const ordered = nextEvent
+        ? [nextEvent, ...items.filter((article) => article.id !== nextEvent.id)]
+        : items;
+      return {
+        ...group,
+        articles: ordered.slice(0, 6),
+        nextId: nextEvent?.id || null,
+      };
+    })
     .filter((group) => group.articles.length);
 
   const homeJsonLd = {
@@ -105,9 +126,6 @@ export default function HomePage() {
         canonicalPath="/"
         jsonLd={homeJsonLd}
       />
-        <div className="home-frame-banners">
-          <SponsorBanners />
-        </div>
         {spotlight && (
           <article className="home-highlight">
             <Link className="home-highlight-poster" to={`/articolo/${spotlight.slug}`}>
@@ -171,45 +189,74 @@ export default function HomePage() {
             </article>
           )}
 
-          <AdSlot code="feed-sponsored" className="mb-4" />
+          <div className="home-feed-banners">
+            <SponsorBanners />
+          </div>
 
           {groups.map((group) => (
             <section key={group.type} className="home-section">
               <h2 className="section-head">
                 <Link to={group.to}>{group.title}</Link>
               </h2>
-              <Row className="home-section-grid g-0">
-                {group.articles.map((a) => (
-                  <Col md={6} key={a.id} className="home-section-cell">
-                    <article className="article-card h-100">
+              {group.articles
+                .filter((a) => a.id === group.nextId)
+                .map((a) => (
+                  <article key={a.id} className="article-card article-card-next">
+                    {a.cover_url && (
+                      <Link to={`/articolo/${a.slug}`}>
+                        <img className="article-cover" src={a.cover_url} alt="" />
+                      </Link>
+                    )}
+                    <div className="article-card-copy">
+                      <span className="article-card-kicker">Prossimo evento</span>
                       <div className="meta mb-1">
                         <Badge className="badge-type me-2">{a.type}</Badge>
                         {a.is_sponsored && <Badge className="badge-sponsored">Sponsor</Badge>}
                       </div>
-                      {a.cover_url && (
-                        <Link to={`/articolo/${a.slug}`}>
-                          <img className="article-cover" src={a.cover_url} alt={`${a.title} – Villa Comunale Giuseppe Garibaldi Lecce`} />
-                        </Link>
-                      )}
                       <h3>
                         <Link to={`/articolo/${a.slug}`}>{a.title}</Link>
                       </h3>
                       {a.subtitle && <p className="text-muted small mb-1">{a.subtitle}</p>}
                       <p className="text-muted small mb-0">
-                        {a.type === 'evento'
-                          ? formatDate(a.event_start) || a.location || ''
-                          : formatDate(a.published_at)}
+                        {formatDate(a.event_start || a.published_at) || a.location || ''}
                       </p>
-                    </article>
-                  </Col>
+                    </div>
+                  </article>
                 ))}
+              <Row className="home-section-grid g-0">
+                {group.articles
+                  .filter((a) => a.id !== group.nextId)
+                  .map((a) => (
+                    <Col md={6} key={a.id} className="home-section-cell">
+                      <article className="article-card h-100">
+                        {a.cover_url && (
+                          <Link to={`/articolo/${a.slug}`}>
+                            <img className="article-cover" src={a.cover_url} alt="" />
+                          </Link>
+                        )}
+                        <div className="article-card-copy">
+                          <div className="meta mb-1">
+                            <Badge className="badge-type me-2">{a.type}</Badge>
+                            {a.is_sponsored && <Badge className="badge-sponsored">Sponsor</Badge>}
+                          </div>
+                          <h3>
+                            <Link to={`/articolo/${a.slug}`}>{a.title}</Link>
+                          </h3>
+                          {a.subtitle && <p className="text-muted small mb-1">{a.subtitle}</p>}
+                          <p className="text-muted small mb-0">
+                            {formatDate(a.event_start || a.published_at)}
+                          </p>
+                        </div>
+                      </article>
+                    </Col>
+                  ))}
               </Row>
             </section>
           ))}
         </Col>
 
         <Col lg={4} className="home-side">
-          <AdSlot code="sidebar-home" className="mb-4" />
+          <AdSlot code="sidebar-home" variant="panel" className="mb-4" />
           <section className="sidebar-block">
             <h2 className="section-head">In evidenza</h2>
             <ul className="list-unstyled mb-0">

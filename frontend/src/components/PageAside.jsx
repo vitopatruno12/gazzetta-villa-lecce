@@ -44,7 +44,7 @@ export default function PageAside({ excludeSlug = '', activeTo = '', skipType = 
         ))}
       </nav>
 
-      <AdSlot code="sidebar-home" className="mb-4" />
+      <AdSlot code="sidebar-home" variant="panel" className="mb-4" />
 
       {video && (
         <section className="sidebar-block">

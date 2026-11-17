@@ -100,6 +100,130 @@ export async function initDb() {
   await ensureTrhThisEvent();
   await ensureDecemberConcerts();
   await ensureClientAccounts();
+  await ensureDisplayAdSlots();
+}
+
+const DISPLAY_AD_SLOTS = [
+  ['sidebar-home', 'Sidebar home', 'Riquadro pubblicità in colonna destra', 300, 250],
+];
+
+const DISPLAY_AD_CREATIVES = [
+  {
+    company: 'quarta-caffe',
+    campaign: 'Display · Quarta Caffè',
+    priority: 20,
+    slots: [['sidebar-home', 'Quarta Caffè', '/pubblicita/quarta-caffe.png']],
+  },
+  {
+    company: 'le-mani-in-pasta',
+    campaign: 'Display · Le Mani in Pasta',
+    priority: 18,
+    slots: [['sidebar-home', 'Le Mani in Pasta', '/pubblicita/le-mani-in-pasta.jpg']],
+  },
+  {
+    company: 'gazza-ladra',
+    campaign: 'Display · Gazza Ladra',
+    priority: 16,
+    slots: [['sidebar-home', 'Gazza Ladra', '/pubblicita/gazza-ladra.jpg']],
+  },
+  {
+    company: 'le-mucche-volanti',
+    campaign: 'Display · Le Mucche Volanti',
+    priority: 14,
+    slots: [['sidebar-home', 'Le Mucche Volanti', '/pubblicita/le-mucche-volanti.jpg']],
+  },
+];
+
+async function ensureDisplayAdSlots() {
+  for (const [code, name, description, width, height] of DISPLAY_AD_SLOTS) {
+    await queryImpl(
+      `INSERT INTO ad_slots (code, name, description, width, height)
+       VALUES ($1, $2, $3, $4, $5)
+       ON CONFLICT (code) DO UPDATE
+         SET name = EXCLUDED.name,
+             description = EXCLUDED.description,
+             width = EXCLUDED.width,
+             height = EXCLUDED.height`,
+      [code, name, description, width, height]
+    );
+  }
+
+  // Nasconde banner laterali / leaderboard, SVG demo e il vecchio testo Bar del Parco
+  await queryImpl(
+    `UPDATE ad_creatives cr
+     SET active = FALSE
+     FROM ad_slots s
+     WHERE cr.slot_id = s.id
+       AND s.code IN ('skyscraper-left', 'skyscraper-right', 'header-leaderboard')`
+  );
+  await queryImpl(
+    `UPDATE ad_creatives
+     SET active = FALSE
+     WHERE image_url LIKE '/pubblicita/banner-side-%.svg'
+        OR image_url LIKE '/pubblicita/banner-sky-%.svg'
+        OR image_url LIKE '/pubblicita/banner-leader-%.svg'`
+  );
+  await queryImpl(
+    `UPDATE ad_creatives cr
+     SET active = FALSE
+     FROM ad_slots s, ad_campaigns ca, companies co
+     WHERE cr.slot_id = s.id
+       AND cr.campaign_id = ca.id
+       AND ca.company_id = co.id
+       AND s.code = 'sidebar-home'
+       AND co.slug = 'bar-del-parco'`
+  );
+
+  for (const item of DISPLAY_AD_CREATIVES) {
+    const company = await queryImpl('SELECT id FROM companies WHERE slug = $1', [item.company]);
+    if (!company.rows.length) continue;
+    const companyId = company.rows[0].id;
+
+    let campaign = await queryImpl(
+      `SELECT id FROM ad_campaigns WHERE company_id = $1 AND name = $2 LIMIT 1`,
+      [companyId, item.campaign]
+    );
+    if (!campaign.rows.length) {
+      campaign = await queryImpl(
+        `INSERT INTO ad_campaigns (company_id, name, status, starts_at, ends_at, priority)
+         VALUES ($1, $2, 'active', NOW() - INTERVAL '1 day', NOW() + INTERVAL '90 days', $3)
+         RETURNING id`,
+        [companyId, item.campaign, item.priority]
+      );
+    } else {
+      await queryImpl(
+        `UPDATE ad_campaigns
+         SET status = 'active', priority = $2, ends_at = NOW() + INTERVAL '90 days'
+         WHERE id = $1`,
+        [campaign.rows[0].id, item.priority]
+      );
+    }
+    const campaignId = campaign.rows[0].id;
+
+    for (const [slotCode, title, image] of item.slots) {
+      const slot = await queryImpl('SELECT id FROM ad_slots WHERE code = $1', [slotCode]);
+      if (!slot.rows.length) continue;
+      const existing = await queryImpl(
+        `SELECT id FROM ad_creatives
+         WHERE campaign_id = $1 AND slot_id = $2 AND image_url = $3
+         LIMIT 1`,
+        [campaignId, slot.rows[0].id, image]
+      );
+      if (existing.rows.length) {
+        await queryImpl(
+          `UPDATE ad_creatives SET active = TRUE, title = $2 WHERE id = $1`,
+          [existing.rows[0].id, title]
+        );
+        continue;
+      }
+      await queryImpl(
+        `INSERT INTO ad_creatives
+           (campaign_id, slot_id, title, image_url, click_url, kind, active)
+         VALUES ($1, $2, $3, $4, '/sponsor', 'banner', TRUE)`,
+        [campaignId, slot.rows[0].id, title, image]
+      );
+    }
+  }
 }
 
 async function ensureClientAccounts() {

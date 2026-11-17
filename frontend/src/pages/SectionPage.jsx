@@ -107,6 +107,19 @@ function eventWhen(article) {
   return `${start} – ${end}`;
 }
 
+function startOfToday() {
+  const day = new Date();
+  day.setHours(0, 0, 0, 0);
+  return day;
+}
+
+function pickNextEvent(articles) {
+  const today = startOfToday();
+  return articles
+    .filter((article) => article.event_start && new Date(article.event_start) >= today)
+    .sort((a, b) => new Date(a.event_start) - new Date(b.event_start))[0];
+}
+
 export default function SectionPage() {
   const { type } = useParams();
   const [searchParams, setSearchParams] = useSearchParams();
@@ -145,6 +158,7 @@ export default function SectionPage() {
   const visibleArticles = isEvents
     ? [...featured, ...listed].filter((a) => matchesEventCategory(a.slug, selectedCategory))
     : [...featured, ...listed];
+  const nextEvent = isEvents ? pickNextEvent(visibleArticles) : null;
 
   const visibleCalendars = isEvents
     ? EVENT_CALENDARS.map((block) => ({
@@ -304,14 +318,16 @@ export default function SectionPage() {
             <ul className="list-unstyled mb-0">
               {visibleArticles.map((a) => {
                 const cats = isEvents ? SLUG_CATEGORIES[a.slug] || [] : [];
+                const isNext = nextEvent && a.id === nextEvent.id;
                 return (
-                  <li key={a.id} className="news-item">
+                  <li key={a.id} className={isNext ? 'news-item news-item-next' : 'news-item'}>
                     {a.cover_url && (
                       <Link className="news-thumb" to={`/articolo/${a.slug}`}>
                         <img src={a.cover_url} alt={`${a.title} – Villa Comunale Lecce`} />
                       </Link>
                     )}
                     <div>
+                      {isNext && <span className="news-item-kicker">Prossimo evento</span>}
                       <div className="mb-1 d-flex flex-wrap align-items-center gap-1">
                         <Badge className="badge-type">{a.type}</Badge>
                         {cats.slice(0, 2).map((cid) => (

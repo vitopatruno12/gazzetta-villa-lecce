@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="300" height="250" viewBox="0 0 300 250" role="img" aria-label="Quarta Caffè">
+  <rect width="300" height="250" fill="#1c1914"/>
+  <rect x="0" y="0" width="300" height="8" fill="#c8102e"/>
+  <text x="150" y="110" text-anchor="middle" font-family="Georgia, serif" font-size="34" font-weight="700" fill="#ffffff">Quarta Caffè</text>
+  <text x="150" y="145" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" letter-spacing="3" fill="#d4c4a8">IL CAFFÈ DEL SALENTO</text>
+  <rect x="85" y="175" width="130" height="36" fill="#c8102e"/>
+  <text x="150" y="198" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" font-weight="700" fill="#ffffff">PARTNER</text>
+</svg>

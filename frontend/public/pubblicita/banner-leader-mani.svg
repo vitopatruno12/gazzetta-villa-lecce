@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="970" height="180" viewBox="0 0 970 180" role="img" aria-label="Le Mani in Pasta">
+  <rect width="970" height="180" fill="#f4efe6"/>
+  <rect x="0" y="0" width="970" height="8" fill="#1c1914"/>
+  <rect x="0" y="172" width="970" height="8" fill="#1c1914"/>
+  <text x="48" y="78" font-family="Georgia, serif" font-size="40" font-weight="700" fill="#1c1914">Le Mani in Pasta</text>
+  <text x="48" y="118" font-family="Arial, sans-serif" font-size="18" letter-spacing="2" fill="#5e564c">FRESCO · LOCALE · A DUE PASSI DALLA VILLA</text>
+  <rect x="780" y="58" width="150" height="64" fill="#1c1914"/>
+  <text x="855" y="98" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="700" fill="#ffffff">MENU</text>
+</svg>
