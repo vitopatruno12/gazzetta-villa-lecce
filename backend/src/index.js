@@ -9,6 +9,7 @@ import articlesRoutes from './routes/articles.js';
 import companiesRoutes from './routes/companies.js';
 import adsRoutes from './routes/ads.js';
 import mediaRoutes from './routes/media.js';
+import seoRoutes from './routes/seo.js';
 import { initDb, pool } from './db.js';
 
 dotenv.config();
@@ -42,6 +43,7 @@ app.get('/api/health', async (_req, res) => {
   }
 });
 
+app.use('/', seoRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/articles', articlesRoutes);
 app.use('/api/companies', companiesRoutes);

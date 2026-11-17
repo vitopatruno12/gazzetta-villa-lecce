@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Container } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import SeoHead from '../components/SeoHead';
 import { PROJECT_PATH, PROJECT_PHOTOS, PROJECT_SLIDES } from '../data/project';
 
 export default function ProjectPhotosPage() {
@@ -23,6 +24,12 @@ export default function ProjectPhotosPage() {
 
   return (
     <Container className="py-4 project-page">
+      <SeoHead
+        title="Foto e Tavole – Giardini Pubblici Giuseppe Garibaldi | Villa Comunale Lecce"
+        description="Planimetrie, foto e tavole progettuali dei Giardini pubblici Giuseppe Garibaldi – Villa Comunale di Lecce: percorsi per mercatini, aree eventi, laboratori e famiglie."
+        keywords="foto Villa Comunale Lecce, planimetria Giardini Giuseppe Garibaldi Lecce, Giuseppe Garibaldi Lecce, Villa Comunale Lecce"
+        canonicalPath="/progetto/foto"
+      />
       <div className="section-kicker">Il nuovo volto della Villa</div>
       <h1 className="page-title">Foto del progetto</h1>
       <p className="social-lead">

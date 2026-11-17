@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /profilo
+Disallow: /accedi
+
+Sitemap: https://www.villacomunalelecce.it/sitemap.xml

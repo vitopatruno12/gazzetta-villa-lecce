@@ -1,6 +1,7 @@
-import { useEffect, useId, useRef } from 'react';
-import { NavLink } from 'react-router-dom';
+import { useEffect, useId, useRef, useState } from 'react';
+import { Link, NavLink } from 'react-router-dom';
 import SocialIcon from './SocialIcon';
+import { EVENT_CATEGORIES } from '../data/eventsCalendar';
 import { BROADCASTS, SOCIALS } from '../data/social';
 
 const SECTIONS = [
@@ -20,6 +21,7 @@ export default function SideMenu({ open, onClose }) {
   const titleId = useId();
   const closeRef = useRef(null);
   const panelRef = useRef(null);
+  const [eventsSubOpen, setEventsSubOpen] = useState(false);
 
   useEffect(() => {
     if (!open) return undefined;
@@ -100,13 +102,53 @@ export default function SideMenu({ open, onClose }) {
         <nav className="side-menu-nav" aria-label="Sezioni">
           <p className="side-menu-kicker">Sezioni</p>
           <ul>
-            {SECTIONS.map((item) => (
-              <li key={item.to}>
-                <NavLink to={item.to} end={item.end} onClick={onClose}>
-                  {item.label}
-                </NavLink>
-              </li>
-            ))}
+            {SECTIONS.map((item) =>
+              item.to === '/sezione/evento' ? (
+                <li key={item.to} className="side-menu-has-sub">
+                  <div className="side-menu-sub-row">
+                    <NavLink to={item.to} end={item.end} onClick={onClose}>
+                      {item.label}
+                    </NavLink>
+                    <button
+                      type="button"
+                      className={`side-menu-sub-toggle${eventsSubOpen ? ' is-open' : ''}`}
+                      aria-expanded={eventsSubOpen}
+                      aria-label="Mostra categorie eventi"
+                      onClick={() => setEventsSubOpen((prev) => !prev)}
+                    >
+                      ▾
+                    </button>
+                  </div>
+                  {eventsSubOpen && (
+                    <ul className="side-menu-sublist">
+                      <li>
+                        <Link to="/sezione/evento#calendario" onClick={onClose}>
+                          Calendari (Dic 2026 – Feb 2027)
+                        </Link>
+                      </li>
+                      {EVENT_CATEGORIES.filter((c) => c.id !== 'tutti').map((cat) => (
+                        <li key={cat.id}>
+                          <Link to={`/sezione/evento?categoria=${cat.id}`} onClick={onClose}>
+                            {cat.shortLabel}
+                          </Link>
+                        </li>
+                      ))}
+                      <li>
+                        <Link to="/articolo/cristiana-vergari-yoga-villa-comunale" onClick={onClose}>
+                          Yoga & Pilates · Cristiana Vergari
+                        </Link>
+                      </li>
+                    </ul>
+                  )}
+                </li>
+              ) : (
+                <li key={item.to}>
+                  <NavLink to={item.to} end={item.end} onClick={onClose}>
+                    {item.label}
+                  </NavLink>
+                </li>
+              )
+            )}
           </ul>
 
           <p className="side-menu-kicker">La Villa</p>

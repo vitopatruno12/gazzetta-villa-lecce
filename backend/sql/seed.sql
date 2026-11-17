@@ -152,16 +152,55 @@ La scaletta passa dai Beatles ai Police, da Bill Withers a Stevie Ray Vaughan, e
   NOW() - INTERVAL '3 days'
 ),
 (
+  'cristiana-vergari-yoga-villa-comunale',
+  'Cristiana Vergari | Yoga, Pilates, Holistic Yoga Walking & Yoga Bambini',
+  'Tutti i venerdì in Villa Comunale · Benessere, movimento e Yoga Bambini Educational',
+  'Ciao, sono Cristiana Vergari, insegnante di Yoga e Pilates, da oltre 23 anni nel mondo del benessere e del movimento.
+
+Sono leccese di origine, ma ho vissuto per tanti anni in Lombardia, dove ho sviluppato il mio percorso professionale, formandomi sia in Italia che all’estero.
+
+Oggi sono felice di portare la mia esperienza nella mia terra, a Lecce, attraverso diverse attività dedicate al benessere di grandi e piccoli.
+
+Holistic Yoga Walking: una camminata olistica all’aria aperta, accompagnata dalla musica in cuffia, che unisce movimento, Yoga, Pilates e respirazione consapevole. Un’esperienza adatta a tutti, che aiuta a scaricare lo stress, migliorare la postura, ritrovare energia e soprattutto divertirsi!
+
+Yoga: lezioni dedicate al benessere fisico e mentale. Attraverso il movimento, il respiro e l’ascolto del corpo, lavoreremo sulla centratura mentale, sulla flessibilità e sulla capacità di ritrovare calma ed equilibrio nella vita quotidiana.
+
+Pilates: lezioni mirate alla tonificazione muscolare, al miglioramento della postura e alla mobilità articolare. Un lavoro completo che aiuta a rinforzare il corpo, con particolare attenzione alla muscolatura profonda e al benessere della schiena.
+
+Yoga Bambini: sono anche un punto di riferimento in Italia nel mondo dello Yoga Bambini, ideatrice del metodo Yoga Bambini Educational e autrice di un libro dedicato a questo tema, che ha raggiunto il primo posto nelle classifiche Amazon.
+
+Il mio percorso formativo Yoga Bambini Educational è riconosciuto dal MIM (Ministero dell’Istruzione e del Merito).
+
+Da anni mi occupo della formazione degli insegnanti e della diffusione dello Yoga nelle scuole, aiutando i bambini a conoscere il proprio corpo, riconoscere le emozioni e sviluppare maggiore consapevolezza attraverso il gioco, il movimento e il respiro.
+
+Per questo porteremo anche lo Yoga Bambini all’interno del progetto della Villa Comunale di Lecce, con attività pensate per i più piccoli, dove imparare e divertirsi insieme.
+
+Il mio obiettivo? Far stare bene le persone, a qualsiasi età, attraverso il movimento, con semplicità, energia e un sorriso!
+
+Sono davvero felice di far parte di questo bellissimo progetto e di poter condividere la mia esperienza proprio nella mia Lecce!
+
+I miei riferimenti
+Sito web: www.cristianavergari.com
+Instagram: https://www.instagram.com/cristianavergari_academy?exln=MXBqdjFpdzg5ODE1Yw%3D%3D&utm_source=qr',
+  'evento',
+  'published',
+  '/eventi/yoga-cristiana-vergari/cover.jpg',
+  NULL,
+  NOW() - INTERVAL '2 days'
+),
+(
   'un-natale-in-villa',
   'Natale in Villa',
-  '5 dicembre 2026 – 6 gennaio 2027 · Mercatini, musica, laboratori e famiglie',
-  'Dal 5 dicembre 2026 al 6 gennaio 2027 la Villa Comunale di Lecce ospita Natale in Villa: un mese di mercatini, musica dal vivo, laboratori e appuntamenti per le famiglie.
+  'Dicembre 2026 – Febbraio 2027 · Mercatini, laboratori, musica, famiglie, yoga e cultura',
+  'La Villa Comunale di Lecce si anima da dicembre 2026 a febbraio 2027 con un calendario diffuso di eventi, cultura e intrattenimento aperto alla città, alle famiglie, ai giovani e ai visitatori.
 
-Dicembre 2026 si apre nei fine settimana del 5–6, 12–13 e 19–20 con i Mercatini di Natale e, ogni sabato, musica live e jam session. Martedì 8 dicembre la Festa dell’Immacolata porta in Villa mercatini, musica e attività per famiglie, mentre venerdì 11 dicembre arriva lo spettacolo con i falchi. Dal 23 al 27 dicembre prende vita il Villaggio di Babbo Natale con mercatini e laboratori per bambini (giovedì 24 spettacolo con i falchi, sabato 26 musica live), seguito il 28 e 29 dicembre dal laboratorio di cartapesta e argilla.
+Dicembre 2026 si apre nei fine settimana del 5–6, 12–13 e 19–20 con i Mercatini di Natale e, ogni sabato, musica live e jam session. Martedì 8 dicembre la Festa dell’Immacolata Concezione porta in Villa mercatini, musica e attività per famiglie, mentre venerdì 11 dicembre arriva lo Spettacolo con i Falchi. Dal 23 al 27 dicembre prende vita Il Villaggio di Babbo Natale con mercatini e laboratori per bambini (giovedì 24 spettacolo con i falchi, sabato 26 musica live), seguito il 28 e 29 dicembre dal Laboratorio di Cartapesta e Argilla.
 
-Gennaio 2027 prosegue venerdì 1 con mercatini, laboratorio di creta e spettacolo con i falchi; sabato 2 con mercatini, laboratorio di creta, musica live e jam session; domenica 3 con mercatini e laboratorio di creta; lunedì 4 e martedì 5 con il laboratorio di cartapesta e argilla, fino a mercoledì 6 gennaio per l’Epifania con mercatini e attività per famiglie.
+Gennaio 2027 prosegue dall’1 al 3 gennaio con mercatini, laboratori di creta, spettacolo con i falchi (1 gennaio) e jam session musicali (2 gennaio); lunedì 4 e martedì 5 con il Laboratorio di Cartapesta e Argilla; mercoledì 6 gennaio per l’Epifania con mercatini e attività per le famiglie.
 
-Ogni settimana: il venerdì Yoga e Fitness, la domenica la passeggiata con i pony.',
+Febbraio 2027 accoglie Lecce Comic, l’appuntamento dedicato al fumetto, all’illustrazione, al collezionismo e alla cultura pop.
+
+Ogni settimana in Villa: tutti i venerdì Yoga, Pilates, Holistic Yoga Walking & Yoga Bambini con Cristiana Vergari; tutte le domeniche la Passeggiata con i Pony.',
   'evento',
   'published',
   '/eventi/natale-in-villa/locandina-2026.jpg',

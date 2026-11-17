@@ -7,6 +7,7 @@ import SideMenu from './SideMenu';
 import SocialIcon from './SocialIcon';
 import WeatherBadge from './WeatherBadge';
 import { useClientAuth } from '../auth/ClientAuth';
+import { EVENT_CATEGORIES, FEATURED_DROPDOWN_EVENTS } from '../data/eventsCalendar';
 import { BROADCASTS, SOCIALS } from '../data/social';
 
 const FOOTER_COLUMNS = [
@@ -24,8 +25,13 @@ const FOOTER_COLUMNS = [
   {
     title: 'La Villa',
     links: [
-      { to: '/progetto', label: 'Il progetto' },
-      { to: '/progetto/foto', label: 'Foto' },
+      { to: '/progetto', label: 'Giardini Giuseppe Garibaldi' },
+      { to: '/progetto/foto', label: 'Foto del progetto' },
+      { to: '/articolo/un-natale-in-villa', label: 'Natale in Villa' },
+      { to: '/sezione/evento?categoria=mercatini', label: 'Mercatini di Natale' },
+      { to: '/sezione/evento?categoria=musica', label: 'Eventi musicali Villa Comunale' },
+      { to: '/sezione/evento?categoria=laboratori', label: 'Laboratori Villa Comunale' },
+      { to: '/sezione/evento?categoria=yoga', label: 'Yoga e Benessere in Villa' },
       { to: '/sponsor', label: 'Partner' },
     ],
   },
@@ -128,11 +134,38 @@ export default function Layout() {
   const { user } = useClientAuth();
   const client = user?.role === 'cliente' ? user : null;
   const [menuOpen, setMenuOpen] = useState(false);
+  const [eventsHoverOpen, setEventsHoverOpen] = useState(false);
+  const [eventsPinnedOpen, setEventsPinnedOpen] = useState(false);
+  const eventsDropdownOpen = eventsHoverOpen || eventsPinnedOpen;
+  const eventsDropdownRef = useRef(null);
+  const closeEventsDropdown = useCallback(() => {
+    setEventsHoverOpen(false);
+    setEventsPinnedOpen(false);
+  }, []);
   const closeMenu = useCallback(() => setMenuOpen(false), []);
 
   useEffect(() => {
     closeMenu();
-  }, [location.pathname, closeMenu]);
+    closeEventsDropdown();
+  }, [location.pathname, location.search, location.hash, closeMenu, closeEventsDropdown]);
+
+  useEffect(() => {
+    if (!eventsDropdownOpen) return undefined;
+    const onOutside = (event) => {
+      if (eventsDropdownRef.current && !eventsDropdownRef.current.contains(event.target)) {
+        closeEventsDropdown();
+      }
+    };
+    const onEscape = (event) => {
+      if (event.key === 'Escape') closeEventsDropdown();
+    };
+    document.addEventListener('mousedown', onOutside);
+    document.addEventListener('keydown', onEscape);
+    return () => {
+      document.removeEventListener('mousedown', onOutside);
+      document.removeEventListener('keydown', onEscape);
+    };
+  }, [eventsDropdownOpen, closeEventsDropdown]);
   return (
     <div
       className={cssTurn ? 'newspaper-sheet newspaper-sheet-fallback' : 'newspaper-sheet'}
@@ -220,9 +253,77 @@ export default function Layout() {
             <Nav.Link as={NavLink} to="/sezione/notizia">
               Cronaca
             </Nav.Link>
-            <Nav.Link as={NavLink} to="/sezione/evento">
-              Eventi
-            </Nav.Link>
+            <div
+              ref={eventsDropdownRef}
+              className={`nav-events-dropdown${eventsDropdownOpen ? ' is-open' : ''}`}
+              onPointerEnter={(e) => {
+                if (e.pointerType === 'mouse') setEventsHoverOpen(true);
+              }}
+              onPointerLeave={(e) => {
+                if (e.pointerType === 'mouse') setEventsHoverOpen(false);
+              }}
+            >
+              <div className="nav-events-trigger">
+                <Nav.Link as={NavLink} to="/sezione/evento">
+                  Eventi
+                </Nav.Link>
+                <button
+                  type="button"
+                  className="nav-events-caret"
+                  aria-label="Apri categorie e calendari eventi"
+                  aria-expanded={eventsDropdownOpen}
+                  onClick={(event) => {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    if (eventsPinnedOpen) {
+                      closeEventsDropdown();
+                    } else {
+                      setEventsPinnedOpen(true);
+                    }
+                  }}
+                >
+                  <svg viewBox="0 0 12 12" width="11" height="11" aria-hidden="true">
+                    <path d="M2.2 4.2 6 8l3.8-3.8" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </button>
+              </div>
+              <div className="nav-events-menu" role="menu" aria-label="Categorie e calendari eventi">
+                <div className="nav-events-col">
+                  <div className="nav-events-heading">Calendari & Categorie</div>
+                  <Link
+                    to="/sezione/evento#calendario"
+                    className="nav-events-link nav-events-link-strong"
+                    onClick={closeEventsDropdown}
+                  >
+                    Calendari degli eventi (Dic 2026 – Feb 2027)
+                  </Link>
+                  {EVENT_CATEGORIES.map((cat) => (
+                    <Link
+                      key={cat.id}
+                      to={cat.id === 'tutti' ? '/sezione/evento' : `/sezione/evento?categoria=${cat.id}`}
+                      className="nav-events-link"
+                      onClick={closeEventsDropdown}
+                    >
+                      {cat.label}
+                    </Link>
+                  ))}
+                </div>
+                <div className="nav-events-col nav-events-col-featured">
+                  <div className="nav-events-heading">In programma</div>
+                  {FEATURED_DROPDOWN_EVENTS.map((item) => (
+                    <Link
+                      key={item.slug}
+                      to={`/articolo/${item.slug}`}
+                      className="nav-events-feature"
+                      onClick={closeEventsDropdown}
+                    >
+                      <span className="nav-events-when">{item.when}</span>
+                      <span className="nav-events-title">{item.label}</span>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            </div>
             <Nav.Link as={NavLink} to="/sezione/avviso">
               Avvisi
             </Nav.Link>

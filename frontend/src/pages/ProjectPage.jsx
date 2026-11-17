@@ -1,5 +1,6 @@
 import { Col, Container, Row } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import SeoHead from '../components/SeoHead';
 import {
   PROJECT_AREAS,
   PROJECT_PDF,
@@ -10,6 +11,12 @@ import {
 export default function ProjectPage() {
   return (
     <Container className="py-4 project-page">
+      <SeoHead
+        title="Il Progetto – Giardini Pubblici Giuseppe Garibaldi | Villa Comunale Lecce"
+        description="Il progetto di riqualificazione della Villa Comunale di Lecce (Giardini pubblici Giuseppe Garibaldi): recupero edifici storici, bar, ristorante, ludoteca, aree gioco e spazi per eventi, mercatini e laboratori."
+        keywords="Giardini pubblici Giuseppe Garibaldi Lecce, Giuseppe Garibaldi Lecce, progetto Villa Comunale Lecce, riqualificazione Villa Comunale Lecce, eventi Villa Comunale"
+        canonicalPath="/progetto"
+      />
       <div className="section-kicker">Città di Lecce</div>
       <h1 className="page-title">Il nuovo volto della Villa</h1>
       <p className="social-lead">

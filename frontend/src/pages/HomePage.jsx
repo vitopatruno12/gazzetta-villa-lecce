@@ -3,6 +3,7 @@ import { Badge, Col, Container, Row, Spinner } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { apiGet } from '../api/client';
 import AdSlot from '../components/AdSlot';
+import SeoHead, { SITE_URL } from '../components/SeoHead';
 import SponsorBanners from '../components/SponsorBanners';
 import FacebookVideo from '../components/FacebookVideo';
 import { PROJECT_ARTICLE_SLUG, PROJECT_PATH } from '../data/project';
@@ -24,7 +25,7 @@ export default function HomePage() {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    apiGet('/api/articles?limit=12')
+    apiGet('/api/articles?limit=24')
       .then(setArticles)
       .catch((e) => setError(e.message))
       .finally(() => setLoading(false));
@@ -49,8 +50,18 @@ export default function HomePage() {
 
   const spotlight = articles.find((article) => article.slug === NATALE_SLUG);
   const news = articles.filter((article) => article.slug !== NATALE_SLUG);
-  const [hero, ...rest] = news;
-  const side = [spotlight, ...news].filter(Boolean).slice(0, 6);
+  const hero = news.find((article) => article.type === 'notizia') || news[0];
+  const rest = news.filter((article) => article.id !== hero?.id);
+  const yogaSpotlight = articles.find(
+    (article) => article.slug === 'cristiana-vergari-yoga-villa-comunale'
+  );
+  const side = [
+    spotlight,
+    yogaSpotlight,
+    ...news.filter((a) => a.slug !== 'cristiana-vergari-yoga-villa-comunale'),
+  ]
+    .filter(Boolean)
+    .slice(0, 6);
   const groups = [
     { type: 'notizia', title: 'Cronaca', to: '/sezione/notizia' },
     { type: 'evento', title: 'Eventi', to: '/sezione/evento' },
@@ -58,12 +69,42 @@ export default function HomePage() {
   ]
     .map((group) => ({
       ...group,
-      articles: rest.filter((article) => article.type === group.type),
+      articles: rest.filter((article) => article.type === group.type).slice(0, 6),
     }))
     .filter((group) => group.articles.length);
 
+  const homeJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'EventSeries',
+    url: `${SITE_URL}/`,
+    name: 'Natale in Villa – Eventi Villa Comunale Giuseppe Garibaldi Lecce',
+    description:
+      'Calendario eventi della Villa Comunale Giuseppe Garibaldi di Lecce: Natale in Villa, mercatini di Natale, eventi musicali, concerti, laboratori creativi di cartapesta, argilla e creta, yoga e attività per famiglie.',
+    startDate: '2026-12-05',
+    endDate: '2027-02-28',
+    eventStatus: 'https://schema.org/EventScheduled',
+    eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+    location: {
+      '@type': 'Place',
+      name: 'Villa Comunale di Lecce – Giardini Pubblici Giuseppe Garibaldi',
+      address: {
+        '@type': 'PostalAddress',
+        addressLocality: 'Lecce',
+        addressRegion: 'LE',
+        postalCode: '73100',
+        addressCountry: 'IT',
+      },
+    },
+  };
+
   return (
     <Container className="home-wrap">
+      <SeoHead
+        title=""
+        description="La Villa Comunale di Lecce (Giardini pubblici Giuseppe Garibaldi): scopri Natale in Villa, eventi Villa Comunale, mercatini di Natale, eventi musicali, laboratori Villa Comunale, yoga e notizie."
+        canonicalPath="/"
+        jsonLd={homeJsonLd}
+      />
         <div className="home-frame-banners">
           <SponsorBanners />
         </div>
@@ -73,26 +114,31 @@ export default function HomePage() {
               <img src={spotlight.cover_url} alt="Locandina Natale in Villa 2026" />
             </Link>
             <div className="home-highlight-copy">
-              <div className="section-kicker">In evidenza · 5 dicembre 2026 – 6 gennaio 2027</div>
+              <div className="section-kicker">In evidenza · Dicembre 2026 – Febbraio 2027</div>
               <h2>
                 <Link to={`/articolo/${spotlight.slug}`}>{spotlight.title}</Link>
               </h2>
               <p>
-                Dal 5 dicembre 2026 al 6 gennaio 2027 la Villa Comunale di Lecce accoglie mercatini,
-                musica, laboratori e famiglie: dal Villaggio di Babbo Natale agli spettacoli con i
-                falchi, fino alla passeggiata con i pony ogni domenica.
+                Da dicembre 2026 a febbraio 2027 la Villa Comunale di Lecce si anima con mercatini,
+                musica, laboratori, yoga e iniziative per famiglie: dal Villaggio di Babbo Natale
+                fino a Lecce Comic.
               </p>
               <ul className="home-highlight-points">
                 <li>Mercatini di Natale e Villaggio di Babbo Natale</li>
                 <li>Laboratori di cartapesta, argilla e creta</li>
-                <li>Musica live e jam session</li>
-                <li>Spettacolo con i falchi</li>
-                <li>Ogni venerdì: Yoga e Fitness</li>
+                <li>Musica live, concerti e jam session</li>
+                <li>Spettacolo con i falchi e Lecce Comic (Febbraio)</li>
+                <li>Ogni venerdì: Yoga, Pilates & Yoga Bambini</li>
                 <li>Ogni domenica: Passeggiata con i pony</li>
               </ul>
-              <Link className="home-highlight-more" to={`/articolo/${spotlight.slug}`}>
-                Scopri il programma completo
-              </Link>
+              <div className="d-flex flex-wrap gap-3 align-items-center">
+                <Link className="home-highlight-more" to={`/articolo/${spotlight.slug}`}>
+                  Scopri il programma completo
+                </Link>
+                <Link className="home-highlight-more" to="/sezione/evento#calendario">
+                  Vai ai calendari →
+                </Link>
+              </div>
             </div>
           </article>
         )}
@@ -112,7 +158,7 @@ export default function HomePage() {
               </h2>
               {hero.cover_url && (
                 <Link to={`/articolo/${hero.slug}`}>
-                  <img className="article-cover" src={hero.cover_url} alt="" />
+                  <img className="article-cover" src={hero.cover_url} alt={`${hero.title} – Villa Comunale Lecce`} />
                 </Link>
               )}
               {hero.subtitle && <p className="deck">{hero.subtitle}</p>}
@@ -142,14 +188,18 @@ export default function HomePage() {
                       </div>
                       {a.cover_url && (
                         <Link to={`/articolo/${a.slug}`}>
-                          <img className="article-cover" src={a.cover_url} alt="" />
+                          <img className="article-cover" src={a.cover_url} alt={`${a.title} – Villa Comunale Giuseppe Garibaldi Lecce`} />
                         </Link>
                       )}
                       <h3>
                         <Link to={`/articolo/${a.slug}`}>{a.title}</Link>
                       </h3>
                       {a.subtitle && <p className="text-muted small mb-1">{a.subtitle}</p>}
-                      <p className="text-muted small mb-0">{formatDate(a.event_start || a.published_at)}</p>
+                      <p className="text-muted small mb-0">
+                        {a.type === 'evento'
+                          ? formatDate(a.event_start) || a.location || ''
+                          : formatDate(a.published_at)}
+                      </p>
                     </article>
                   </Col>
                 ))}

@@ -3,6 +3,7 @@ import { Container } from 'react-bootstrap';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { apiPost } from '../api/client';
 import { useClientAuth } from '../auth/ClientAuth';
+import SeoHead from '../components/SeoHead';
 
 const EMPTY = {
   first_name: '',
@@ -45,6 +46,11 @@ export default function JoinPage() {
 
   return (
     <Container className="py-4">
+      <SeoHead
+        title="Modulo di Registrazione Partner e Attività"
+        description="Modulo di registrazione per aziende e attività partner de La Villa Comunale di Lecce."
+        canonicalPath="/adesione"
+      />
       <div className="info-page">
       <div className="section-kicker">Registrazione</div>
       <h1 className="page-title">Modulo di registrazione</h1>

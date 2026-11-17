@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Card, Col, Container, Row, Spinner } from 'react-bootstrap';
 import { apiGet } from '../api/client';
+import SeoHead from '../components/SeoHead';
 
 export default function SponsorsPage() {
   const [companies, setCompanies] = useState([]);
@@ -15,6 +16,11 @@ export default function SponsorsPage() {
 
   return (
     <Container className="py-4">
+      <SeoHead
+        title="Partner e Attività Locali – Villa Comunale di Lecce"
+        description="Partner e attività del territorio che sostengono gli eventi della Villa Comunale Giuseppe Garibaldi di Lecce."
+        canonicalPath="/sponsor"
+      />
       <h1 className="h2 mb-2" style={{ fontWeight: 700 }}>
         Partner e attività locali
       </h1>

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Badge, Container, Spinner } from 'react-bootstrap';
 import { Link, useSearchParams } from 'react-router-dom';
 import { apiGet } from '../api/client';
+import SeoHead from '../components/SeoHead';
 
 export default function SearchPage() {
   const [params] = useSearchParams();
@@ -23,6 +24,11 @@ export default function SearchPage() {
 
   return (
     <Container className="py-4">
+      <SeoHead
+        title={q ? `Ricerca «${q}»` : 'Cerca eventi e notizie'}
+        description="Cerca eventi Villa Comunale, Natale in Villa, mercatini di Natale, eventi musicali e laboratori nella Villa Comunale Giuseppe Garibaldi di Lecce."
+        noindex
+      />
       <h1 className="section-head">Cerca</h1>
       {q && <p className="social-lead">Risultati per «{q}»</p>}
       {!q ? (

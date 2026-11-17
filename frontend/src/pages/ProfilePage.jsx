@@ -3,6 +3,7 @@ import { Container, Spinner } from 'react-bootstrap';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { apiAuthGet } from '../api/client';
 import { clientToken, useClientAuth } from '../auth/ClientAuth';
+import SeoHead from '../components/SeoHead';
 
 const FIELDS = [
   ['first_name', 'Nome'],
@@ -37,6 +38,7 @@ export default function ProfilePage() {
 
   return (
     <Container className="py-4">
+      <SeoHead title="Il tuo profilo" noindex />
       <div className="info-page">
       <div className="section-kicker">Cliente</div>
       <h1 className="page-title">Il tuo profilo</h1>

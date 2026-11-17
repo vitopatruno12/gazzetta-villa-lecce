@@ -3,6 +3,7 @@ import { Container } from 'react-bootstrap';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { apiPost } from '../api/client';
 import { useClientAuth } from '../auth/ClientAuth';
+import SeoHead from '../components/SeoHead';
 
 export default function LoginPage() {
   const { user, login } = useClientAuth();
@@ -35,6 +36,7 @@ export default function LoginPage() {
 
   return (
     <Container className="py-4">
+      <SeoHead title="Accedi" noindex />
       <div className="info-page">
       <div className="section-kicker">Accesso</div>
       <h1 className="page-title">Accedi</h1>
