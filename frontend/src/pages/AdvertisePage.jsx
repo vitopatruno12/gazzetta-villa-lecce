@@ -21,6 +21,13 @@ export default function AdvertisePage() {
           società sponsor: Gazza Ladra, Le Mani in Pasta, Le Mucche Volanti e Quarta Caffè.
         </p>
         <p>
+          Per info e richieste scrivi a{' '}
+          <a className="social-link" href="mailto:andiamo.lavilla@gmail.com">
+            andiamo.lavilla@gmail.com
+          </a>
+          .
+        </p>
+        <p>
           <Link to="/sponsor" className="social-link">
             Vedi i partner
           </Link>

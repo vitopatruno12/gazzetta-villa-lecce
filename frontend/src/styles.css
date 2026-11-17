@@ -857,6 +857,7 @@ a:hover {
 .side-menu-social-list a.social-instagram {
   background: radial-gradient(circle at 30% 110%, #feda75 0%, #fa7e1e 35%, #d62976 65%, #4f5bd5 100%);
 }
+.side-menu-social-list a.social-email { background: #c8102e; }
 .side-menu-social-list a.social-spotify { background: #1db954; }
 .side-menu-social-list a.social-linkedin { background: #0a66c2; }
 .side-menu-social-list a.social-tiktok { background: #111; }
@@ -1979,6 +1980,8 @@ a.calendar-entry-title:hover {
 .social-page-badge.social-instagram {
   background: radial-gradient(circle at 30% 110%, #feda75 0%, #fa7e1e 35%, #d62976 65%, #4f5bd5 100%);
 }
+.footer-social a.social-email,
+.social-page-badge.social-email { background: #c8102e; }
 .footer-social a.social-spotify,
 .social-page-badge.social-spotify { background: #1db954; }
 .footer-social a.social-linkedin,

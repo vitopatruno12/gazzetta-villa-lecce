@@ -1,3 +1,5 @@
+export const CONTACT_EMAIL = 'andiamo.lavilla@gmail.com';
+
 export const BROADCASTS = [
   {
     id: 'radio-rama',
@@ -19,6 +21,18 @@ export const BROADCASTS = [
 
 export const SOCIALS = [
   {
+    id: 'instagram',
+    name: 'Instagram',
+    href: 'https://www.instagram.com/villacomunalelecce/',
+    description: 'Foto, storie e la vita quotidiana della Villa di Lecce.',
+  },
+  {
+    id: 'email',
+    name: 'Email',
+    href: `mailto:${CONTACT_EMAIL}`,
+    description: 'Scrivi alla redazione di La Villa Comunale.',
+  },
+  {
     id: 'facebook',
     name: 'Facebook',
     href: 'https://www.facebook.com/',
@@ -29,12 +43,6 @@ export const SOCIALS = [
     name: 'X',
     href: 'https://x.com/',
     description: 'Aggiornamenti brevi dalla redazione.',
-  },
-  {
-    id: 'instagram',
-    name: 'Instagram',
-    href: 'https://www.instagram.com/',
-    description: 'Foto, storie e la vita quotidiana della Villa di Lecce.',
   },
   {
     id: 'spotify',

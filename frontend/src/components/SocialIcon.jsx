@@ -20,6 +20,13 @@ export default function SocialIcon({ id }) {
       </svg>
     );
   }
+  if (id === 'email') {
+    return (
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M4.2 6.2h15.6A1.8 1.8 0 0 1 21.6 8v8a1.8 1.8 0 0 1-1.8 1.8H4.2A1.8 1.8 0 0 1 2.4 16V8a1.8 1.8 0 0 1 1.8-1.8zm.6 1.6 6.5 4.6a1.2 1.2 0 0 0 1.4 0l6.5-4.6H4.8zm14.8 1.4-5.9 4.2a2.8 2.8 0 0 1-3.4 0L4.4 9.2V16c0 .1.1.2.2.2h14.8c.1 0 .2-.1.2-.2V9.2z" />
+      </svg>
+    );
+  }
   if (id === 'spotify') {
     return (
       <svg viewBox="0 0 24 24" aria-hidden="true">

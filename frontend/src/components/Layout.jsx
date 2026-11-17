@@ -37,6 +37,8 @@ const FOOTER_COLUMNS = [
   {
     title: 'Seguici',
     links: [
+      { href: 'https://www.instagram.com/villacomunalelecce/', label: 'Instagram' },
+      { href: 'mailto:andiamo.lavilla@gmail.com', label: 'andiamo.lavilla@gmail.com' },
       { href: 'https://radiorama.online/', label: 'Radio Rama' },
       { href: 'https://trnews.it/', label: 'Tele Rama' },
     ],
@@ -373,18 +375,21 @@ export default function Layout() {
               <span className="footer-brand-place">di Lecce</span>
             </p>
             <div className="footer-social">
-              {SOCIALS.map((item) => (
-                <a
-                  key={item.id}
-                  className={`social-${item.id}`}
-                  href={item.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={item.name}
-                >
-                  <SocialIcon id={item.id} />
-                </a>
-              ))}
+              {SOCIALS.map((item) => {
+                const external = /^https?:\/\//i.test(item.href);
+                return (
+                  <a
+                    key={item.id}
+                    className={`social-${item.id}`}
+                    href={item.href}
+                    target={external ? '_blank' : undefined}
+                    rel={external ? 'noopener noreferrer' : undefined}
+                    aria-label={item.name}
+                  >
+                    <SocialIcon id={item.id} />
+                  </a>
+                );
+              })}
             </div>
           </div>
 
@@ -398,7 +403,11 @@ export default function Layout() {
                       {link.to ? (
                         <Link to={link.to}>{link.label}</Link>
                       ) : (
-                        <a href={link.href} target="_blank" rel="noopener noreferrer">
+                        <a
+                          href={link.href}
+                          target={/^https?:\/\//i.test(link.href) ? '_blank' : undefined}
+                          rel={/^https?:\/\//i.test(link.href) ? 'noopener noreferrer' : undefined}
+                        >
                           {link.label}
                         </a>
                       )}

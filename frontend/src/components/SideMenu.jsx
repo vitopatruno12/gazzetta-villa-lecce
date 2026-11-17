@@ -183,19 +183,22 @@ export default function SideMenu({ open, onClose }) {
         <div className="side-menu-social">
           <p className="side-menu-kicker">Social</p>
           <div className="side-menu-social-list">
-            {SOCIALS.map((item) => (
-              <a
-                key={item.id}
-                className={`social-${item.id}`}
-                href={item.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={item.name}
-                onClick={onClose}
-              >
-                <SocialIcon id={item.id} />
-              </a>
-            ))}
+            {SOCIALS.map((item) => {
+              const external = /^https?:\/\//i.test(item.href);
+              return (
+                <a
+                  key={item.id}
+                  className={`social-${item.id}`}
+                  href={item.href}
+                  target={external ? '_blank' : undefined}
+                  rel={external ? 'noopener noreferrer' : undefined}
+                  aria-label={item.name}
+                  onClick={onClose}
+                >
+                  <SocialIcon id={item.id} />
+                </a>
+              );
+            })}
           </div>
         </div>
       </aside>
