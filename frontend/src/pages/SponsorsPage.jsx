@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Card, Col, Container, Row, Spinner } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import { apiGet } from '../api/client';
 import SeoHead from '../components/SeoHead';
 
@@ -36,10 +37,19 @@ export default function SponsorsPage() {
             .map((c) => (
               <Col md={6} lg={3} key={c.id}>
                 <Card className="h-100 border-0 shadow-sm partner-card">
-                  <Card.Body className="text-center">
-                    <img className="partner-logo" src={c.logo_url} alt={`Logo ${c.name}`} />
-                    <Card.Title>{c.name}</Card.Title>
-                    {c.city && <Card.Subtitle className="text-muted">{c.city}</Card.Subtitle>}
+                  <Card.Body className="text-center d-flex flex-column">
+                    {c.slug === 'quarta-caffe' ? (
+                      <Link to="/articolo/stefania-quarta-casa-quarta" className="text-decoration-none">
+                        <img className="partner-logo" src={c.logo_url} alt={`Logo ${c.name}`} />
+                        <Card.Title>{c.name}</Card.Title>
+                      </Link>
+                    ) : (
+                      <>
+                        <img className="partner-logo" src={c.logo_url} alt={`Logo ${c.name}`} />
+                        <Card.Title>{c.name}</Card.Title>
+                      </>
+                    )}
+                    {c.city && <Card.Subtitle className="text-muted mt-auto">{c.city}</Card.Subtitle>}
                   </Card.Body>
                 </Card>
               </Col>

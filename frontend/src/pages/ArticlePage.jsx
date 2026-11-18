@@ -231,7 +231,9 @@ export default function ArticlePage() {
                     href={src}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className={`event-gallery-item${src.includes('logo-') ? ' is-logo' : ''}`}
+                    className={`event-gallery-item${
+                      src.includes('logo-') || src.includes('/schede/') ? ' is-logo' : ''
+                    }`}
                   >
                     <img src={src} alt={`${article.title}, immagine ${index + 1}`} loading="lazy" />
                   </a>

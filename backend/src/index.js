@@ -34,6 +34,17 @@ app.use(
   express.static(path.resolve(__dirname, '..', process.env.UPLOAD_DIR || 'uploads'))
 );
 
+const dbReady = initDb();
+
+app.use(async (_req, _res, next) => {
+  try {
+    await dbReady;
+    next();
+  } catch (err) {
+    next(err);
+  }
+});
+
 app.get('/api/health', async (_req, res) => {
   try {
     await pool.query('SELECT 1');
@@ -55,10 +66,15 @@ app.use((err, _req, res, _next) => {
   res.status(500).json({ error: err.message || 'Errore server' });
 });
 
-await initDb();
-
 const server = app.listen(port, () => {
-  console.log(`API testata in ascolto su http://localhost:${port}`);
+  dbReady
+    .then(() => {
+      console.log(`API testata in ascolto su http://localhost:${port}`);
+    })
+    .catch((err) => {
+      console.error('Errore avvio database:', err);
+      process.exit(1);
+    });
 });
 
 server.on('error', (err) => {

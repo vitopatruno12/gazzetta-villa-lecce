@@ -149,7 +149,7 @@ export default function HomePage() {
                 <li>Ogni venerdì: Yoga, Pilates & Yoga Bambini</li>
                 <li>Ogni domenica: Passeggiata con i pony</li>
               </ul>
-              <div className="d-flex flex-wrap gap-3 align-items-center">
+              <div className="home-highlight-actions">
                 <Link className="home-highlight-more" to={`/articolo/${spotlight.slug}`}>
                   Scopri il programma completo
                 </Link>

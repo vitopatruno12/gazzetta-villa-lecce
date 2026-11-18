@@ -34,20 +34,22 @@ async function ensureArticleVideo() {
 }
 
 const SPONSOR_LOGOS = [
-  ['le-mani-in-pasta', 'Le Mani in Pasta', '/pubblicita/le-mani-in-pasta.jpg'],
-  ['gazza-ladra', 'Gazza Ladra', '/pubblicita/gazza-ladra.jpg'],
-  ['le-mucche-volanti', 'Le Mucche Volanti', '/pubblicita/le-mucche-volanti.jpg'],
-  ['quarta-caffe', 'Quarta Caffè', '/pubblicita/quarta-caffe.png'],
+  ['le-mani-in-pasta', 'Le Mani in Pasta', '/pubblicita/le-mani-in-pasta.jpg', null],
+  ['gazza-ladra', 'Gazza Ladra', '/pubblicita/gazza-ladra.jpg', null],
+  ['le-mucche-volanti', 'Le Mucche Volanti', '/pubblicita/le-mucche-volanti.jpg', null],
+  ['quarta-caffe', 'Quarta Stefania · Casa Quarta', '/pubblicita/quarta-stefania.png', 'https://www.quartastore.it/'],
 ];
 
 async function ensureCompanyLogos() {
-  for (const [slug, name, logo] of SPONSOR_LOGOS) {
+  for (const [slug, name, logo, website] of SPONSOR_LOGOS) {
     await queryImpl(
-      `INSERT INTO companies (name, slug, logo_url, city)
-       VALUES ($1, $2, $3, 'Lecce')
+      `INSERT INTO companies (name, slug, logo_url, website, city)
+       VALUES ($1, $2, $3, $4, 'Lecce')
        ON CONFLICT (slug) DO UPDATE
-         SET name = EXCLUDED.name, logo_url = EXCLUDED.logo_url`,
-      [name, slug, logo]
+         SET name = EXCLUDED.name,
+             logo_url = EXCLUDED.logo_url,
+             website = COALESCE(EXCLUDED.website, companies.website)`,
+      [name, slug, logo, website]
     );
   }
   await queryImpl(
@@ -110,27 +112,34 @@ const DISPLAY_AD_SLOTS = [
 const DISPLAY_AD_CREATIVES = [
   {
     company: 'quarta-caffe',
-    campaign: 'Display · Quarta Caffè',
+    campaign: 'Display · Quarta Stefania',
     priority: 20,
-    slots: [['sidebar-home', 'Quarta Caffè', '/pubblicita/quarta-caffe.png']],
+    slots: [
+      [
+        'sidebar-home',
+        'Quarta Stefania · Casa Quarta',
+        '/pubblicita/quarta-stefania.png',
+        '/articolo/stefania-quarta-casa-quarta',
+      ],
+    ],
   },
   {
     company: 'le-mani-in-pasta',
     campaign: 'Display · Le Mani in Pasta',
     priority: 18,
-    slots: [['sidebar-home', 'Le Mani in Pasta', '/pubblicita/le-mani-in-pasta.jpg']],
+    slots: [['sidebar-home', 'Le Mani in Pasta', '/pubblicita/le-mani-in-pasta.jpg', '/sponsor']],
   },
   {
     company: 'gazza-ladra',
     campaign: 'Display · Gazza Ladra',
     priority: 16,
-    slots: [['sidebar-home', 'Gazza Ladra', '/pubblicita/gazza-ladra.jpg']],
+    slots: [['sidebar-home', 'Gazza Ladra', '/pubblicita/gazza-ladra.jpg', '/sponsor']],
   },
   {
     company: 'le-mucche-volanti',
     campaign: 'Display · Le Mucche Volanti',
     priority: 14,
-    slots: [['sidebar-home', 'Le Mucche Volanti', '/pubblicita/le-mucche-volanti.jpg']],
+    slots: [['sidebar-home', 'Le Mucche Volanti', '/pubblicita/le-mucche-volanti.jpg', '/sponsor']],
   },
 ];
 
@@ -148,7 +157,6 @@ async function ensureDisplayAdSlots() {
     );
   }
 
-  // Nasconde banner laterali / leaderboard, SVG demo e il vecchio testo Bar del Parco
   await queryImpl(
     `UPDATE ad_creatives cr
      SET active = FALSE
@@ -161,7 +169,8 @@ async function ensureDisplayAdSlots() {
      SET active = FALSE
      WHERE image_url LIKE '/pubblicita/banner-side-%.svg'
         OR image_url LIKE '/pubblicita/banner-sky-%.svg'
-        OR image_url LIKE '/pubblicita/banner-leader-%.svg'`
+        OR image_url LIKE '/pubblicita/banner-leader-%.svg'
+        OR image_url = '/pubblicita/quarta-caffe.png'`
   );
   await queryImpl(
     `UPDATE ad_creatives cr
@@ -200,7 +209,7 @@ async function ensureDisplayAdSlots() {
     }
     const campaignId = campaign.rows[0].id;
 
-    for (const [slotCode, title, image] of item.slots) {
+    for (const [slotCode, title, image, clickUrl] of item.slots) {
       const slot = await queryImpl('SELECT id FROM ad_slots WHERE code = $1', [slotCode]);
       if (!slot.rows.length) continue;
       const existing = await queryImpl(
@@ -211,16 +220,16 @@ async function ensureDisplayAdSlots() {
       );
       if (existing.rows.length) {
         await queryImpl(
-          `UPDATE ad_creatives SET active = TRUE, title = $2 WHERE id = $1`,
-          [existing.rows[0].id, title]
+          `UPDATE ad_creatives SET active = TRUE, title = $2, click_url = $3 WHERE id = $1`,
+          [existing.rows[0].id, title, clickUrl || '/sponsor']
         );
         continue;
       }
       await queryImpl(
         `INSERT INTO ad_creatives
            (campaign_id, slot_id, title, image_url, click_url, kind, active)
-         VALUES ($1, $2, $3, $4, '/sponsor', 'banner', TRUE)`,
-        [campaignId, slot.rows[0].id, title, image]
+         VALUES ($1, $2, $3, $4, $5, 'banner', TRUE)`,
+        [campaignId, slot.rows[0].id, title, image, clickUrl || '/sponsor']
       );
     }
   }
@@ -368,6 +377,50 @@ const YOGA_GALLERY = [
 
 const VILLA_PROGRAM_EVENTS = [
   {
+    slug: 'stefania-quarta-casa-quarta',
+    title: 'Quarta Store è Stefania Quarta · Casa Quarta',
+    subtitle: 'Un’esperienza fatta di passione che nasce nel 1943 · Tradizione, creatività e concept store',
+    body: `Quarta Store è Stefania Quarta
+Un’esperienza fatta di passione che nasce nel 1943
+
+La mia esperienza è l’esperienza di mio padre e prima ancora dei miei nonni. È il ricordo degli insegnamenti ereditati. Tra questi la cura nella selezione dei prodotti dai sapori autentici e l’attenzione speciale verso il cliente.
+
+Quarta Store è l’unione tra il gusto autentico della tradizione e il potere della creatività.
+
+La tradizione è quella tramandata da padre in figlia, fatta di passione nella selezione di sapori autentici e dedizione al cliente.
+
+La creatività è nella scelta di non far mancare mai quei sapori da nessuna casa dotandosi degli strumenti di comunicazione più innovativi e dei mezzi di consegna più efficienti. Ma anche nella sapiente selezione di ceramiche, porcellane, tessuti, vetri e latte per completare la soddisfazione di una confezione fatta a regola d’arte.
+
+In una delicata armonia tra passato e presente è racchiuso il segreto di un’azienda che ogni giorno coccola i propri clienti sparsi nel mondo, solleticandone anche i palati più esigenti e raffinati. Un’azienda che negli anni si è specializzata nella spedizione di prodotti d’eccellenza divenendo punto di riferimento per la passione e l’affidabilità con cui lavora.
+
+Link Quarta Store
+Sito web: www.quartastore.it
+Facebook: https://www.facebook.com/QuartaStore/
+Instagram: https://www.instagram.com/quartastore/
+
+Casa Quarta
+
+Casa Quarta è un nuovo concept store che ha la pretesa di essere unico ed inimitabile perché nasce dall’esigenza di soddisfare una richiesta sempre più evidente: un luogo in cui sentirsi a casa e dove si restituisca leggerezza e “joie de vivre”.
+
+Alla nostra gamma di prodotti si aggiunge la possibilità di degustarli in spazi accoglienti e curati nei dettagli.
+
+Dalla più classica tazzina di espresso alla cioccolata calda fondente passando per la nostra amatissima offerta di tea e tisane accompagnate dai nostri biscottini, tutto parla di autenticità e sapori veri.
+
+A Casa Quarta troverete torte, muffin e colazioni salate per i più esigenti ma non solo: aperitivi a buffet, coppe gelato e yogurt con frutta serviti da uno staff sorridente ed accogliente.
+
+Casa Quarta è gioco che si declina in cambi di abbigliamento del personale che seguono i diversi momenti della giornata con un unico obiettivo: restituire stupore e meraviglia.
+
+Link Casa Quarta
+Sito web: https://www.quartastore.it/casa-quarta/
+Facebook: https://www.facebook.com/CasaQuarta/
+Instagram: https://www.instagram.com/casaquartastore/`,
+    cover: '/eventi/quarta-stefania/logo.png',
+    gallery: null,
+    start: null,
+    end: null,
+    location: 'Lecce · Quarta Store & Casa Quarta',
+  },
+  {
     slug: 'cristiana-vergari-yoga-villa-comunale',
     title: 'Cristiana Vergari | Yoga, Pilates, Holistic Yoga Walking & Yoga Bambini',
     subtitle: 'Tutti i venerdì in Villa Comunale · Benessere, movimento e Yoga Bambini Educational',
@@ -406,9 +459,9 @@ Instagram: https://www.instagram.com/cristianavergari_academy?exln=MXBqdjFpdzg5O
   },
   {
     slug: 'mercatini-di-natale-in-villa',
-    title: 'Mercatini di Natale in Villa',
+    title: 'Mercatini dell’Artigianato Salentino · Mercatini di Natale in Villa',
     subtitle: '5–6, 8, 12–13, 19–20, 23–27 dicembre 2026 · 1–3 e 6 gennaio 2027',
-    body: `Un percorso tra artigianato, idee regalo, prodotti tipici e atmosfere natalizie lungo i viali della Villa Comunale di Lecce.
+    body: `I Mercatini dell’Artigianato Salentino animano i viali della Villa Comunale di Lecce con un percorso tra artigianato locale, idee regalo, prodotti tipici e atmosfere natalizie.
 
 Date in calendario:
 • 5 – 6 dicembre 2026
@@ -418,8 +471,8 @@ Date in calendario:
 • 23 – 24 – 25 – 26 – 27 dicembre 2026 (con Il Villaggio di Babbo Natale)
 • 1 – 2 – 3 gennaio 2027 (con laboratori di creta e jam session)
 • 6 gennaio 2027 (Epifania, con attività per le famiglie)`,
-    cover: '/eventi/natale-in-villa/schede/mercatini-natale.jpg',
-    gallery: null,
+    cover: '/eventi/mercatini-artigianato/logo-mercatini.jpg',
+    gallery: JSON.stringify(['/eventi/natale-in-villa/schede/mercatini-natale.jpg']),
     start: '2026-12-05',
     end: '2027-01-06',
     location: 'Villa Comunale di Lecce',
@@ -459,16 +512,20 @@ In programma:
   },
   {
     slug: 'laboratorio-cartapesta-e-argilla',
-    title: 'Laboratorio Cartapesta, Argilla e Creta',
-    subtitle: '28–29 dicembre 2026 · 1–3 e 4–5 gennaio 2027 · Arte, tradizione e creatività',
-    body: `La tradizione dell’arte artigianale leccese diventa protagonista in Villa Comunale attraverso attività pratiche e creative per grandi e piccoli.
+    title: 'Villa Lab · Piccole mani, grandi meraviglie — Laboratori Creativi per Bambini',
+    subtitle: 'Cartapesta, terracotta, argilla, creta e tanta fantasia · Dicembre 2026 e Gennaio 2027',
+    body: `Villa Lab – Piccole mani, grandi meraviglie porta nella Villa Comunale di Lecce i laboratori creativi per bambini: un’occasione speciale per giocare, creare e immaginare tra cartapesta, terracotta, argilla, creta e tanta fantasia!
 
 Appuntamenti in calendario:
+• Dicembre in Villa Comunale: laboratori creativi per bambini di cartapesta e terracotta (inclusi i giorni 23–27 dicembre nel Villaggio di Babbo Natale)
 • 28 – 29 dicembre 2026: Laboratorio di Cartapesta e Argilla
-• 1 – 3 gennaio 2027: Creatività e musica per il nuovo anno — laboratori di modellazione e costruzione con la creta, attività manuali e jam session musicali
+• 1 – 3 gennaio 2027: Creatività e musica per il nuovo anno — laboratori di modellazione e costruzione con la creta e attività manuali
 • 4 – 5 gennaio 2027: Laboratorio di Cartapesta e Argilla`,
-    cover: '/eventi/natale-in-villa/schede/cartapesta-argilla.jpg',
-    gallery: JSON.stringify(['/eventi/natale-in-villa/schede/creativita-nuovo-anno.jpg']),
+    cover: '/eventi/villa-lab/locandina.jpg',
+    gallery: JSON.stringify([
+      '/eventi/natale-in-villa/schede/cartapesta-argilla.jpg',
+      '/eventi/natale-in-villa/schede/creativita-nuovo-anno.jpg',
+    ]),
     start: '2026-12-28',
     end: '2027-01-05',
     location: 'Villa Comunale di Lecce',
@@ -490,16 +547,34 @@ Appuntamenti in calendario:
   },
   {
     slug: 'spettacolo-con-i-falchi',
-    title: 'Spettacolo con i Falchi',
-    subtitle: '11 e 24 dicembre 2026 · 1 gennaio 2027 · Dimostrazione di falconeria',
-    body: `Un’affascinante dimostrazione di falconeria nella cornice della Villa Comunale di Lecce per scoprire da vicino il mondo dei rapaci, tra natura, tradizione ed emozione.
+    title: 'Educazione Ambientale e Spettacolo con i Rapaci · Yuna Lucky Owl',
+    subtitle: '11 e 24 dicembre 2026 · 1 gennaio 2027 · Aquila delle steppe, Gufo bengalese e Falco pellegrino',
+    body: `Nella cornice della Villa Comunale di Lecce arriva l’appuntamento dedicato all’educazione ambientale con rapaci in presenza, curato sul territorio tra attività didattiche, eventi e rievocazioni storiche con Federico Quarta e il progetto salentino Yuna Lucky Owl, già raccontato anche dalle cronache per gli incontri ravvicinati dedicati a famiglie, bambini e scuole.
+
+Rapaci presenti all’evento:
+• Aquila delle steppe (Aquila nipalensis)
+• Gufo bengalese (Bubo bengalensis), con la celebre Yuna
+• Falco pellegrino (Falco peregrinus)
+
+Cosa prevede l’incontro in Villa:
+• Sessioni didattiche con osservazioni guidate da vicino
+• Esposizione di materiale, attrezzature tradizionali e libri dedicati ai rapaci e all’arte della falconeria (riconosciuta Patrimonio culturale immateriale dell’umanità UNESCO)
+• Approfondimenti divulgativi sui rapaci, sul rispetto della fauna selvatica e sulla loro funzione fondamentale nell’equilibrio dell’ecosistema
+• Possibilità per bambini, famiglie e visitatori di scattare foto insieme ai rapaci
 
 Date in calendario:
 • Venerdì 11 dicembre 2026
 • Giovedì 24 dicembre 2026
-• Venerdì 1 gennaio 2027`,
-    cover: '/eventi/natale-in-villa/schede/spettacolo-falchi.jpg',
-    gallery: null,
+• Venerdì 1 gennaio 2027
+
+Riferimenti e foto social
+Instagram (@yuna.lucky.owl): https://www.instagram.com/yuna.lucky.owl`,
+    cover: '/eventi/spettacolo-falchi/falco-pellegrino.jpg',
+    gallery: JSON.stringify([
+      '/eventi/spettacolo-falchi/aquila.jpg',
+      '/eventi/spettacolo-falchi/gufo-reale.jpg',
+      '/eventi/natale-in-villa/schede/spettacolo-falchi.jpg',
+    ]),
     start: '2026-12-11',
     end: '2027-01-01',
     location: 'Villa Comunale di Lecce',

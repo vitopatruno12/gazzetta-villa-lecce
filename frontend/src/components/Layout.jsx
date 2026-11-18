@@ -321,7 +321,7 @@ export default function Layout() {
                   {FEATURED_DROPDOWN_EVENTS.map((item) => (
                     <Link
                       key={item.slug}
-                      to={`/articolo/${item.slug}`}
+                      to={`/articolo/${item.toSlug || item.slug}`}
                       className="nav-events-feature"
                       onClick={closeEventsDropdown}
                     >

@@ -18,7 +18,7 @@ export default function AdvertisePage() {
         </p>
         <p>
           I banner con il logo compaiono in homepage. Nella pagina Partner restano le schede delle
-          società sponsor: Gazza Ladra, Le Mani in Pasta, Le Mucche Volanti e Quarta Caffè.
+          società sponsor: Gazza Ladra, Le Mani in Pasta, Le Mucche Volanti e Quarta Stefania – Casa Quarta.
         </p>
         <p>
           Per info e richieste scrivi a{' '}

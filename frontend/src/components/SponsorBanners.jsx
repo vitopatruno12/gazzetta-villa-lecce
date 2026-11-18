@@ -18,7 +18,11 @@ export default function SponsorBanners() {
       <h2 className="section-head">Pubblicità</h2>
       <div className="sponsor-banner-row">
         {companies.map((company) => (
-          <Link className="sponsor-banner" to="/sponsor" key={company.id}>
+          <Link
+            className="sponsor-banner"
+            to={company.slug === 'quarta-caffe' ? '/articolo/stefania-quarta-casa-quarta' : '/sponsor'}
+            key={company.id}
+          >
             <img src={company.logo_url} alt={company.name} />
           </Link>
         ))}

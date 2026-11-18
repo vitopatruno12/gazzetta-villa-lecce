@@ -75,15 +75,16 @@ const CATEGORY_SEO = {
 
 const FEATURED_EVENTS = [
   'un-natale-in-villa',
+  'stefania-quarta-casa-quarta',
   'cristiana-vergari-yoga-villa-comunale',
+  'laboratorio-cartapesta-e-argilla',
+  'mercatini-di-natale-in-villa',
   'the-dytt',
   'nitecity',
   'metropolitan-trio-christmas',
   'le-circostanze',
   'villaggio-di-babbo-natale',
   'festa-immacolata-villa-comunale',
-  'mercatini-di-natale-in-villa',
-  'laboratorio-cartapesta-e-argilla',
   'passeggiata-con-i-pony',
   'spettacolo-con-i-falchi',
   'musica-live-e-jam-session',

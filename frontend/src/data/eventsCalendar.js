@@ -10,6 +10,7 @@ export const EVENT_CATEGORIES = [
 
 export const SLUG_CATEGORIES = {
   'un-natale-in-villa': ['mercatini', 'laboratori', 'musica', 'famiglie', 'yoga', 'cultura'],
+  'stefania-quarta-casa-quarta': ['mercatini', 'cultura', 'famiglie'],
   'cristiana-vergari-yoga-villa-comunale': ['yoga', 'famiglie'],
   'mercatini-di-natale-in-villa': ['mercatini', 'famiglie'],
   'festa-immacolata-villa-comunale': ['mercatini', 'famiglie', 'musica'],
@@ -30,9 +31,26 @@ export const SLUG_CATEGORIES = {
 
 export const FEATURED_DROPDOWN_EVENTS = [
   {
+    slug: 'stefania-quarta-casa-quarta',
+    label: 'Quarta Store & Casa Quarta · Stefania Quarta',
+    when: 'Tradizione dal 1943',
+  },
+  {
     slug: 'cristiana-vergari-yoga-villa-comunale',
     label: 'Yoga, Pilates & Yoga Bambini · Cristiana Vergari',
     when: 'Tutti i venerdì',
+  },
+  {
+    slug: 'villa-lab-laboratori-bambini',
+    toSlug: 'laboratorio-cartapesta-e-argilla',
+    label: 'Villa Lab · Cartapesta, Terracotta e Creta',
+    when: 'Dicembre – Gennaio',
+  },
+  {
+    slug: 'mercatini-artigianato-salentino',
+    toSlug: 'mercatini-di-natale-in-villa',
+    label: 'Mercatini dell’Artigianato Salentino',
+    when: 'Dicembre – 6 Gennaio',
   },
   {
     slug: 'un-natale-in-villa',
@@ -43,6 +61,11 @@ export const FEATURED_DROPDOWN_EVENTS = [
     slug: 'villaggio-di-babbo-natale',
     label: 'Il Villaggio di Babbo Natale',
     when: '23–27 dicembre',
+  },
+  {
+    slug: 'spettacolo-con-i-falchi',
+    label: 'Rapaci in Villa · Yuna Lucky Owl',
+    when: '11 e 24 dic · 1 gen',
   },
   {
     slug: 'lecce-comic',
@@ -80,8 +103,8 @@ export const EVENT_CALENDARS = [
     entries: [
       {
         dates: '5 – 6 dicembre',
-        title: 'Mercatini di Natale & Musica Live (sabato 5: NiteCity + Jam Session)',
-        detail: 'Apertura dei mercatini tra i viali; sabato musica dal vivo e jam session.',
+        title: 'Mercatini dell’Artigianato Salentino & Musica Live (sabato 5: NiteCity)',
+        detail: 'Apertura dei Mercatini di Natale e dell’artigianato salentino tra i viali; sabato musica dal vivo e jam session.',
         category: 'mercatini',
         extraCategories: ['musica'],
         slug: 'mercatini-di-natale-in-villa',
@@ -103,8 +126,8 @@ export const EVENT_CALENDARS = [
       },
       {
         dates: '11 dicembre',
-        title: 'Spettacolo con i Falchi',
-        detail: 'Dimostrazione di falconeria per scoprire da vicino il mondo dei rapaci.',
+        title: 'Educazione Ambientale e Spettacolo con i Rapaci · Yuna Lucky Owl',
+        detail: 'Sessioni didattiche, falconeria UNESCO e foto con Aquila delle steppe, Gufo bengalese e Falco pellegrino.',
         category: 'famiglie',
         slug: 'spettacolo-con-i-falchi',
       },
@@ -134,8 +157,8 @@ export const EVENT_CALENDARS = [
       },
       {
         dates: '28 – 29 dicembre',
-        title: 'Laboratorio Cartapesta e Argilla',
-        detail: 'La tradizione dell’arte artigianale leccese in attività pratiche e creative.',
+        title: 'Villa Lab · Laboratorio Cartapesta, Terracotta e Argilla',
+        detail: 'Piccole mani, grandi meraviglie: laboratori creativi per bambini tra cartapesta, terracotta, argilla e fantasia.',
         category: 'laboratori',
         slug: 'laboratorio-cartapesta-e-argilla',
       },

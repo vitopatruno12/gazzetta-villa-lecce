@@ -21,7 +21,7 @@ INSERT INTO companies (name, slug, website, city, email, logo_url) VALUES
 ('Le Mani in Pasta', 'le-mani-in-pasta', NULL, 'Lecce', NULL, '/pubblicita/le-mani-in-pasta.jpg'),
 ('Gazza Ladra', 'gazza-ladra', NULL, 'Lecce', NULL, '/pubblicita/gazza-ladra.jpg'),
 ('Le Mucche Volanti', 'le-mucche-volanti', NULL, 'Lecce', NULL, '/pubblicita/le-mucche-volanti.jpg'),
-('Quarta Caffè', 'quarta-caffe', NULL, 'Lecce', NULL, '/pubblicita/quarta-caffe.png');
+('Quarta Stefania · Casa Quarta', 'quarta-caffe', 'https://www.quartastore.it/', 'Lecce', NULL, '/pubblicita/quarta-stefania.png');
 
 INSERT INTO articles (slug, title, subtitle, body, type, status, location, event_start, is_sponsored, published_at) VALUES
 (
