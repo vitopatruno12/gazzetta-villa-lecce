@@ -1,3 +1,4 @@
+import http from 'node:http';
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
@@ -33,11 +34,13 @@ app.use(
   '/uploads',
   express.static(path.resolve(__dirname, '..', process.env.UPLOAD_DIR || 'uploads'))
 );
+app.use(express.static(path.resolve(__dirname, '..', '..', 'frontend', 'public')));
 
-const dbReady = initDb();
+let dbReady = null;
 
 app.use(async (_req, _res, next) => {
   try {
+    if (!dbReady) dbReady = initDb();
     await dbReady;
     next();
   } catch (err) {
@@ -66,7 +69,35 @@ app.use((err, _req, res, _next) => {
   res.status(500).json({ error: err.message || 'Errore server' });
 });
 
+function isExistingBackendHealthy(targetPort) {
+  return new Promise((resolve) => {
+    const req = http.get(
+      { hostname: '127.0.0.1', port: targetPort, path: '/api/health', timeout: 1500 },
+      (res) => {
+        let raw = '';
+        res.on('data', (chunk) => {
+          raw += chunk;
+        });
+        res.on('end', () => {
+          try {
+            const parsed = JSON.parse(raw);
+            resolve(Boolean(parsed && parsed.ok));
+          } catch {
+            resolve(false);
+          }
+        });
+      }
+    );
+    req.on('error', () => resolve(false));
+    req.on('timeout', () => {
+      req.destroy();
+      resolve(false);
+    });
+  });
+}
+
 const server = app.listen(port, () => {
+  dbReady = initDb();
   dbReady
     .then(() => {
       console.log(`API testata in ascolto su http://localhost:${port}`);
@@ -77,8 +108,13 @@ const server = app.listen(port, () => {
     });
 });
 
-server.on('error', (err) => {
+server.on('error', async (err) => {
   if (err.code === 'EADDRINUSE') {
+    if (await isExistingBackendHealthy(port)) {
+      console.log(`API testata già attiva su http://localhost:${port} (riutilizzo istanza attiva)`);
+      setInterval(() => {}, 1 << 30);
+      return;
+    }
     console.error(
       `Porta ${port} già in uso. Chiudi il processo precedente oppure cambia PORT nel file .env.`
     );

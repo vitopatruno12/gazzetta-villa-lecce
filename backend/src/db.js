@@ -38,6 +38,7 @@ const SPONSOR_LOGOS = [
   ['gazza-ladra', 'Gazza Ladra', '/pubblicita/gazza-ladra.jpg', null],
   ['le-mucche-volanti', 'Le Mucche Volanti', '/pubblicita/le-mucche-volanti.jpg', null],
   ['quarta-caffe', 'Quarta Stefania · Casa Quarta', '/pubblicita/quarta-stefania.png', 'https://www.quartastore.it/'],
+  ['cristiana-vergari-academy', 'Cristiana Vergari Academy', '/pubblicita/cristiana-vergari-academy.png', 'https://www.cristianavergari.com/'],
 ];
 
 async function ensureCompanyLogos() {
@@ -120,6 +121,19 @@ const DISPLAY_AD_CREATIVES = [
         'Quarta Stefania · Casa Quarta',
         '/pubblicita/quarta-stefania.png',
         '/articolo/stefania-quarta-casa-quarta',
+      ],
+    ],
+  },
+  {
+    company: 'cristiana-vergari-academy',
+    campaign: 'Display · Cristiana Vergari Academy',
+    priority: 19,
+    slots: [
+      [
+        'sidebar-home',
+        'Cristiana Vergari Academy',
+        '/pubblicita/cristiana-vergari-academy.png',
+        '/articolo/cristiana-vergari-yoga-villa-comunale',
       ],
     ],
   },
@@ -309,8 +323,10 @@ async function ensureTrhThisEvent() {
     [
       'trh-this',
       'TRH This',
-      'Gruppo musicale',
-      'Il gruppo musicale TRH This in concerto. Chitarra, tromba, basso e batteria.',
+      'Gruppo musicale · Chitarra, tromba, basso e batteria dal vivo',
+      `Il gruppo musicale TRH This porta sul palco un dialogo serrato tra chitarra, tromba, basso e batteria, costruendo un suono strumentale e contemporaneo capace di alternare improvvisazione, dinamica ritmica e melodie avvolgenti.
+
+L’intreccio tra il timbro caldo dei fiati e la spinta della sezione ritmica accompagna il pubblico in un percorso sonoro pensato per essere vissuto dal vivo, all’aperto, tra ascolto attento, energia condivisa e atmosfere che uniscono ricerca musicale e immediatezza espressiva.`,
       TRH_PHOTOS[0],
       JSON.stringify(TRH_PHOTOS),
     ]
@@ -322,9 +338,11 @@ const DECEMBER_CONCERTS = [
     slug: 'metropolitan-trio-christmas',
     title: 'Metropolitan Trio',
     subtitle: 'Christmas Edition. Giusy Colì, Paco Carrieri e Alessio Borgia · 12 dicembre',
-    body: `Il 12 dicembre il Metropolitan Trio porta in scena la Christmas Edition. In voce Giusy Colì, alle tastiere Paco Carrieri, alla batteria Alessio Borgia.
+    body: `Sabato 12 dicembre il Metropolitan Trio porta in scena la speciale Christmas Edition nell’ambito degli appuntamenti musicali del periodo natalizio. Sul palco Giusy Colì alla voce, Paco Carrieri al pianoforte e alle tastiere, e Alessio Borgia alla batteria.
 
-Colì e Carrieri sono una coppia di palco del Salento. Lei è una delle voci più seguite della black music locale, dal jazz al soul e al funk. Lui sta al piano e alle tastiere, sugli arrangiamenti. Insieme hanno costruito un groove che mescola jazz contemporaneo, blues e funk. A dicembre quel sound vira sulle canzoni di Natale.`,
+Giusy Colì e Paco Carrieri formano da anni un sodalizio artistico consolidato nella scena salentina: lei è una delle interpreti più apprezzate della black music del territorio, capace di muoversi con naturalezza tra jazz, soul, blues e funk; lui cura gli arrangiamenti e l’architettura armonica alle tastiere.
+
+Con la spinta ritmica di Alessio Borgia alla batteria, il trio rilegge i brani simbolo della tradizione natalizia internazionale insieme a pagine scelte del repertorio soul e jazz contemporaneo, avvolgendo il pubblico in un’atmosfera calda, intima e luminosa nel pieno delle festività dicembrine.`,
     cover: '/eventi/metropolitan-trio/locandina.jpg',
     start: '2026-12-12',
   },
@@ -332,9 +350,11 @@ Colì e Carrieri sono una coppia di palco del Salento. Lei è una delle voci pi�
     slug: 'nitecity',
     title: 'NiteCity',
     subtitle: 'Dance, pop e latino, dal vivo · 5 dicembre',
-    body: `Il 5 dicembre suona NiteCity. Il progetto nasce da Ciki Forchetti, dj e cantante salentino, che ha riportato sul palco la sua trasmissione radiofonica Nite City.
+    body: `Sabato 5 dicembre inaugura il calendario musicale di dicembre NiteCity, il progetto nato dall’idea di Ciki Forchetti, dj e cantante salentino che ha trasformato il ritmo e lo spirito della sua storica trasmissione radiofonica Nite City in uno spettacolo dal vivo ad alta energia.
 
-Il repertorio pesca nella dance e nel pop dagli anni ’70 a oggi, con soul, funk e musica latina, italiana compresa. A Lecce la band è da anni un live da ballare e da cantare.`,
+La scaletta attraversa cinquant’anni di grande musica da ballare e da cantare insieme: dai classici intramontabili della dance e della disco anni ’70 e ’80 fino al pop contemporaneo, intrecciando soul, funk e sonorità latine e italiane dal forte impatto ritmico.
+
+Conosciuta e seguita in tutto il Salento per il coinvolgimento diretto del pubblico, la band trasforma ogni appuntamento in una vera festa collettiva a cielo aperto, ideale per aprire il primo fine settimana natalizio tra musica, luci e condivisione.`,
     cover: '/eventi/nitecity/locandina.jpg',
     start: '2026-12-05',
   },
@@ -342,9 +362,11 @@ Il repertorio pesca nella dance e nel pop dagli anni ’70 a oggi, con soul, fun
     slug: 'le-circostanze',
     title: 'Le Circostanze',
     subtitle: 'La musica italiana dagli anni ’70 a oggi, dal vivo · 19 dicembre',
-    body: `Il 19 dicembre Le Circostanze portano in live la musica italiana dagli anni ’70 a oggi. La formazione salentina è Paolo Liberti alla voce e alla chitarra, Ramona Ricchiuto alla voce, Mauro De Carlo alla chitarra, Luca Sarinelli al basso e Gianmarco Razzano alla batteria.
+    body: `Sabato 19 dicembre Le Circostanze portano dal vivo un ampio e appassionato tributo alla canzone d’autore e al pop-rock italiano dagli anni ’70 fino ai giorni nostri. Sul palco la formazione salentina composta da Paolo Liberti alla voce e chitarra, Ramona Ricchiuto alla voce, Mauro De Carlo alla chitarra, Luca Sarinelli al basso e Gianmarco Razzano alla batteria.
 
-Il viaggio passa da Battisti e Rino Gaetano a Vanoni, e da Cremonini a Vasco. Canzoni che il pubblico conosce a memoria, restituite da una band che le suona dal vivo.`,
+Il concerto ripercorre melodie e parole entrate nella memoria collettiva di più generazioni: dall’intensità senza tempo di Lucio Battisti e Ornella Vanoni all’ironia graffiante di Rino Gaetano, passando per le atmosfere di Cesare Cremonini, l’energia rock di Vasco Rossi e molti altri grandi interpreti italiani.
+
+L’intreccio delle due voci soliste e una sezione strumentale affiatata restituiscono nuova freschezza a ogni brano, regalando al pubblico del sabato prenatalizio una serata tutta da cantare dal vivo.`,
     cover: '/eventi/le-circostanze/locandina.jpg',
     start: '2026-12-19',
   },
@@ -352,11 +374,11 @@ Il viaggio passa da Battisti e Rino Gaetano a Vanoni, e da Cremonini a Vasco. Ca
     slug: 'the-dytt',
     title: 'The Dytt',
     subtitle: 'La Jam del Caffè del Teatro · 13 novembre, ore 22.00',
-    body: `Il 13 novembre, alle 22, The Dytt sale sul palco del Caffè del Teatro per La Jam del Caffè del Teatro. Sul palco Leo Gaballo, Alessio Vergari, Giorgio Campiti, Francesco Perrone e Filippo Trinchera.
+    body: `Il 13 novembre, alle ore 22.00, The Dytt sale sul palco del Caffè del Teatro per l’appuntamento con La Jam del Caffè del Teatro. Protagonisti della serata Leo Gaballo, Alessio Vergari, Giorgio Campiti, Francesco Perrone e Filippo Trinchera, cinque musicisti affiatati uniti dal gusto per l’interplay dal vivo, l’improvvisazione e il suono caldo degli strumenti.
 
-The Dytt propone un viaggio nel rock ’n’ roll, nel blues, nel funk e nel soul, con grandi classici della musica italiana e internazionale. Lo spettacolo alterna atmosfere blues e sonorità raffinate a ritmi funky, groove e momenti di puro rock ’n’ roll.
+The Dytt propone un viaggio sonoro avvincente nel rock ’n’ roll, nel blues, nel funk e nel soul, rileggendo con carattere grandi classici della musica internazionale e italiana. Lo spettacolo alterna atmosfere blues avvolgenti e sonorità ricercate a ritmi funky serrati, groove trascinanti e momenti di puro rock ’n’ roll.
 
-La scaletta passa dai Beatles ai Police, da Bill Withers a Stevie Ray Vaughan, e ancora da John Mayer a Prince, Oasis, Daft Punk e Red Hot Chili Peppers. Dalla musica italiana arrivano Pino Daniele, Jovanotti, Neffa e Alex Britti.`,
+La scaletta attraversa decenni di grande musica passando dai Beatles ai Police, da Bill Withers a Stevie Ray Vaughan, fino a John Mayer, Prince, Oasis, Daft Punk e Red Hot Chili Peppers. Sul versante italiano trovano spazio l’anima mediterranea e blues di Pino Daniele insieme a Jovanotti, Neffa e Alex Britti, in un live dinamico pensato per chi ama la musica suonata dal vivo.`,
     cover: '/eventi/the-dytt/locandina.jpg',
     start: '2026-11-13',
     location: 'Caffè del Teatro',
@@ -459,18 +481,24 @@ Instagram: https://www.instagram.com/cristianavergari_academy?exln=MXBqdjFpdzg5O
   },
   {
     slug: 'mercatini-di-natale-in-villa',
-    title: 'Mercatini dell’Artigianato Salentino · Mercatini di Natale in Villa',
-    subtitle: '5–6, 8, 12–13, 19–20, 23–27 dicembre 2026 · 1–3 e 6 gennaio 2027',
-    body: `I Mercatini dell’Artigianato Salentino animano i viali della Villa Comunale di Lecce con un percorso tra artigianato locale, idee regalo, prodotti tipici e atmosfere natalizie.
+    title: 'Mercatini dell’Artigianato Salentino · Diciottesimomeridiano APS',
+    subtitle: '5–6, 8, 12–13, 19–20, 23–27 dicembre 2026 · 1–3 e 6 gennaio 2027 · Vero fatto a mano salentino',
+    body: `I Mercatini dell’Artigianato Salentino animano i viali alberati della Villa Comunale di Lecce nell’ambito di Natale in Villa, a cura dell’Associazione Culturale Diciottesimomeridiano APS, realtà impegnata da anni nella valorizzazione della cultura, delle arti manuali, delle mostre e delle tradizioni identitarie del Salento.
 
-Date in calendario:
+Il percorso espositivo nasce per celebrare il vero “fatto a mano” locale e restituire centralità al lavoro paziente delle botteghe, lontano dalla grande produzione standardizzata: lungo gli stand maestri artigiani e creativi del territorio presentano pezzi unici realizzati interamente a mano — sculture e manufatti in pietra leccese, opere in cartapesta, ceramiche e terrecotte dipinte, lavorazioni in legno, vetro e rame, cucito creativo, tessuti, pelletteria e preziosi merletti dell’antica arte del tombolo — offrendo a famiglie, cittadini e visitatori idee regalo autentiche e atmosfere natalizie da vivere passeggiando nel parco.
+
+Date in calendario in Villa Comunale:
 • 5 – 6 dicembre 2026
 • 8 dicembre 2026 (Festa dell’Immacolata Concezione)
 • 12 – 13 dicembre 2026
 • 19 – 20 dicembre 2026
 • 23 – 24 – 25 – 26 – 27 dicembre 2026 (con Il Villaggio di Babbo Natale)
 • 1 – 2 – 3 gennaio 2027 (con laboratori di creta e jam session)
-• 6 gennaio 2027 (Epifania, con attività per le famiglie)`,
+• 6 gennaio 2027 (Epifania, con attività per le famiglie)
+
+Riferimenti e canali ufficiali Diciottesimomeridiano
+Sito web: https://www.diciottesimomeridiano.it/
+Facebook: https://www.facebook.com/Diciottesimomeridiano/`,
     cover: '/eventi/mercatini-artigianato/logo-mercatini.jpg',
     gallery: JSON.stringify(['/eventi/natale-in-villa/schede/mercatini-natale.jpg']),
     start: '2026-12-05',
@@ -481,12 +509,14 @@ Date in calendario:
     slug: 'festa-immacolata-villa-comunale',
     title: 'Festa dell’Immacolata Concezione',
     subtitle: '8 dicembre 2026 · Tradizione, mercatini, musica e famiglie',
-    body: `Martedì 8 dicembre 2026 la Villa Comunale di Lecce celebra la Festa dell’Immacolata Concezione con un appuntamento speciale dedicato alla tradizione, alla fede e alla cultura del nostro territorio.
+    body: `Martedì 8 dicembre 2026 la Villa Comunale di Lecce inaugura il cuore tradizionale delle festività con la giornata dedicata alla Festa dell’Immacolata Concezione: un appuntamento pensato per riunire generazioni diverse nel parco storico cittadino, tra il calore delle usanze salentine, la passeggiata tra gli alberi illuminati e la riscoperta dello stare insieme.
+
+Per l’intera giornata i viali dei Giardini pubblici Giuseppe Garibaldi si animano con gli stand dei Mercatini di Natale e dell’artigianato locale, accompagnati da momenti musicali, intrattenimento diffuso e iniziative dedicate ai bambini e alle famiglie, trasformando la Villa in una piazza verde accogliente e festosa.
 
 In programma:
-• Mercatini di Natale nella Villa
-• Momenti di musica e intrattenimento
-• Attività per famiglie e bambini`,
+• Mercatini di Natale e dell’artigianato lungo i viali della Villa
+• Momenti di musica dal vivo e intrattenimento nel parco
+• Attività ricreative e spazi dedicati a famiglie e bambini`,
     cover: '/eventi/natale-in-villa/schede/immacolata.jpg',
     gallery: null,
     start: '2026-12-08',
@@ -497,13 +527,15 @@ In programma:
     slug: 'villaggio-di-babbo-natale',
     title: 'Il Villaggio di Babbo Natale',
     subtitle: '23 – 27 dicembre 2026 · Cinque giornate dedicate alla magia delle feste',
-    body: `Dal 23 al 27 dicembre 2026 la Villa Comunale di Lecce accoglie Il Villaggio di Babbo Natale: cinque giornate dedicate all’atmosfera e alla magia delle feste per bambini e famiglie.
+    body: `Dal 23 al 27 dicembre 2026 il cuore della Villa Comunale di Lecce si trasforma ne Il Villaggio di Babbo Natale: cinque giornate consecutive interamente dedicate allo stupore dei più piccoli, ai racconti natalizi e alla serenità delle famiglie nei giorni più attesi dell’anno.
+
+Tra luminarie, allestimenti a tema e i profumi dei mercatini natalizi, i bambini possono vivere l’emozione dell’incontro dal vivo con Babbo Natale, partecipare a laboratori creativi e manuali pensati per stimolare fantasia e condivisione, e assistere agli appuntamenti speciali nel parco, con l’incontro ravvicinato con i rapaci nella vigilia del 24 dicembre e la musica dal vivo di Santo Stefano il 26 dicembre.
 
 In programma:
-• Incontro con Babbo Natale
-• Attività e intrattenimento per bambini
-• Laboratori creativi e manuali
-• Musica e animazione per famiglie (24 dicembre Spettacolo con i Falchi · 26 dicembre Musica Live e Jam Session)`,
+• Incontro con Babbo Natale e spazi fotografici per i bambini
+• Attività ludiche, letture animate e intrattenimento per famiglie
+• Laboratori creativi e manuali di Natale
+• Musica e appuntamenti speciali (24 dicembre Rapaci in Villa · 26 dicembre Musica Live e Jam Session)`,
     cover: '/eventi/natale-in-villa/schede/villaggio-babbo-natale.jpg',
     gallery: null,
     start: '2026-12-23',
@@ -514,13 +546,15 @@ In programma:
     slug: 'laboratorio-cartapesta-e-argilla',
     title: 'Villa Lab · Piccole mani, grandi meraviglie — Laboratori Creativi per Bambini',
     subtitle: 'Cartapesta, terracotta, argilla, creta e tanta fantasia · Dicembre 2026 e Gennaio 2027',
-    body: `Villa Lab – Piccole mani, grandi meraviglie porta nella Villa Comunale di Lecce i laboratori creativi per bambini: un’occasione speciale per giocare, creare e immaginare tra cartapesta, terracotta, argilla, creta e tanta fantasia!
+    body: `Villa Lab – Piccole mani, grandi meraviglie porta nella Villa Comunale di Lecce il fascino senza tempo delle botteghe artigiane salentine tradotto a misura di bambino: uno spazio accogliente dove giocare, creare e immaginare mettendo letteralmente le mani nella materia, tra cartapesta leccese, terracotta, argilla, creta, colori e tanta fantasia.
+
+Accompagnati passo dopo passo nelle attività manuali, bambini e ragazzi scoprono come da materiali semplici e naturali — acqua, carta, colla e terra — possano nascere forme, personaggi natalizi e piccoli manufatti da portare a casa come ricordo vivo dell’esperienza. Un percorso educativo e divertente che unisce manualità, espressione artistica e amore per la tradizione storica di Lecce.
 
 Appuntamenti in calendario:
 • Dicembre in Villa Comunale: laboratori creativi per bambini di cartapesta e terracotta (inclusi i giorni 23–27 dicembre nel Villaggio di Babbo Natale)
-• 28 – 29 dicembre 2026: Laboratorio di Cartapesta e Argilla
+• 28 – 29 dicembre 2026: Laboratorio dedicato di Cartapesta e Argilla
 • 1 – 3 gennaio 2027: Creatività e musica per il nuovo anno — laboratori di modellazione e costruzione con la creta e attività manuali
-• 4 – 5 gennaio 2027: Laboratorio di Cartapesta e Argilla`,
+• 4 – 5 gennaio 2027: Laboratorio di Cartapesta e Argilla aspettando l’Epifania`,
     cover: '/eventi/villa-lab/locandina.jpg',
     gallery: JSON.stringify([
       '/eventi/natale-in-villa/schede/cartapesta-argilla.jpg',
@@ -534,11 +568,13 @@ Appuntamenti in calendario:
     slug: 'passeggiata-con-i-pony',
     title: 'Passeggiata con i Pony',
     subtitle: 'Tutte le domeniche · Un’esperienza speciale nel parco per i più piccoli',
-    body: `Ogni domenica in Villa Comunale un’esperienza speciale pensata per i più piccoli, per scoprire il parco in modo divertente e sicuro.
+    body: `Tutte le domeniche la Villa Comunale di Lecce rinnova uno degli appuntamenti più amati dalle famiglie e dai bambini: la Passeggiata con i Pony lungo i viali alberati dei Giardini pubblici Giuseppe Garibaldi, pensata per avvicinare i più piccoli al contatto dolce e rispettoso con gli animali.
 
-• Passeggiate nel parco a misura di bambino
-• Accompagnamento da personale qualificato
-• Un’attività all’aria aperta per tutta la famiglia`,
+Accompagnati in ogni passo da personale esperto e qualificato, i bambini vivono l’emozione di un giro in sella nel verde del parco in totale tranquillità e sicurezza, trasformando la domenica mattina o il pomeriggio in Villa in un ricordo speciale da condividere con tutta la famiglia.
+
+• Passeggiate nel parco a misura di bambino lungo i viali della Villa
+• Accompagnamento costante da parte di personale qualificato
+• Un’esperienza educativa all’aria aperta dedicata a tutta la famiglia`,
     cover: '/eventi/natale-in-villa/schede/passeggiata-pony.jpg',
     gallery: null,
     start: null,
@@ -551,16 +587,13 @@ Appuntamenti in calendario:
     subtitle: '11 e 24 dicembre 2026 · 1 gennaio 2027 · Aquila delle steppe, Gufo bengalese e Falco pellegrino',
     body: `Nella cornice della Villa Comunale di Lecce arriva l’appuntamento dedicato all’educazione ambientale con rapaci in presenza, curato sul territorio tra attività didattiche, eventi e rievocazioni storiche con Federico Quarta e il progetto salentino Yuna Lucky Owl, già raccontato anche dalle cronache per gli incontri ravvicinati dedicati a famiglie, bambini e scuole.
 
-Rapaci presenti all’evento:
-• Aquila delle steppe (Aquila nipalensis)
-• Gufo bengalese (Bubo bengalensis), con la celebre Yuna
-• Falco pellegrino (Falco peregrinus)
+Durante le giornate in programma i visitatori potranno osservare da vicino tre straordinari esemplari — l’Aquila delle steppe (Aquila nipalensis), il Gufo bengalese (Bubo bengalensis) con la celebre Yuna e il Falco pellegrino (Falco peregrinus) — scoprendo le caratteristiche del volo, la biologia diurna e notturna e il ruolo insostituibile che i rapaci svolgono per la salute e l’equilibrio dell’ecosistema naturale.
 
 Cosa prevede l’incontro in Villa:
-• Sessioni didattiche con osservazioni guidate da vicino
+• Sessioni didattiche interattive con osservazioni guidate da vicino
 • Esposizione di materiale, attrezzature tradizionali e libri dedicati ai rapaci e all’arte della falconeria (riconosciuta Patrimonio culturale immateriale dell’umanità UNESCO)
-• Approfondimenti divulgativi sui rapaci, sul rispetto della fauna selvatica e sulla loro funzione fondamentale nell’equilibrio dell’ecosistema
-• Possibilità per bambini, famiglie e visitatori di scattare foto insieme ai rapaci
+• Approfondimenti divulgativi sulla tutela della biodiversità e sul rispetto della fauna selvatica
+• Possibilità per bambini, famiglie e visitatori di scattare foto ricordo insieme ai rapaci
 
 Date in calendario:
 • Venerdì 11 dicembre 2026
@@ -583,14 +616,16 @@ Instagram (@yuna.lucky.owl): https://www.instagram.com/yuna.lucky.owl`,
     slug: 'musica-live-e-jam-session',
     title: 'Musica Live e Jam Session in Villa',
     subtitle: '5, 12, 19 e 26 dicembre 2026 · 2 gennaio 2027 · Palcoscenico a cielo aperto',
-    body: `La Villa Comunale di Lecce diventa un palcoscenico a cielo aperto per artisti, musicisti e giovani talenti, tra concerti dal vivo e jam session aperte.
+    body: `Per tutto il calendario delle festività la Villa Comunale di Lecce si trasforma in un vero palcoscenico a cielo aperto dedicato alla musica suonata dal vivo, all’incontro tra musicisti salentini, band affermate e giovani talenti del territorio.
+
+Ogni sabato in programma alterna i concerti principali — dal groove dance e pop di NiteCity alle atmosfere soul-jazz natalizie del Metropolitan Trio, fino al grande cantautorato italiano de Le Circostanze — a momenti di jam session aperta, in cui l’energia dell’improvvisazione e della condivisione musicale accompagna la passeggiata tra i mercatini e gli spazi del parco.
 
 Date in programma:
-• Sabato 5 dicembre 2026 (con NiteCity)
+• Sabato 5 dicembre 2026 (con NiteCity e jam session)
 • Sabato 12 dicembre 2026 (con Metropolitan Trio – Christmas Edition)
 • Sabato 19 dicembre 2026 (con Le Circostanze)
-• Sabato 26 dicembre 2026
-• Sabato 2 gennaio 2027`,
+• Sabato 26 dicembre 2026 (Santo Stefano in musica)
+• Sabato 2 gennaio 2027 (Jam session di inizio anno)`,
     cover: '/eventi/natale-in-villa/schede/musica-jam-session.jpg',
     gallery: null,
     start: '2026-12-05',
@@ -601,13 +636,15 @@ Date in programma:
     slug: 'lecce-comic',
     title: 'Lecce Comic · Fumetto, Illustrazione e Cultura Pop',
     subtitle: 'Febbraio 2027 · Creatività contemporanea, autori, disegno e cultura pop',
-    body: `A febbraio 2027 la programmazione della Villa Comunale di Lecce prosegue con Lecce Comic, un evento dedicato al mondo del fumetto, dell’illustrazione e della creatività contemporanea.
+    body: `A febbraio 2027 la programmazione invernale della Villa Comunale di Lecce culmina con Lecce Comic, l’appuntamento interamente dedicato all’universo del fumetto, dell’illustrazione d’autore, del gioco e della creatività contemporanea, pensato per coinvolgere giovani, appassionati, scuole e famiglie.
+
+I viali e gli spazi del parco ospiteranno incontri dal vivo con fumettisti e illustratori, esposizioni di tavole originali, workshop di disegno e narrazione visiva, insieme a stand tematici dedicati all’editoria indipendente, al collezionismo, alla cultura pop e al gaming, confermando la vocazione culturale e intergenerazionale della nuova Villa Comunale.
 
 In programma:
-• Incontri con autori e illustratori
-• Mostre e laboratori di disegno
-• Stand tematici e collezionismo
-• Spazio alla cultura pop e al gaming`,
+• Incontri, talk e sessioni di dediche con autori e illustratori
+• Mostre espositive e laboratori pratici di disegno e fumetto
+• Stand tematici, fumetterie e spazi per il collezionismo
+• Aree dedicate alla cultura pop, all’animazione e al gaming`,
     cover: '/eventi/natale-in-villa/schede/lecce-comic.jpg',
     gallery: null,
     start: '2027-02-01',

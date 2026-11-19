@@ -210,14 +210,9 @@ export default function Layout() {
                   {client.first_name || 'Profilo'}
                 </Link>
               ) : (
-                <>
-                  <Link className="top-login" to="/adesione">
-                    Registrazione
-                  </Link>
-                  <Link className="top-login" to="/accedi">
-                    Accedi
-                  </Link>
-                </>
+                <Link className="top-login" to="/accedi">
+                  Login
+                </Link>
               )}
             </div>
           </div>

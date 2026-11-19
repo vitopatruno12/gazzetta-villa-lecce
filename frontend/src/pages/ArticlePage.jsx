@@ -51,14 +51,26 @@ function renderBodyWithLinks(text) {
 export default function ArticlePage() {
   const { slug } = useParams();
   const [article, setArticle] = useState(null);
+  const [wideCover, setWideCover] = useState(false);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     setLoading(true);
+    setWideCover(false);
     window.scrollTo(0, 0);
     apiGet(`/api/articles/slug/${slug}`)
-      .then(setArticle)
+      .then((data) => {
+        setArticle(data);
+        const url = data?.cover_url || '';
+        if (
+          url.includes('yoga-cristiana-vergari/cover') ||
+          url.includes('quarta-stefania/') ||
+          url.includes('/schede/')
+        ) {
+          setWideCover(true);
+        }
+      })
       .catch((e) => setError(e.message))
       .finally(() => setLoading(false));
   }, [slug]);
@@ -214,7 +226,13 @@ export default function ArticlePage() {
                 <img
                   src={article.cover_url}
                   alt={`${article.title} – Villa Comunale Giuseppe Garibaldi Lecce`}
-                  className="article-cover"
+                  className={wideCover ? 'article-cover article-cover-wide' : 'article-cover'}
+                  onLoad={(e) => {
+                    const { naturalWidth, naturalHeight } = e.currentTarget;
+                    if (naturalWidth && naturalHeight) {
+                      setWideCover(naturalWidth / naturalHeight >= 1.15);
+                    }
+                  }}
                 />
               )
             )}

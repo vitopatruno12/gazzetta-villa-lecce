@@ -12,6 +12,10 @@ backend/.pglite-data-broken/
 backend/.pglite-data-broken-*/
 frontend/public/progetto/nuovo-volto-villa.mp4
 .vite/
+.expo/
+mobile/.expo/
+mobile/dist/
+mobile/web-build/
 coverage/
 _archive_legacy/
 caricati/

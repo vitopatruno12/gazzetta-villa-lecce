@@ -4,6 +4,11 @@ import { Link } from 'react-router-dom';
 import { apiGet } from '../api/client';
 import SeoHead from '../components/SeoHead';
 
+const PARTNER_ROUTES = {
+  'quarta-caffe': '/articolo/stefania-quarta-casa-quarta',
+  'cristiana-vergari-academy': '/articolo/cristiana-vergari-yoga-villa-comunale',
+};
+
 export default function SponsorsPage() {
   const [companies, setCompanies] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -34,26 +39,29 @@ export default function SponsorsPage() {
         <Row className="g-3">
           {companies
             .filter((c) => c.logo_url)
-            .map((c) => (
-              <Col md={6} lg={3} key={c.id}>
-                <Card className="h-100 border-0 shadow-sm partner-card">
-                  <Card.Body className="text-center d-flex flex-column">
-                    {c.slug === 'quarta-caffe' ? (
-                      <Link to="/articolo/stefania-quarta-casa-quarta" className="text-decoration-none">
-                        <img className="partner-logo" src={c.logo_url} alt={`Logo ${c.name}`} />
-                        <Card.Title>{c.name}</Card.Title>
-                      </Link>
-                    ) : (
-                      <>
-                        <img className="partner-logo" src={c.logo_url} alt={`Logo ${c.name}`} />
-                        <Card.Title>{c.name}</Card.Title>
-                      </>
-                    )}
-                    {c.city && <Card.Subtitle className="text-muted mt-auto">{c.city}</Card.Subtitle>}
-                  </Card.Body>
-                </Card>
-              </Col>
-            ))}
+            .map((c) => {
+              const target = PARTNER_ROUTES[c.slug];
+              return (
+                <Col md={6} lg={3} key={c.id}>
+                  <Card className="h-100 border-0 shadow-sm partner-card">
+                    <Card.Body className="text-center d-flex flex-column">
+                      {target ? (
+                        <Link to={target} className="text-decoration-none">
+                          <img className="partner-logo" src={c.logo_url} alt={`Logo ${c.name}`} />
+                          <Card.Title>{c.name}</Card.Title>
+                        </Link>
+                      ) : (
+                        <>
+                          <img className="partner-logo" src={c.logo_url} alt={`Logo ${c.name}`} />
+                          <Card.Title>{c.name}</Card.Title>
+                        </>
+                      )}
+                      {c.city && <Card.Subtitle className="text-muted mt-auto">{c.city}</Card.Subtitle>}
+                    </Card.Body>
+                  </Card>
+                </Col>
+              );
+            })}
         </Row>
       )}
     </Container>

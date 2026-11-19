@@ -79,6 +79,7 @@ const FEATURED_EVENTS = [
   'cristiana-vergari-yoga-villa-comunale',
   'laboratorio-cartapesta-e-argilla',
   'mercatini-di-natale-in-villa',
+  'spettacolo-con-i-falchi',
   'the-dytt',
   'nitecity',
   'metropolitan-trio-christmas',
@@ -86,7 +87,6 @@ const FEATURED_EVENTS = [
   'villaggio-di-babbo-natale',
   'festa-immacolata-villa-comunale',
   'passeggiata-con-i-pony',
-  'spettacolo-con-i-falchi',
   'musica-live-e-jam-session',
   'lecce-comic',
 ];
@@ -108,17 +108,134 @@ function eventWhen(article) {
   return `${start} – ${end}`;
 }
 
-function startOfToday() {
-  const day = new Date();
-  day.setHours(0, 0, 0, 0);
-  return day;
+function nextUpcomingEvent(items) {
+  const today = new Date().toISOString().slice(0, 10);
+  const upcoming = items
+    .filter((item) => item.event_start && String(item.event_start).slice(0, 10) >= today)
+    .sort((a, b) => String(a.event_start).localeCompare(String(b.event_start)));
+  return upcoming[0] || null;
 }
 
-function pickNextEvent(articles) {
-  const today = startOfToday();
-  return articles
-    .filter((article) => article.event_start && new Date(article.event_start) >= today)
-    .sort((a, b) => new Date(a.event_start) - new Date(b.event_start))[0];
+function extractEditorialParagraphs(body, maxChars = 1200) {
+  if (!body) return [];
+  const rawBlocks = String(body)
+    .split(/\n{2,}/)
+    .map((block) => block.trim())
+    .filter(Boolean)
+    .filter(
+      (block) =>
+        !/^(Link|Riferimenti|I miei riferimenti|Sito web:|Facebook:|Instagram:)/i.test(block)
+    );
+
+  const paragraphs = [];
+  let count = 0;
+
+  for (const block of rawBlocks) {
+    const cleaned = block
+      .split('\n')
+      .filter((line) => !/^(Sito web:|Facebook:|Instagram:)/i.test(line.trim()))
+      .join(' ')
+      .replace(/\s+/g, ' ')
+      .trim();
+    if (!cleaned) continue;
+
+    if (count + cleaned.length > maxChars && paragraphs.length > 0) {
+      const remaining = maxChars - count;
+      if (remaining > 140) {
+        const cut = cleaned.slice(0, remaining).replace(/\s+\S*$/, '');
+        if (cut) paragraphs.push(`${cut}…`);
+      }
+      break;
+    }
+
+    paragraphs.push(cleaned);
+    count += cleaned.length;
+    if (paragraphs.length >= 5 || count >= maxChars) break;
+  }
+
+  return paragraphs;
+}
+
+function isInitiallyWide(url) {
+  if (!url) return false;
+  return (
+    url.includes('yoga-cristiana-vergari/cover') ||
+    url.includes('quarta-stefania/') ||
+    url.includes('/schede/')
+  );
+}
+
+function EventCardItem({ article: a, isEvents, isNext, onSelectCategory }) {
+  const [wide, setWide] = useState(() => isInitiallyWide(a.cover_url));
+  const cats = isEvents ? SLUG_CATEGORIES[a.slug] || [] : [];
+  const paragraphs = extractEditorialParagraphs(a.body, 1180);
+  const whenWhere = [eventWhen(a), a.location].filter(Boolean).join(' · ');
+
+  const itemClass = [
+    'news-item',
+    isNext ? 'news-item-next' : '',
+    a.cover_url ? (wide ? 'news-item-wide' : 'news-item-float') : '',
+  ]
+    .filter(Boolean)
+    .join(' ');
+
+  return (
+    <li className={itemClass}>
+      {a.cover_url && (
+        <Link className="news-thumb" to={`/articolo/${a.slug}`}>
+          <img
+            src={a.cover_url}
+            alt={`${a.title} – Villa Comunale Lecce`}
+            onLoad={(e) => {
+              const { naturalWidth, naturalHeight } = e.currentTarget;
+              if (naturalWidth && naturalHeight) {
+                setWide(naturalWidth / naturalHeight >= 1.15);
+              }
+            }}
+          />
+        </Link>
+      )}
+      <div className="news-item-header">
+        {isNext && <span className="news-item-kicker">Prossimo evento</span>}
+        <div className="mb-1 d-flex flex-wrap align-items-center gap-1">
+          <Badge className="badge-type">{a.type}</Badge>
+          {cats.slice(0, 3).map((cid) => (
+            <button
+              key={cid}
+              type="button"
+              className="calendar-cat-pill"
+              onClick={() => onSelectCategory(cid)}
+            >
+              {categoryLabelOf(cid)}
+            </button>
+          ))}
+        </div>
+        <Link to={`/articolo/${a.slug}`} className="news-item-title">
+          {a.title}
+        </Link>
+        {a.subtitle && <p className="news-item-deck">{a.subtitle}</p>}
+      </div>
+
+      {paragraphs.length > 0 && (
+        <div className="news-item-excerpt">
+          {paragraphs.map((p, i) => (
+            <p key={i}>{p}</p>
+          ))}
+        </div>
+      )}
+
+      {a.video_url && <FacebookVideo url={a.video_url} />}
+
+      <div className="news-item-footer">
+        <span className="news-item-when">
+          {whenWhere || (a.published_at ? formatDay(a.published_at) : 'Villa Comunale di Lecce')}
+        </span>
+        <Link to={`/articolo/${a.slug}`} className="news-item-readmore">
+          Leggi l’approfondimento →
+        </Link>
+      </div>
+    </li>
+  );
 }
 
 export default function SectionPage() {
@@ -159,7 +276,8 @@ export default function SectionPage() {
   const visibleArticles = isEvents
     ? [...featured, ...listed].filter((a) => matchesEventCategory(a.slug, selectedCategory))
     : [...featured, ...listed];
-  const nextEvent = isEvents ? pickNextEvent(visibleArticles) : null;
+
+  const nextEvent = isEvents ? nextUpcomingEvent(visibleArticles) : null;
 
   const visibleCalendars = isEvents
     ? EVENT_CALENDARS.map((block) => ({
@@ -317,45 +435,15 @@ export default function SectionPage() {
             <p className="text-muted">Nessun contenuto in questa categoria.</p>
           ) : (
             <ul className="list-unstyled mb-0">
-              {visibleArticles.map((a) => {
-                const cats = isEvents ? SLUG_CATEGORIES[a.slug] || [] : [];
-                const isNext = nextEvent && a.id === nextEvent.id;
-                return (
-                  <li key={a.id} className={isNext ? 'news-item news-item-next' : 'news-item'}>
-                    {a.cover_url && (
-                      <Link className="news-thumb" to={`/articolo/${a.slug}`}>
-                        <img src={a.cover_url} alt={`${a.title} – Villa Comunale Lecce`} />
-                      </Link>
-                    )}
-                    <div>
-                      {isNext && <span className="news-item-kicker">Prossimo evento</span>}
-                      <div className="mb-1 d-flex flex-wrap align-items-center gap-1">
-                        <Badge className="badge-type">{a.type}</Badge>
-                        {cats.slice(0, 2).map((cid) => (
-                          <button
-                            key={cid}
-                            type="button"
-                            className="calendar-cat-pill"
-                            onClick={() => onSelectCategory(cid)}
-                          >
-                            {categoryLabelOf(cid)}
-                          </button>
-                        ))}
-                      </div>
-                      <Link to={`/articolo/${a.slug}`} className="fw-semibold fs-5 d-block">
-                        {a.title}
-                      </Link>
-                      {a.subtitle && <p className="text-muted mb-1 mt-1">{a.subtitle}</p>}
-                      {(a.event_start || a.location) && (
-                        <p className="text-muted small mb-0">
-                          {[eventWhen(a), a.location].filter(Boolean).join(' · ')}
-                        </p>
-                      )}
-                      {a.video_url && <FacebookVideo url={a.video_url} />}
-                    </div>
-                  </li>
-                );
-              })}
+              {visibleArticles.map((a) => (
+                <EventCardItem
+                  key={a.id}
+                  article={a}
+                  isEvents={isEvents}
+                  isNext={Boolean(nextEvent && a.id === nextEvent.id)}
+                  onSelectCategory={onSelectCategory}
+                />
+              ))}
             </ul>
           )}
         </Col>

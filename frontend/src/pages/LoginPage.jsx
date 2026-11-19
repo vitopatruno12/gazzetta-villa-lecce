@@ -36,40 +36,43 @@ export default function LoginPage() {
 
   return (
     <Container className="py-4">
-      <SeoHead title="Accedi" noindex />
+      <SeoHead title="Login" noindex />
       <div className="info-page">
-      <div className="section-kicker">Accesso</div>
-      <h1 className="page-title">Accedi</h1>
-      <p className="social-lead">Entra per vedere il tuo profilo.</p>
-      <form className="paper-form" onSubmit={onSubmit}>
-        <label htmlFor="login-email">Email</label>
-        <input
-          id="login-email"
-          className="form-control"
-          type="email"
-          autoComplete="email"
-          value={email}
-          onChange={(event) => setEmail(event.target.value)}
-          required
-        />
-        <label htmlFor="login-password">Password</label>
-        <input
-          id="login-password"
-          className="form-control"
-          type="password"
-          autoComplete="current-password"
-          value={password}
-          onChange={(event) => setPassword(event.target.value)}
-          required
-        />
-        {error && <p className="paper-form-error">{error}</p>}
-        <button className="paper-button" type="submit" disabled={pending}>
-          {pending ? 'Accesso…' : 'Accedi'}
-        </button>
-      </form>
-      <p className="paper-form-note">
-        Non sei ancora iscritto? <Link to="/adesione">Compila il modulo di registrazione</Link>
-      </p>
+        <div className="section-kicker">Area Cliente</div>
+        <h1 className="page-title">Login</h1>
+        <p className="social-lead">Inserisci le tue credenziali per accedere al tuo profilo.</p>
+        <form className="paper-form" onSubmit={onSubmit}>
+          <label htmlFor="login-email">Email</label>
+          <input
+            id="login-email"
+            className="form-control"
+            type="email"
+            autoComplete="email"
+            value={email}
+            onChange={(event) => setEmail(event.target.value)}
+            required
+          />
+          <label htmlFor="login-password">Password</label>
+          <input
+            id="login-password"
+            className="form-control"
+            type="password"
+            autoComplete="current-password"
+            value={password}
+            onChange={(event) => setPassword(event.target.value)}
+            required
+          />
+          {error && <p className="paper-form-error">{error}</p>}
+          <button className="paper-button" type="submit" disabled={pending}>
+            {pending ? 'Accesso…' : 'Login'}
+          </button>
+        </form>
+        <p className="paper-form-note">
+          Non sei ancora registrato?{' '}
+          <Link to="/adesione" className="fw-bold">
+            Registrati
+          </Link>
+        </p>
       </div>
     </Container>
   );

@@ -139,7 +139,7 @@ export default function JoinPage() {
         </button>
       </form>
       <p className="paper-form-note">
-        Hai già un profilo? <Link to="/accedi">Accedi</Link>
+        Hai già un profilo? <Link to="/accedi" className="fw-bold">Torna al Login</Link>
       </p>
       </div>
     </Container>

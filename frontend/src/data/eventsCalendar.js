@@ -49,7 +49,7 @@ export const FEATURED_DROPDOWN_EVENTS = [
   {
     slug: 'mercatini-artigianato-salentino',
     toSlug: 'mercatini-di-natale-in-villa',
-    label: 'Mercatini dell’Artigianato Salentino',
+    label: 'Mercatini dell’Artigianato Salentino · Diciottesimomeridiano',
     when: 'Dicembre – 6 Gennaio',
   },
   {
@@ -83,14 +83,16 @@ export const EVENT_CALENDARS = [
       {
         dates: 'Tutti i venerdì',
         title: 'Yoga, Pilates, Holistic Yoga Walking & Yoga Bambini — Cristiana Vergari',
-        detail: 'Sessioni di Yoga, Pilates, camminata olistica in cuffia e Yoga Bambini Educational per adulti e famiglie.',
+        detail:
+          'Percorsi settimanali all’aria aperta dedicati al benessere psicofisico, alla postura e al respiro consapevole: sessioni di Yoga e Pilates per adulti, camminata olistica dinamica con musica in cuffia e laboratori Yoga Bambini Educational riconosciuti dal MIM.',
         category: 'yoga',
         slug: 'cristiana-vergari-yoga-villa-comunale',
       },
       {
         dates: 'Tutte le domeniche',
         title: 'Passeggiata con i Pony',
-        detail: 'Passeggiate nel parco a misura di bambino accompagnate da personale qualificato.',
+        detail:
+          'Un’esperienza dolce ed educativa immersa nel verde dei Giardini pubblici Giuseppe Garibaldi: passeggiate domenicali a misura di bambino in totale sicurezza, accompagnate passo dopo passo da personale esperto e qualificato.',
         category: 'famiglie',
         slug: 'passeggiata-con-i-pony',
       },
@@ -103,8 +105,9 @@ export const EVENT_CALENDARS = [
     entries: [
       {
         dates: '5 – 6 dicembre',
-        title: 'Mercatini dell’Artigianato Salentino & Musica Live (sabato 5: NiteCity)',
-        detail: 'Apertura dei Mercatini di Natale e dell’artigianato salentino tra i viali; sabato musica dal vivo e jam session.',
+        title: 'Mercatini dell’Artigianato Salentino (Diciottesimomeridiano) & Musica Live',
+        detail:
+          'Inaugurazione dei mercatini natalizi curati da Diciottesimomeridiano APS tra pietra leccese, cartapesta, ceramiche e manufatti fatti a mano lungo i viali della Villa; sabato spazio alla musica dal vivo e alle jam session.',
         category: 'mercatini',
         extraCategories: ['musica'],
         slug: 'mercatini-di-natale-in-villa',
@@ -112,14 +115,16 @@ export const EVENT_CALENDARS = [
       {
         dates: '5 dicembre',
         title: 'NiteCity in concerto + Musica Live e Jam Session',
-        detail: 'Dance, pop, soul, funk e musica latina dal vivo.',
+        detail:
+          'Il progetto live ideato da Ciki Forchetti apre i sabati musicali in Villa con un viaggio trascinante tra dance anni ’70 e ’80, pop contemporaneo, soul, funk e ritmi latini e italiani tutti da ballare.',
         category: 'musica',
         slug: 'nitecity',
       },
       {
         dates: '8 dicembre',
         title: 'Festa dell’Immacolata Concezione',
-        detail: 'Mercatini di Natale nella Villa, momenti di musica e intrattenimento, attività per famiglie e bambini.',
+        detail:
+          'Giornata speciale dedicata alla tradizione salentina e alle famiglie nel cuore del parco: stand dei Mercatini di Natale, momenti musicali diffusi, animazione e attività ricreative pensate per grandi e piccoli.',
         category: 'famiglie',
         extraCategories: ['mercatini', 'musica'],
         slug: 'festa-immacolata-villa-comunale',
@@ -127,14 +132,16 @@ export const EVENT_CALENDARS = [
       {
         dates: '11 dicembre',
         title: 'Educazione Ambientale e Spettacolo con i Rapaci · Yuna Lucky Owl',
-        detail: 'Sessioni didattiche, falconeria UNESCO e foto con Aquila delle steppe, Gufo bengalese e Falco pellegrino.',
+        detail:
+          'Incontro ravvicinato di educazione ambientale e falconeria UNESCO con Federico Quarta e il progetto Yuna Lucky Owl: osservazioni guidate, didattica sull’ecosistema e foto con Aquila delle steppe, Gufo bengalese e Falco pellegrino.',
         category: 'famiglie',
         slug: 'spettacolo-con-i-falchi',
       },
       {
         dates: '12 – 13 dicembre',
         title: 'Mercatini di Natale & Musica Live (sabato 12: Metropolitan Trio)',
-        detail: 'Artigianato, prodotti tipici e musica dal vivo il sabato.',
+        detail:
+          'Secondo fine settimana tra le botteghe dell’artigianato salentino e idee regalo fatte a mano; sabato sera concerto Christmas Edition del Metropolitan Trio (Giusy Colì, Paco Carrieri e Alessio Borgia) tra jazz, soul e classici natalizi.',
         category: 'mercatini',
         extraCategories: ['musica'],
         slug: 'metropolitan-trio-christmas',
@@ -142,7 +149,8 @@ export const EVENT_CALENDARS = [
       {
         dates: '19 – 20 dicembre',
         title: 'Mercatini di Natale & Musica Live (sabato 19: Le Circostanze)',
-        detail: 'Mercatini natalizi e, il sabato, grande musica italiana dal vivo e jam session.',
+        detail:
+          'Ultimo weekend prima di Natale tra gli stand artigianali illuminati nel parco e, nella serata di sabato, il concerto dal vivo de Le Circostanze dedicato alla grande canzone d’autore e al pop-rock italiano dagli anni ’70 a oggi.',
         category: 'mercatini',
         extraCategories: ['musica'],
         slug: 'le-circostanze',
@@ -150,7 +158,8 @@ export const EVENT_CALENDARS = [
       {
         dates: '23 – 27 dicembre',
         title: 'Il Villaggio di Babbo Natale & Mercatini di Natale',
-        detail: 'Cinque giornate con incontro con Babbo Natale, laboratori creativi, falchi (24 dic) e musica live (26 dic).',
+        detail:
+          'Cinque giornate consecutive nel pieno della magia natalizia: incontro dal vivo con Babbo Natale, laboratori creativi per bambini, mercatini, l’appuntamento della vigilia con i rapaci (24 dicembre) e la musica live di Santo Stefano (26 dicembre).',
         category: 'famiglie',
         extraCategories: ['mercatini', 'laboratori', 'musica'],
         slug: 'villaggio-di-babbo-natale',
@@ -158,7 +167,8 @@ export const EVENT_CALENDARS = [
       {
         dates: '28 – 29 dicembre',
         title: 'Villa Lab · Laboratorio Cartapesta, Terracotta e Argilla',
-        detail: 'Piccole mani, grandi meraviglie: laboratori creativi per bambini tra cartapesta, terracotta, argilla e fantasia.',
+        detail:
+          'Piccole mani, grandi meraviglie: due giornate di laboratori pratici dedicati ai bambini per scoprire e modellare cartapesta leccese, terracotta e argilla tra gioco, manualità e fantasia.',
         category: 'laboratori',
         slug: 'laboratorio-cartapesta-e-argilla',
       },
@@ -172,22 +182,25 @@ export const EVENT_CALENDARS = [
       {
         dates: '1 – 3 gennaio',
         title: 'Creatività e musica per il nuovo anno',
-        detail: 'Mercatini di Natale, laboratori di modellazione con la creta, Spettacolo con i Falchi (1 gen) e Jam Session (2 gen).',
+        detail:
+          'Il 2027 si apre in Villa con tre giornate di Mercatini di Natale, laboratori di modellazione e costruzione con la creta, l’incontro didattico con i rapaci di Capodanno (1 gennaio) e la musica dal vivo con jam session (2 gennaio).',
         category: 'laboratori',
         extraCategories: ['mercatini', 'musica', 'famiglie'],
         slug: 'laboratorio-cartapesta-e-argilla',
       },
       {
         dates: '4 – 5 gennaio',
-        title: 'Laboratorio Cartapesta e Argilla',
-        detail: 'Attività manuali e artigianali per grandi e piccoli.',
+        title: 'Villa Lab · Laboratorio Cartapesta e Argilla',
+        detail:
+          'Nuovo appuntamento con i laboratori artigianali di Villa Lab aspettando l’Epifania: attività manuali guidate di cartapesta e argilla per stimolare creatività ed espressione artistica in bambini e ragazzi.',
         category: 'laboratori',
         slug: 'laboratorio-cartapesta-e-argilla',
       },
       {
         dates: '6 gennaio',
         title: 'Epifania in Villa',
-        detail: 'Mercatini di Natale e attività dedicate alle famiglie.',
+        detail:
+          'Gran finale delle festività natalizie nei Giardini pubblici Giuseppe Garibaldi con l’apertura dei Mercatini dell’Artigianato Salentino, animazione e iniziative dedicate a tutte le famiglie.',
         category: 'mercatini',
         extraCategories: ['famiglie'],
         slug: 'mercatini-di-natale-in-villa',
@@ -202,7 +215,8 @@ export const EVENT_CALENDARS = [
       {
         dates: 'Febbraio 2027',
         title: 'Lecce Comic — Fumetto, Illustrazione e Cultura Pop',
-        detail: 'Incontri con autori e illustratori, mostre e laboratori di disegno, stand tematici, collezionismo e gaming.',
+        detail:
+          'La programmazione invernale prosegue a febbraio con la rassegna dedicata alla nona arte e alla creatività contemporanea: incontri con autori e illustratori, mostre di tavole, laboratori di disegno, collezionismo, cultura pop e gaming.',
         category: 'cultura',
         extraCategories: ['laboratori', 'famiglie'],
         slug: 'lecce-comic',

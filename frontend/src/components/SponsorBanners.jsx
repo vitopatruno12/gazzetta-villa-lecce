@@ -2,6 +2,11 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { apiGet } from '../api/client';
 
+const SPONSOR_LINKS = {
+  'quarta-caffe': '/articolo/stefania-quarta-casa-quarta',
+  'cristiana-vergari-academy': '/articolo/cristiana-vergari-yoga-villa-comunale',
+};
+
 export default function SponsorBanners() {
   const [companies, setCompanies] = useState([]);
 
@@ -20,7 +25,7 @@ export default function SponsorBanners() {
         {companies.map((company) => (
           <Link
             className="sponsor-banner"
-            to={company.slug === 'quarta-caffe' ? '/articolo/stefania-quarta-casa-quarta' : '/sponsor'}
+            to={SPONSOR_LINKS[company.slug] || '/sponsor'}
             key={company.id}
           >
             <img src={company.logo_url} alt={company.name} />

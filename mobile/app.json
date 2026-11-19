@@ -1,0 +1,29 @@
+{
+  "expo": {
+    "name": "La Villa Comunale",
+    "slug": "villa-comunale-lecce",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/logo-villa-comunale.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#1a5132"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "it.villacomunalelecce.app"
+    },
+    "android": {
+      "package": "it.villacomunalelecce.app",
+      "adaptiveIcon": {
+        "backgroundColor": "#1a5132",
+        "foregroundImage": "./assets/android-icon-foreground.png"
+      }
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    }
+  }
+}

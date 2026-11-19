@@ -137,9 +137,11 @@ export default function HomePage() {
                 <Link to={`/articolo/${spotlight.slug}`}>{spotlight.title}</Link>
               </h2>
               <p>
-                Da dicembre 2026 a febbraio 2027 la Villa Comunale di Lecce si anima con mercatini,
-                musica, laboratori, yoga e iniziative per famiglie: dal Villaggio di Babbo Natale
-                fino a Lecce Comic.
+                Da dicembre 2026 a febbraio 2027 la Villa Comunale di Lecce (Giardini pubblici
+                Giuseppe Garibaldi) accoglie cittadini, famiglie, bambini e visitatori con un ricco
+                calendario diffuso tra i Mercatini dell’Artigianato Salentino, i laboratori creativi
+                di Villa Lab, la musica dal vivo, gli incontri con i rapaci, il benessere del
+                venerdì con Cristiana Vergari e l’appuntamento di febbraio con Lecce Comic.
               </p>
               <ul className="home-highlight-points">
                 <li>Mercatini di Natale e Villaggio di Babbo Natale</li>
