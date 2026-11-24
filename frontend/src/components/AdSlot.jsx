@@ -109,9 +109,18 @@ export default function AdSlot({
         </a>
       )}
       {ads.length > 1 && (
-        <div className="ad-slot-dots" aria-hidden="true">
+        <div className="ad-slot-dots" role="tablist" aria-label="Scorri banner pubblicitari">
           {ads.map((item, dotIndex) => (
-            <span key={item.id} className={dotIndex === index ? 'is-active' : ''} />
+            <button
+              key={item.id}
+              type="button"
+              className={dotIndex === index ? 'is-active' : ''}
+              aria-label={`Mostra ${item.company_name || item.title || `banner ${dotIndex + 1}`}`}
+              onClick={() => {
+                setIndex(dotIndex);
+                setBroken(false);
+              }}
+            />
           ))}
         </div>
       )}

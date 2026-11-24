@@ -21,7 +21,7 @@ router.get('/serve/:slotCode', async (req, res) => {
        AND (ca.starts_at IS NULL OR ca.starts_at <= NOW())
        AND (ca.ends_at IS NULL OR ca.ends_at >= NOW())
      ORDER BY ca.priority DESC, RANDOM()
-     LIMIT 5`,
+     LIMIT 10`,
     [req.params.slotCode]
   );
   res.json(rows);

@@ -6,6 +6,7 @@ import SectionPage from './pages/SectionPage';
 import SponsorsPage from './pages/SponsorsPage';
 import ProjectPage from './pages/ProjectPage';
 import ProjectPhotosPage from './pages/ProjectPhotosPage';
+import MediaGalleryPage from './pages/MediaGalleryPage';
 import AdvertisePage from './pages/AdvertisePage';
 import JobsPage from './pages/JobsPage';
 import LoginPage from './pages/LoginPage';
@@ -22,6 +23,7 @@ export default function App() {
         <Route path="sponsor" element={<SponsorsPage />} />
         <Route path="progetto" element={<ProjectPage />} />
         <Route path="progetto/foto" element={<ProjectPhotosPage />} />
+        <Route path="foto" element={<MediaGalleryPage />} />
         <Route path="fai-pubblicita" element={<AdvertisePage />} />
         <Route path="lavora-con-noi" element={<JobsPage />} />
         <Route path="accedi" element={<LoginPage />} />

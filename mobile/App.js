@@ -25,6 +25,7 @@ import MobileSideMenu from './src/components/MobileSideMenu';
 import SmartImage from './src/components/SmartImage';
 import AccountView from './src/screens/AccountView';
 import ArticleDetailView from './src/screens/ArticleDetailView';
+import MediaGalleryView from './src/screens/MediaGalleryView';
 import ProjectView from './src/screens/ProjectView';
 import { COLORS, SANS, SERIF } from './src/theme';
 
@@ -34,6 +35,7 @@ const NATALE_SLUG = 'un-natale-in-villa';
 const TOP_NAV_ITEMS = [
   { id: 'home', label: 'Home' },
   { id: 'progetto', label: 'Il progetto' },
+  { id: 'foto', label: 'Foto' },
   { id: 'cronaca', label: 'Cronaca' },
   { id: 'eventi', label: 'Eventi' },
   { id: 'partner', label: 'Partner' },
@@ -78,6 +80,8 @@ function VillaAppContent() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [selectedSlug, setSelectedSlug] = useState(null);
   const [eventCategory, setEventCategory] = useState('tutti');
+  const [projectSubView, setProjectSubView] = useState('info');
+  const [mediaCategory, setMediaCategory] = useState('tutti');
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [articles, setArticles] = useState([]);
@@ -136,6 +140,20 @@ function VillaAppContent() {
     setSelectedSlug(null);
     setSearchOpen(false);
     setActiveTab('eventi');
+  }, []);
+
+  const selectProjectSubFromMenu = useCallback((sub) => {
+    setProjectSubView(sub || 'info');
+    setSelectedSlug(null);
+    setSearchOpen(false);
+    setActiveTab('progetto');
+  }, []);
+
+  const selectMediaCategoryFromMenu = useCallback((catId) => {
+    setMediaCategory(catId || 'tutti');
+    setSelectedSlug(null);
+    setSearchOpen(false);
+    setActiveTab('foto');
   }, []);
 
   const spotlight = useMemo(
@@ -306,6 +324,8 @@ function VillaAppContent() {
         session={session}
         onClose={() => setMenuOpen(false)}
         onSelectTab={switchTab}
+        onSelectProjectSub={selectProjectSubFromMenu}
+        onSelectMediaCategory={selectMediaCategoryFromMenu}
         onSelectEventCategory={selectCategoryFromMenu}
         onOpenAccount={openAccount}
       />
@@ -331,7 +351,14 @@ function VillaAppContent() {
             )}
           </ScrollView>
         ) : activeTab === 'progetto' ? (
-          <ProjectView onOpenArticle={openArticle} />
+          <ProjectView onOpenArticle={openArticle} initialSubView={projectSubView} />
+        ) : activeTab === 'foto' ? (
+          <MediaGalleryView
+            articles={articles}
+            activeCategory={mediaCategory}
+            onChangeCategory={setMediaCategory}
+            onOpenArticle={openArticle}
+          />
         ) : activeTab === 'account' ? (
           <AccountView
             session={session}
@@ -574,7 +601,9 @@ function SponsorGrid({ companies, onOpenArticle, showName = false }) {
         >
           <SmartImage
             uri={resolveMediaUrl(c.logo_url)}
-            defaultRatio={c.slug === 'quarta-caffe' ? 1.55 : 1}
+            defaultRatio={
+              c.slug === 'quarta-caffe' || c.slug === 'andromeda-prog' ? 1.6 : 1
+            }
             minRatio={0.85}
             maxRatio={1.65}
             bordered={false}

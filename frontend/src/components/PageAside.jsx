@@ -5,6 +5,7 @@ import AdSlot from './AdSlot';
 import FacebookVideo from './FacebookVideo';
 
 const MENU = [
+  { to: '/foto', label: 'Foto' },
   { to: '/sezione/notizia', label: 'Cronaca' },
   { to: '/sezione/evento', label: 'Eventi' },
   { to: '/sezione/avviso', label: 'Avvisi' },

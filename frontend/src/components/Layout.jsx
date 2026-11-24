@@ -14,6 +14,7 @@ const FOOTER_COLUMNS = [
     title: 'Il giornale',
     links: [
       { to: '/', label: 'Home' },
+      { to: '/foto', label: 'Foto e Video degli eventi' },
       { to: '/sezione/notizia', label: 'Cronaca' },
       { to: '/sezione/evento', label: 'Eventi' },
       { to: '/sezione/avviso', label: 'Avvisi' },
@@ -24,7 +25,7 @@ const FOOTER_COLUMNS = [
   {
     title: 'La Villa',
     links: [
-      { to: '/progetto', label: 'Giardini Giuseppe Garibaldi' },
+      { to: '/progetto', label: 'Il progetto · Giardini Garibaldi' },
       { to: '/progetto/foto', label: 'Foto del progetto' },
       { to: '/articolo/un-natale-in-villa', label: 'Natale in Villa' },
       { to: '/sezione/evento?categoria=mercatini', label: 'Mercatini di Natale' },
@@ -137,30 +138,30 @@ export default function Layout() {
   const { user } = useClientAuth();
   const client = user?.role === 'cliente' ? user : null;
   const [menuOpen, setMenuOpen] = useState(false);
-  const [eventsHoverOpen, setEventsHoverOpen] = useState(false);
-  const [eventsPinnedOpen, setEventsPinnedOpen] = useState(false);
-  const eventsDropdownOpen = eventsHoverOpen || eventsPinnedOpen;
-  const eventsDropdownRef = useRef(null);
-  const closeEventsDropdown = useCallback(() => {
-    setEventsHoverOpen(false);
-    setEventsPinnedOpen(false);
+  const [hoverMenu, setHoverMenu] = useState(null);
+  const [pinnedMenu, setPinnedMenu] = useState(null);
+  const openDropdown = pinnedMenu || hoverMenu;
+  const navLinksRef = useRef(null);
+  const closeAllDropdowns = useCallback(() => {
+    setHoverMenu(null);
+    setPinnedMenu(null);
   }, []);
   const closeMenu = useCallback(() => setMenuOpen(false), []);
 
   useEffect(() => {
     closeMenu();
-    closeEventsDropdown();
-  }, [location.pathname, location.search, location.hash, closeMenu, closeEventsDropdown]);
+    closeAllDropdowns();
+  }, [location.pathname, location.search, location.hash, closeMenu, closeAllDropdowns]);
 
   useEffect(() => {
-    if (!eventsDropdownOpen) return undefined;
+    if (!openDropdown) return undefined;
     const onOutside = (event) => {
-      if (eventsDropdownRef.current && !eventsDropdownRef.current.contains(event.target)) {
-        closeEventsDropdown();
+      if (navLinksRef.current && !navLinksRef.current.contains(event.target)) {
+        closeAllDropdowns();
       }
     };
     const onEscape = (event) => {
-      if (event.key === 'Escape') closeEventsDropdown();
+      if (event.key === 'Escape') closeAllDropdowns();
     };
     document.addEventListener('mousedown', onOutside);
     document.addEventListener('keydown', onEscape);
@@ -168,7 +169,7 @@ export default function Layout() {
       document.removeEventListener('mousedown', onOutside);
       document.removeEventListener('keydown', onEscape);
     };
-  }, [eventsDropdownOpen, closeEventsDropdown]);
+  }, [openDropdown, closeAllDropdowns]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -197,10 +198,7 @@ export default function Layout() {
             </button>
             <div className="top-place">
               <span>{todayLabel()}</span>
-              <span className="top-place-pair">
-                <span>Lecce</span>
-                <span>Lecce e provincia</span>
-              </span>
+              <span>Lecce</span>
             </div>
             </div>
             <div className="top-tools">
@@ -225,10 +223,10 @@ export default function Layout() {
             <span className="masthead-text masthead-text-left">LA VILLA</span>
             <img
               className="stemma-lecce"
-              src="/assets/logo-villa-comunale.png"
+              src="/assets/logo-villa-comunale.png?v=20261124"
               alt="La Villa Comunale di Lecce"
-              width="124"
-              height="124"
+              width="128"
+              height="128"
             />
             <span className="masthead-text masthead-text-right">
               <span className="masthead-villa">COMUNALE</span>
@@ -243,27 +241,146 @@ export default function Layout() {
 
       <Navbar className="site-nav sticky-top">
         <Container className="site-nav-inner">
-          <Nav className="site-nav-links">
+          <Nav ref={navLinksRef} className="site-nav-links">
             <Nav.Link as={NavLink} to="/" end>
               Home
             </Nav.Link>
-            <Nav.Link as={NavLink} to="/progetto" end>
-              Il progetto
-            </Nav.Link>
-            <Nav.Link as={NavLink} to="/progetto/foto">
-              Foto
-            </Nav.Link>
+
+            <div
+              className={`nav-events-dropdown${openDropdown === 'progetto' ? ' is-open' : ''}`}
+              onPointerEnter={(e) => {
+                if (e.pointerType === 'mouse') setHoverMenu('progetto');
+              }}
+              onPointerLeave={(e) => {
+                if (e.pointerType === 'mouse') {
+                  setHoverMenu((curr) => (curr === 'progetto' ? null : curr));
+                }
+              }}
+            >
+              <div className="nav-events-trigger">
+                <Nav.Link as={NavLink} to="/progetto">
+                  Il progetto
+                </Nav.Link>
+                <button
+                  type="button"
+                  className="nav-events-caret"
+                  aria-label="Apri menu Il progetto"
+                  aria-expanded={openDropdown === 'progetto'}
+                  onClick={(event) => {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    setPinnedMenu((curr) => (curr === 'progetto' ? null : 'progetto'));
+                  }}
+                >
+                  <svg viewBox="0 0 12 12" width="11" height="11" aria-hidden="true">
+                    <path d="M2.2 4.2 6 8l3.8-3.8" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </button>
+              </div>
+              <div
+                className="nav-events-menu nav-events-menu-single"
+                role="menu"
+                aria-label="Il progetto e foto del progetto"
+              >
+                <div className="nav-events-col">
+                  <div className="nav-events-heading">Giardini Giuseppe Garibaldi</div>
+                  <Link
+                    to="/progetto"
+                    className="nav-events-link nav-events-link-strong"
+                    onClick={closeAllDropdowns}
+                  >
+                    Il progetto di riqualificazione
+                  </Link>
+                  <Link
+                    to="/progetto/foto"
+                    className="nav-events-link"
+                    onClick={closeAllDropdowns}
+                  >
+                    Foto e tavole del progetto
+                  </Link>
+                </div>
+              </div>
+            </div>
+
+            <div
+              className={`nav-events-dropdown${openDropdown === 'foto' ? ' is-open' : ''}`}
+              onPointerEnter={(e) => {
+                if (e.pointerType === 'mouse') setHoverMenu('foto');
+              }}
+              onPointerLeave={(e) => {
+                if (e.pointerType === 'mouse') {
+                  setHoverMenu((curr) => (curr === 'foto' ? null : curr));
+                }
+              }}
+            >
+              <div className="nav-events-trigger">
+                <Nav.Link as={NavLink} to="/foto">
+                  Foto
+                </Nav.Link>
+                <button
+                  type="button"
+                  className="nav-events-caret"
+                  aria-label="Apri categorie foto e video degli eventi"
+                  aria-expanded={openDropdown === 'foto'}
+                  onClick={(event) => {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    setPinnedMenu((curr) => (curr === 'foto' ? null : 'foto'));
+                  }}
+                >
+                  <svg viewBox="0 0 12 12" width="11" height="11" aria-hidden="true">
+                    <path d="M2.2 4.2 6 8l3.8-3.8" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </button>
+              </div>
+              <div
+                className="nav-events-menu nav-events-menu-single"
+                role="menu"
+                aria-label="Foto e video degli eventi"
+              >
+                <div className="nav-events-col">
+                  <div className="nav-events-heading">Archivio Foto & Video</div>
+                  <Link
+                    to="/foto"
+                    className="nav-events-link nav-events-link-strong"
+                    onClick={closeAllDropdowns}
+                  >
+                    Tutte le foto e i video
+                  </Link>
+                  <Link
+                    to="/foto?categoria=video"
+                    className="nav-events-link"
+                    onClick={closeAllDropdowns}
+                  >
+                    ▶ Video degli eventi e della Villa
+                  </Link>
+                  {EVENT_CATEGORIES.filter((cat) => cat.id !== 'tutti').map((cat) => (
+                    <Link
+                      key={cat.id}
+                      to={`/foto?categoria=${cat.id}`}
+                      className="nav-events-link"
+                      onClick={closeAllDropdowns}
+                    >
+                      {cat.label}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            </div>
+
             <Nav.Link as={NavLink} to="/sezione/notizia">
               Cronaca
             </Nav.Link>
+
             <div
-              ref={eventsDropdownRef}
-              className={`nav-events-dropdown${eventsDropdownOpen ? ' is-open' : ''}`}
+              className={`nav-events-dropdown${openDropdown === 'eventi' ? ' is-open' : ''}`}
               onPointerEnter={(e) => {
-                if (e.pointerType === 'mouse') setEventsHoverOpen(true);
+                if (e.pointerType === 'mouse') setHoverMenu('eventi');
               }}
               onPointerLeave={(e) => {
-                if (e.pointerType === 'mouse') setEventsHoverOpen(false);
+                if (e.pointerType === 'mouse') {
+                  setHoverMenu((curr) => (curr === 'eventi' ? null : curr));
+                }
               }}
             >
               <div className="nav-events-trigger">
@@ -274,15 +391,11 @@ export default function Layout() {
                   type="button"
                   className="nav-events-caret"
                   aria-label="Apri categorie e calendari eventi"
-                  aria-expanded={eventsDropdownOpen}
+                  aria-expanded={openDropdown === 'eventi'}
                   onClick={(event) => {
                     event.preventDefault();
                     event.stopPropagation();
-                    if (eventsPinnedOpen) {
-                      closeEventsDropdown();
-                    } else {
-                      setEventsPinnedOpen(true);
-                    }
+                    setPinnedMenu((curr) => (curr === 'eventi' ? null : 'eventi'));
                   }}
                 >
                   <svg viewBox="0 0 12 12" width="11" height="11" aria-hidden="true">
@@ -296,7 +409,7 @@ export default function Layout() {
                   <Link
                     to="/sezione/evento#calendario"
                     className="nav-events-link nav-events-link-strong"
-                    onClick={closeEventsDropdown}
+                    onClick={closeAllDropdowns}
                   >
                     Calendari degli eventi (Dic 2026 – Feb 2027)
                   </Link>
@@ -305,7 +418,7 @@ export default function Layout() {
                       key={cat.id}
                       to={cat.id === 'tutti' ? '/sezione/evento' : `/sezione/evento?categoria=${cat.id}`}
                       className="nav-events-link"
-                      onClick={closeEventsDropdown}
+                      onClick={closeAllDropdowns}
                     >
                       {cat.label}
                     </Link>
@@ -318,7 +431,7 @@ export default function Layout() {
                       key={item.slug}
                       to={`/articolo/${item.toSlug || item.slug}`}
                       className="nav-events-feature"
-                      onClick={closeEventsDropdown}
+                      onClick={closeAllDropdowns}
                     >
                       <span className="nav-events-when">{item.when}</span>
                       <span className="nav-events-title">{item.label}</span>

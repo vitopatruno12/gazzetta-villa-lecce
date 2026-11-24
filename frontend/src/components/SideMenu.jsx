@@ -6,14 +6,14 @@ import { BROADCASTS, SOCIALS } from '../data/social';
 
 const SECTIONS = [
   { to: '/', label: 'Home', end: true },
+  { to: '/foto', label: 'Foto e Video' },
   { to: '/sezione/notizia', label: 'Cronaca' },
   { to: '/sezione/evento', label: 'Eventi' },
   { to: '/sezione/avviso', label: 'Avvisi' },
 ];
 
 const VILLA = [
-  { to: '/progetto', label: 'Il progetto', end: true },
-  { to: '/progetto/foto', label: 'Foto' },
+  { to: '/progetto', label: 'Il progetto' },
   { to: '/sponsor', label: 'Partner' },
 ];
 
@@ -22,6 +22,8 @@ export default function SideMenu({ open, onClose }) {
   const closeRef = useRef(null);
   const panelRef = useRef(null);
   const [eventsSubOpen, setEventsSubOpen] = useState(false);
+  const [projectSubOpen, setProjectSubOpen] = useState(false);
+  const [photosSubOpen, setPhotosSubOpen] = useState(false);
 
   useEffect(() => {
     if (!open) return undefined;
@@ -103,7 +105,45 @@ export default function SideMenu({ open, onClose }) {
           <p className="side-menu-kicker">Sezioni</p>
           <ul>
             {SECTIONS.map((item) =>
-              item.to === '/sezione/evento' ? (
+              item.to === '/foto' ? (
+                <li key={item.to} className="side-menu-has-sub">
+                  <div className="side-menu-sub-row">
+                    <NavLink to={item.to} end={item.end} onClick={onClose}>
+                      {item.label}
+                    </NavLink>
+                    <button
+                      type="button"
+                      className={`side-menu-sub-toggle${photosSubOpen ? ' is-open' : ''}`}
+                      aria-expanded={photosSubOpen}
+                      aria-label="Mostra categorie foto e video"
+                      onClick={() => setPhotosSubOpen((prev) => !prev)}
+                    >
+                      ▾
+                    </button>
+                  </div>
+                  {photosSubOpen && (
+                    <ul className="side-menu-sublist">
+                      <li>
+                        <Link to="/foto" onClick={onClose}>
+                          Tutte le foto e i video
+                        </Link>
+                      </li>
+                      <li>
+                        <Link to="/foto?categoria=video" onClick={onClose}>
+                          Video degli eventi
+                        </Link>
+                      </li>
+                      {EVENT_CATEGORIES.filter((c) => c.id !== 'tutti').map((cat) => (
+                        <li key={cat.id}>
+                          <Link to={`/foto?categoria=${cat.id}`} onClick={onClose}>
+                            {cat.shortLabel}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </li>
+              ) : item.to === '/sezione/evento' ? (
                 <li key={item.to} className="side-menu-has-sub">
                   <div className="side-menu-sub-row">
                     <NavLink to={item.to} end={item.end} onClick={onClose}>
@@ -153,13 +193,46 @@ export default function SideMenu({ open, onClose }) {
 
           <p className="side-menu-kicker">La Villa</p>
           <ul>
-            {VILLA.map((item) => (
-              <li key={item.to}>
-                <NavLink to={item.to} end={item.end} onClick={onClose}>
-                  {item.label}
-                </NavLink>
-              </li>
-            ))}
+            {VILLA.map((item) =>
+              item.to === '/progetto' ? (
+                <li key={item.to} className="side-menu-has-sub">
+                  <div className="side-menu-sub-row">
+                    <NavLink to={item.to} onClick={onClose}>
+                      {item.label}
+                    </NavLink>
+                    <button
+                      type="button"
+                      className={`side-menu-sub-toggle${projectSubOpen ? ' is-open' : ''}`}
+                      aria-expanded={projectSubOpen}
+                      aria-label="Mostra voci del progetto"
+                      onClick={() => setProjectSubOpen((prev) => !prev)}
+                    >
+                      ▾
+                    </button>
+                  </div>
+                  {projectSubOpen && (
+                    <ul className="side-menu-sublist">
+                      <li>
+                        <Link to="/progetto" onClick={onClose}>
+                          Il progetto di riqualificazione
+                        </Link>
+                      </li>
+                      <li>
+                        <Link to="/progetto/foto" onClick={onClose}>
+                          Foto del progetto
+                        </Link>
+                      </li>
+                    </ul>
+                  )}
+                </li>
+              ) : (
+                <li key={item.to}>
+                  <NavLink to={item.to} end={item.end} onClick={onClose}>
+                    {item.label}
+                  </NavLink>
+                </li>
+              )
+            )}
           </ul>
         </nav>
 

@@ -29,7 +29,7 @@ router.get('/', async (req, res) => {
   params.push(Number(offset) || 0);
 
   const { rows } = await query(
-    `SELECT id, slug, title, subtitle, body, type, cover_url, video_url, location, event_start, event_end,
+    `SELECT id, slug, title, subtitle, body, type, cover_url, gallery_urls, video_url, location, event_start, event_end,
             is_sponsored, company_id, published_at, created_at
      FROM articles
      WHERE ${where.join(' AND ')}

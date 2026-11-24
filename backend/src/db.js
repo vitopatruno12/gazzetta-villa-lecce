@@ -34,6 +34,7 @@ async function ensureArticleVideo() {
 }
 
 const SPONSOR_LOGOS = [
+  ['andromeda-prog', 'Andromeda Programmazione', '/pubblicita/andromeda-prog.png', 'https://www.andromedaprog.it/'],
   ['le-mani-in-pasta', 'Le Mani in Pasta', '/pubblicita/le-mani-in-pasta.jpg', null],
   ['gazza-ladra', 'Gazza Ladra', '/pubblicita/gazza-ladra.jpg', null],
   ['le-mucche-volanti', 'Le Mucche Volanti', '/pubblicita/le-mucche-volanti.jpg', null],
@@ -111,6 +112,19 @@ const DISPLAY_AD_SLOTS = [
 ];
 
 const DISPLAY_AD_CREATIVES = [
+  {
+    company: 'andromeda-prog',
+    campaign: 'Display · Andromeda Programmazione',
+    priority: 25,
+    slots: [
+      [
+        'sidebar-home',
+        'Andromeda Programmazione',
+        '/pubblicita/andromeda-prog.png',
+        'https://www.andromedaprog.it/',
+      ],
+    ],
+  },
   {
     company: 'quarta-caffe',
     campaign: 'Display · Quarta Stefania',
@@ -730,7 +744,7 @@ Gennaio 2027 prosegue dall’1 al 3 gennaio con mercatini, laboratori di creta, 
 Febbraio 2027 accoglie Lecce Comic, l’appuntamento dedicato al fumetto, all’illustrazione, al collezionismo e alla cultura pop.
 
 Ogni settimana in Villa: tutti i venerdì Yoga, Pilates, Holistic Yoga Walking & Yoga Bambini con Cristiana Vergari; tutte le domeniche la Passeggiata con i Pony.`,
-      '/eventi/natale-in-villa/locandina-2026.jpg',
+      '/eventi/natale-in-villa/locandina-natale-2026.jpg',
       JSON.stringify(['/eventi/natale-in-villa/programma-completo.jpg']),
       'Villa Comunale di Lecce',
       '2026-12-05',

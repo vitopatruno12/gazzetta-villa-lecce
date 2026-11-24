@@ -203,7 +203,7 @@ Febbraio 2027 accoglie Lecce Comic, l’appuntamento dedicato al fumetto, all’
 Ogni settimana in Villa: tutti i venerdì Yoga, Pilates, Holistic Yoga Walking & Yoga Bambini con Cristiana Vergari; tutte le domeniche la Passeggiata con i Pony.',
   'evento',
   'published',
-  '/eventi/natale-in-villa/locandina-2026.jpg',
+  '/eventi/natale-in-villa/locandina-natale-2026.jpg',
   DATE '2026-12-05',
   NOW()
 );

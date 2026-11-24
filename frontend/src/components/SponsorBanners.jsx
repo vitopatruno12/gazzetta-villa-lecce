@@ -22,15 +22,35 @@ export default function SponsorBanners() {
     <section className="sponsor-banners" aria-label="Banner delle società sponsor">
       <h2 className="section-head">Pubblicità</h2>
       <div className="sponsor-banner-row">
-        {companies.map((company) => (
-          <Link
-            className="sponsor-banner"
-            to={SPONSOR_LINKS[company.slug] || '/sponsor'}
-            key={company.id}
-          >
-            <img src={company.logo_url} alt={company.name} />
-          </Link>
-        ))}
+        {companies.map((company) => {
+          const internalTo = SPONSOR_LINKS[company.slug];
+          const externalHref =
+            !internalTo && company.website && !company.website.includes('example.com')
+              ? company.website
+              : null;
+          if (externalHref) {
+            return (
+              <a
+                className="sponsor-banner"
+                href={externalHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                key={company.id}
+              >
+                <img src={company.logo_url} alt={company.name} />
+              </a>
+            );
+          }
+          return (
+            <Link
+              className="sponsor-banner"
+              to={internalTo || '/sponsor'}
+              key={company.id}
+            >
+              <img src={company.logo_url} alt={company.name} />
+            </Link>
+          );
+        })}
       </div>
     </section>
   );

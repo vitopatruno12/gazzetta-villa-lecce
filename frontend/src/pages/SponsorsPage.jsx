@@ -41,6 +41,8 @@ export default function SponsorsPage() {
             .filter((c) => c.logo_url)
             .map((c) => {
               const target = PARTNER_ROUTES[c.slug];
+              const externalUrl =
+                !target && c.website && !c.website.includes('example.com') ? c.website : null;
               return (
                 <Col md={6} lg={3} key={c.id}>
                   <Card className="h-100 border-0 shadow-sm partner-card">
@@ -50,6 +52,16 @@ export default function SponsorsPage() {
                           <img className="partner-logo" src={c.logo_url} alt={`Logo ${c.name}`} />
                           <Card.Title>{c.name}</Card.Title>
                         </Link>
+                      ) : externalUrl ? (
+                        <a
+                          href={externalUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-decoration-none"
+                        >
+                          <img className="partner-logo" src={c.logo_url} alt={`Logo ${c.name}`} />
+                          <Card.Title>{c.name}</Card.Title>
+                        </a>
                       ) : (
                         <>
                           <img className="partner-logo" src={c.logo_url} alt={`Logo ${c.name}`} />

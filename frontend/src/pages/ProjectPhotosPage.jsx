@@ -36,7 +36,8 @@ export default function ProjectPhotosPage() {
         Planimetrie e tavole dei Giardini pubblici Giuseppe Garibaldi.
       </p>
       <p className="project-callout">
-        <Link to={PROJECT_PATH}>Guarda il video</Link>
+        <Link to={PROJECT_PATH}>Presentazione e video del progetto</Link>
+        <Link to="/foto">Foto e video degli eventi</Link>
       </p>
 
       {PROJECT_PHOTOS.map((photo) => (

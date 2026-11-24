@@ -17,13 +17,29 @@ export default function MobileSideMenu({
   session,
   onClose,
   onSelectTab,
+  onSelectProjectSub,
+  onSelectMediaCategory,
   onSelectEventCategory,
   onOpenAccount,
 }) {
-  const [eventsExpanded, setEventsExpanded] = useState(true);
+  const [eventsExpanded, setEventsExpanded] = useState(false);
+  const [projectExpanded, setProjectExpanded] = useState(false);
+  const [mediaExpanded, setMediaExpanded] = useState(false);
 
   function goTab(tabId) {
     onSelectTab(tabId);
+    onClose();
+  }
+
+  function goProject(sub) {
+    if (onSelectProjectSub) onSelectProjectSub(sub);
+    else onSelectTab('progetto');
+    onClose();
+  }
+
+  function goMedia(catId) {
+    if (onSelectMediaCategory) onSelectMediaCategory(catId);
+    else onSelectTab('foto');
     onClose();
   }
 
@@ -51,6 +67,43 @@ export default function MobileSideMenu({
                 Home
               </Text>
             </Pressable>
+
+            {/* Foto e Video degli eventi con sottomenu categorie */}
+            <View style={styles.menuSubWrap}>
+              <View style={styles.menuSubHeader}>
+                <Pressable style={{ flex: 1, paddingVertical: 10 }} onPress={() => goMedia('tutti')}>
+                  <Text style={[styles.menuItemText, activeTab === 'foto' && styles.menuItemActive]}>
+                    Foto e Video
+                  </Text>
+                </Pressable>
+                <Pressable
+                  style={styles.subToggleBtn}
+                  onPress={() => setMediaExpanded((v) => !v)}
+                >
+                  <Text style={styles.subToggleText}>{mediaExpanded ? '▴' : '▾'}</Text>
+                </Pressable>
+              </View>
+
+              {mediaExpanded ? (
+                <View style={styles.subList}>
+                  <Pressable style={styles.subItem} onPress={() => goMedia('tutti')}>
+                    <Text style={styles.subItemText}>Tutte le foto e i video</Text>
+                  </Pressable>
+                  <Pressable style={styles.subItem} onPress={() => goMedia('video')}>
+                    <Text style={styles.subItemText}>▶ Video degli eventi</Text>
+                  </Pressable>
+                  {EVENT_CATEGORIES.filter((c) => c.id !== 'tutti').map((cat) => (
+                    <Pressable
+                      key={cat.id}
+                      style={styles.subItem}
+                      onPress={() => goMedia(cat.id)}
+                    >
+                      <Text style={styles.subItemText}>{cat.fullLabel}</Text>
+                    </Pressable>
+                  ))}
+                </View>
+              ) : null}
+            </View>
 
             <Pressable style={styles.menuItem} onPress={() => goTab('cronaca')}>
               <Text style={[styles.menuItemText, activeTab === 'cronaca' && styles.menuItemActive]}>
@@ -93,13 +146,34 @@ export default function MobileSideMenu({
 
             <Text style={[styles.kicker, { marginTop: 16 }]}>La Villa</Text>
 
-            <Pressable style={styles.menuItem} onPress={() => goTab('progetto')}>
-              <Text
-                style={[styles.menuItemText, activeTab === 'progetto' && styles.menuItemActive]}
-              >
-                Il progetto · Giardini Garibaldi
-              </Text>
-            </Pressable>
+            <View style={styles.menuSubWrap}>
+              <View style={styles.menuSubHeader}>
+                <Pressable style={{ flex: 1, paddingVertical: 10 }} onPress={() => goProject('info')}>
+                  <Text
+                    style={[styles.menuItemText, activeTab === 'progetto' && styles.menuItemActive]}
+                  >
+                    Il progetto · Giardini Garibaldi
+                  </Text>
+                </Pressable>
+                <Pressable
+                  style={styles.subToggleBtn}
+                  onPress={() => setProjectExpanded((v) => !v)}
+                >
+                  <Text style={styles.subToggleText}>{projectExpanded ? '▴' : '▾'}</Text>
+                </Pressable>
+              </View>
+
+              {projectExpanded ? (
+                <View style={styles.subList}>
+                  <Pressable style={styles.subItem} onPress={() => goProject('info')}>
+                    <Text style={styles.subItemText}>Il progetto di riqualificazione</Text>
+                  </Pressable>
+                  <Pressable style={styles.subItem} onPress={() => goProject('foto')}>
+                    <Text style={styles.subItemText}>Foto e tavole del progetto</Text>
+                  </Pressable>
+                </View>
+              ) : null}
+            </View>
 
             <Pressable style={styles.menuItem} onPress={() => goTab('partner')}>
               <Text style={[styles.menuItemText, activeTab === 'partner' && styles.menuItemActive]}>
