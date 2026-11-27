@@ -10,7 +10,7 @@
   --muted: #5e564c;
   --sponsored: #8a5a00;
   --font-display: 'Fraunces', 'Times New Roman', serif;
-  --font-body: 'Dancing Script', Georgia, cursive;
+  --font-body: 'Newsreader', Georgia, serif;
   --font-ui: 'Source Sans 3', 'Segoe UI', sans-serif;
 }
 
@@ -1314,13 +1314,11 @@ a:hover {
 }
 
 .aside-box-text {
-  font-family: var(--font-body);
-  font-style: normal;
-  font-weight: 600;
-  font-size: 1.2rem;
-  line-height: 1.5;
-  color: #1f1a15;
-  text-align: left;
+  font-size: 0.95rem;
+  line-height: 1.48;
+  color: var(--ink);
+  text-align: justify;
+  hyphens: auto;
   margin: 0 0 0.6rem;
 }
 
@@ -1383,12 +1381,9 @@ a:hover {
 
 .aside-deck {
   margin: 0.28rem 0 0;
-  font-family: var(--font-body);
-  font-style: normal;
-  font-weight: 600;
   color: var(--muted);
-  font-size: 1.12rem;
-  line-height: 1.38;
+  font-size: 0.92rem;
+  line-height: 1.35;
 }
 
 .aside-live a {
@@ -1470,12 +1465,10 @@ a:hover {
 
 .home-highlight p {
   margin-bottom: 0.75rem;
-  font-family: var(--font-body);
-  font-style: normal;
-  font-weight: 600;
-  font-size: 1.32rem;
-  line-height: 1.52;
-  text-align: left;
+  font-size: 1.05rem;
+  line-height: 1.5;
+  text-align: justify;
+  hyphens: auto;
 }
 
 .home-highlight-points {
@@ -1490,11 +1483,8 @@ a:hover {
 .home-highlight-points li {
   border-top: 1px solid var(--rule);
   padding-top: 0.32rem;
-  font-family: var(--font-body);
-  font-style: normal;
-  font-weight: 600;
-  font-size: 1.2rem;
-  line-height: 1.34;
+  font-size: 0.98rem;
+  line-height: 1.3;
 }
 
 .home-highlight-actions {
@@ -1651,11 +1641,10 @@ h1.section-head {
 }
 
 .hero-article .deck {
-  font-family: var(--font-body);
-  font-size: 1.32rem;
-  font-weight: 600;
+  font-family: var(--font-display);
+  font-size: 1.1rem;
   color: var(--muted);
-  font-style: normal;
+  font-style: italic;
   margin: 0;
 }
 
@@ -1892,10 +1881,9 @@ h1.section-head {
 }
 
 .news-item-deck {
-  font-family: var(--font-body);
-  font-style: normal;
-  font-weight: 600;
-  font-size: 1.28rem;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1.02rem;
   line-height: 1.38;
   color: var(--muted);
   margin: 0 0 0.65rem;
@@ -1903,12 +1891,11 @@ h1.section-head {
 
 .news-item-excerpt {
   font-family: var(--font-body);
-  font-style: normal;
-  font-weight: 600;
-  font-size: 1.32rem;
-  line-height: 1.56;
-  color: #1f1a15;
-  text-align: left;
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: var(--ink);
+  text-align: justify;
+  hyphens: auto;
   margin-bottom: 0.85rem;
 }
 
@@ -2318,14 +2305,12 @@ a.calendar-entry-title:hover {
 }
 
 .calendar-entry-detail {
-  font-family: var(--font-body);
-  font-style: normal;
-  font-weight: 600;
-  font-size: 1.18rem;
+  font-size: 0.94rem;
   color: var(--muted);
-  line-height: 1.46;
+  line-height: 1.44;
   margin-top: 0.22rem;
-  text-align: left;
+  text-align: justify;
+  hyphens: auto;
 }
 
 @media (max-width: 575.98px) {
@@ -2406,82 +2391,11 @@ a.calendar-entry-title:hover {
 
 .article-body {
   font-family: var(--font-body);
-  font-style: normal;
-  font-weight: 600;
-  font-size: 1.42rem;
-  line-height: 1.58;
-  color: #1f1a15;
-  text-align: left;
-}
-
-.article-body p {
-  margin: 0 0 0.95rem;
-}
-
-.article-body p:last-child {
-  margin-bottom: 0;
-}
-
-.article-body-lead-label {
-  font-family: var(--font-body);
-  font-style: normal;
-  font-weight: 700;
-  font-size: 1.5rem;
-  color: var(--ink);
-  margin-right: 0.2rem;
-}
-
-.article-body-subhead {
-  font-family: var(--font-display);
-  font-style: normal;
-  font-weight: 700;
-  font-size: 1.28rem;
-  line-height: 1.25;
-  color: var(--ink);
-  margin: 1.35rem 0 0.45rem;
-  padding-top: 0.35rem;
-  border-top: 1px solid rgba(201, 184, 154, 0.55);
-}
-
-.article-body-list {
-  margin: 0.35rem 0 1.05rem;
-  padding-left: 1.2rem;
-  list-style: disc;
-}
-
-.article-body-list li {
-  margin-bottom: 0.35rem;
-}
-
-.article-title-main {
-  font-family: var(--font-display);
-  font-style: normal;
-  font-weight: 700;
-  font-size: clamp(1.7rem, 3vw, 2.4rem);
-  line-height: 1.15;
-  color: var(--ink);
-  margin: 0 0 0.5rem;
-}
-
-.article-subtitle-deck {
-  font-family: var(--font-body);
-  font-style: normal;
-  font-weight: 600;
-  font-size: clamp(1.32rem, 1.9vw, 1.52rem);
-  line-height: 1.38;
-  color: #4f463c;
-  padding-bottom: 0.65rem;
-  margin-bottom: 0.65rem;
-  border-bottom: 1px solid var(--rule);
-}
-
-.article-when-where {
-  font-family: var(--font-body);
-  font-style: normal;
-  font-weight: 600;
-  font-size: 1.22rem;
-  color: var(--muted);
-  margin-bottom: 0.9rem;
+  font-size: 1.2rem;
+  line-height: 1.7;
+  white-space: pre-wrap;
+  text-align: justify;
+  hyphens: auto;
 }
 
 .card {

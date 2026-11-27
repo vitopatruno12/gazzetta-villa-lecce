@@ -27,7 +27,7 @@ function galleryOf(article) {
 
 const URL_REGEX = /(https?:\/\/[^\s]+|www\.[^\s]+)/gi;
 
-function renderInlineLinks(text, keyPrefix = 'lnk') {
+function renderBodyWithLinks(text) {
   if (!text) return null;
   const parts = String(text).split(URL_REGEX);
   return parts.map((part, idx) => {
@@ -36,7 +36,7 @@ function renderInlineLinks(text, keyPrefix = 'lnk') {
       const trailing = part.slice(clean.length);
       const href = /^https?:\/\//i.test(clean) ? clean : `https://${clean}`;
       return (
-        <Fragment key={`${keyPrefix}-${idx}`}>
+        <Fragment key={idx}>
           <a href={href} target="_blank" rel="noopener noreferrer" className="article-ext-link">
             {clean}
           </a>
@@ -44,83 +44,7 @@ function renderInlineLinks(text, keyPrefix = 'lnk') {
         </Fragment>
       );
     }
-    return <Fragment key={`${keyPrefix}-${idx}`}>{part}</Fragment>;
-  });
-}
-
-function renderStyledParagraphLine(line, keyPrefix) {
-  const labelMatch = line.match(
-    /^([A-ZÀ-Ú][A-Za-zÀ-ÿ0-9 ’'&·–-]{1,42}:)\s+([\s\S]+)$/
-  );
-  if (labelMatch && !/^https?:/i.test(labelMatch[1])) {
-    return (
-      <>
-        <strong className="article-body-lead-label">{labelMatch[1]}</strong>{' '}
-        {renderInlineLinks(labelMatch[2], `${keyPrefix}-rest`)}
-      </>
-    );
-  }
-  return renderInlineLinks(line, keyPrefix);
-}
-
-function renderBodyWithLinks(text) {
-  if (!text) return null;
-  const blocks = String(text)
-    .split(/\n{2,}/)
-    .map((b) => b.trim())
-    .filter(Boolean);
-
-  return blocks.map((block, bIdx) => {
-    const lines = block
-      .split('\n')
-      .map((l) => l.trim())
-      .filter(Boolean);
-
-    if (lines.length === 1 && lines[0].length <= 54 && !/[.!?]$/.test(lines[0])) {
-      return (
-        <h3 key={`b-${bIdx}`} className="article-body-subhead">
-          {lines[0]}
-        </h3>
-      );
-    }
-
-    const bulletStart = lines.findIndex((l) => /^[•\-*]\s+/.test(l));
-    if (bulletStart !== -1) {
-      const introLines = lines.slice(0, bulletStart);
-      const bulletLines = lines.slice(bulletStart);
-      return (
-        <Fragment key={`b-${bIdx}`}>
-          {introLines.length > 0 && (
-            <p className="mb-1">
-              {introLines.map((ln, lIdx) => (
-                <Fragment key={`i-${lIdx}`}>
-                  {lIdx > 0 && <br />}
-                  {renderStyledParagraphLine(ln, `b${bIdx}-i${lIdx}`)}
-                </Fragment>
-              ))}
-            </p>
-          )}
-          <ul className="article-body-list">
-            {bulletLines.map((ln, lIdx) => (
-              <li key={`li-${lIdx}`}>
-                {renderInlineLinks(ln.replace(/^[•\-*]\s+/, ''), `b${bIdx}-li${lIdx}`)}
-              </li>
-            ))}
-          </ul>
-        </Fragment>
-      );
-    }
-
-    return (
-      <p key={`b-${bIdx}`}>
-        {lines.map((ln, lIdx) => (
-          <Fragment key={`ln-${lIdx}`}>
-            {lIdx > 0 && <br />}
-            {renderStyledParagraphLine(ln, `b${bIdx}-l${lIdx}`)}
-          </Fragment>
-        ))}
-      </p>
-    );
+    return <Fragment key={idx}>{part}</Fragment>;
   });
 }
 
@@ -270,12 +194,12 @@ export default function ArticlePage() {
                 </span>
               )}
             </div>
-            <h1 className="article-title-main">
+            <h1 className="hero-article mb-2" style={{ fontSize: 'clamp(1.7rem, 3vw, 2.4rem)', fontWeight: 700 }}>
               {article.title}
             </h1>
-            {article.subtitle && <p className="article-subtitle-deck">{article.subtitle}</p>}
+            {article.subtitle && <p className="lead text-muted">{article.subtitle}</p>}
             {(article.event_start || article.location) && (
-              <p className="article-when-where">
+              <p className="text-muted">
                 {article.event_start && (
                   <span>
                     {new Date(article.event_start).toLocaleDateString('it-IT', {
