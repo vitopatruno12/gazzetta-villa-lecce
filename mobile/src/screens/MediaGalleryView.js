@@ -48,9 +48,12 @@ export default function MediaGalleryView({
       const cats = SLUG_CATEGORIES[art.slug] || [];
       list.push({
         id: `vid-${art.id}`,
-        title: art.title,
+        title:
+          art.slug === 'un-natale-in-villa'
+            ? `${art.title} · Un mese pieno di spettacoli`
+            : art.title,
         subtitle: art.subtitle || 'Servizio video dalla Villa Comunale di Lecce',
-        videoUrl: art.video_url,
+        videoUrl: resolveMediaUrl(art.video_url),
         slug: art.slug,
         kicker: art.type === 'evento' ? 'Video Evento' : 'Servizio Video · TeleRama',
         categories: cats,

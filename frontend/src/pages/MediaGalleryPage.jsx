@@ -48,49 +48,9 @@ function parseGallery(raw) {
   }
 }
 
-function parseYouTubeEmbed(url) {
-  if (!url) return null;
-  try {
-    const u = new URL(url);
-    if (u.hostname.includes('youtu.be')) {
-      const id = u.pathname.replace(/^\//, '').split('/')[0];
-      return id ? `https://www.youtube.com/embed/${id}` : null;
-    }
-    if (u.hostname.includes('youtube.com')) {
-      const v = u.searchParams.get('v');
-      if (v) return `https://www.youtube.com/embed/${v}`;
-      const m = u.pathname.match(/\/(?:embed|shorts)\/([^/?]+)/);
-      if (m) return `https://www.youtube.com/embed/${m[1]}`;
-    }
-  } catch {
-    return null;
-  }
-  return null;
-}
-
 function VideoPlayer({ url, title }) {
   if (!url) return null;
-  const yt = parseYouTubeEmbed(url);
-  if (yt) {
-    return (
-      <div className="media-video-embed">
-        <iframe
-          src={yt}
-          title={title || 'Video evento'}
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowFullScreen
-        />
-      </div>
-    );
-  }
-  if (/\.(mp4|webm|ogg)(\?|$)/i.test(url)) {
-    return (
-      <video className="media-video-native" controls playsInline preload="metadata">
-        <source src={url} />
-      </video>
-    );
-  }
-  return <FacebookVideo url={url} />;
+  return <FacebookVideo url={url} title={title} />;
 }
 
 export default function MediaGalleryPage() {
@@ -125,19 +85,36 @@ export default function MediaGalleryPage() {
   const allVideos = useMemo(() => {
     const list = [];
     const seenUrls = new Set();
+    const VIDEO_ORDER = ['un-natale-in-villa', 'laboratorio-cartapesta-e-argilla'];
+    const sortedForVideo = [...articles].sort((a, b) => {
+      const ia = VIDEO_ORDER.indexOf(a.slug);
+      const ib = VIDEO_ORDER.indexOf(b.slug);
+      if (ia !== -1 && ib !== -1) return ia - ib;
+      if (ia !== -1) return -1;
+      if (ib !== -1) return 1;
+      return 0;
+    });
 
-    for (const art of articles) {
+    for (const art of sortedForVideo) {
       if (!art.video_url || seenUrls.has(art.video_url)) continue;
       seenUrls.add(art.video_url);
       const cats = SLUG_CATEGORIES[art.slug] || (art.type === 'evento' ? ['musica'] : []);
+      const isNatale = art.slug === 'un-natale-in-villa';
+      const hasCoverAndVideo = Boolean(art.cover_url && art.video_url);
       list.push({
         id: `art-video-${art.id}`,
-        title: art.title,
-        subtitle: art.subtitle || 'Servizio video e approfondimento dalla Villa Comunale di Lecce',
+        title: isNatale ? `${art.title} · Un mese pieno di spettacoli` : art.title,
+        subtitle: isNatale
+          ? 'Dal 5 dicembre al 6 gennaio in Villa Comunale: musica dal vivo, mercatini, spettacoli e attività per famiglie.'
+          : art.subtitle || 'Servizio video e approfondimento dalla Villa Comunale di Lecce',
         videoUrl: art.video_url,
-        to: `/articolo/${art.slug}`,
+        to: hasCoverAndVideo ? `/articolo/${art.slug}#video` : `/articolo/${art.slug}`,
         linkLabel: art.type === 'evento' ? 'Vai all’evento →' : 'Leggi l’articolo →',
-        kicker: art.type === 'evento' ? 'Video Evento' : 'Servizio Video · TeleRama',
+        kicker: isNatale
+          ? 'Video Promo · Natale in Villa'
+          : art.type === 'evento'
+            ? 'Video Evento · La Villa'
+            : 'Servizio Video · TeleRama',
         categories: cats,
       });
     }

@@ -70,6 +70,14 @@ export const EVENT_CALENDARS = [
         slug: 'nitecity',
       },
       {
+        dates: '7 dicembre',
+        title: 'Villa Lab · Piccole mani, grandi meraviglie (dai 6 anni)',
+        detail: 'Laboratori creativi bambini 10:00–12:00 e 15:00–17:00 (info Betty 328 617 8251).',
+        category: 'laboratori',
+        extraCategories: ['famiglie'],
+        slug: 'laboratorio-cartapesta-e-argilla',
+      },
+      {
         dates: '8 dicembre',
         title: 'Festa dell’Immacolata Concezione',
         detail: 'Mercatini di Natale nella Villa, musica e attività per famiglie e bambini.',

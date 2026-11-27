@@ -142,7 +142,7 @@ export default function ArticleDetailView({ slug, onBack }) {
       {coverUri ? (
         <SmartImage
           uri={coverUri}
-          minRatio={0.65}
+          minRatio={0.5}
           maxRatio={2.4}
           style={styles.coverImage}
         />
@@ -151,7 +151,10 @@ export default function ArticleDetailView({ slug, onBack }) {
       {article.video_url ? (
         <Pressable
           style={styles.videoButton}
-          onPress={() => Linking.openURL(article.video_url).catch(() => {})}
+          onPress={() => {
+            const target = resolveMediaUrl(article.video_url);
+            if (target) Linking.openURL(target).catch(() => {});
+          }}
         >
           <Text style={styles.videoButtonText}>▶ Guarda il video completo</Text>
         </Pressable>

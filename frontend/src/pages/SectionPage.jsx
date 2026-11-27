@@ -362,9 +362,11 @@ export default function SectionPage() {
                     Mostra tutte
                   </button>
                 )}
-                <a href="#calendario" className="events-jump-link">
-                  Vai ai calendari ↓
-                </a>
+                {selectedCategory !== 'yoga' && (
+                  <a href="#calendario" className="events-jump-link">
+                    Vai ai calendari ↓
+                  </a>
+                )}
                 <a href="#elenco-eventi" className="events-jump-link">
                   Schede eventi ↓
                 </a>
@@ -372,7 +374,7 @@ export default function SectionPage() {
             </div>
           )}
 
-          {isEvents && visibleCalendars.length > 0 && (
+          {isEvents && visibleCalendars.length > 0 && selectedCategory !== 'yoga' && (
             <section id="calendario" className="events-calendar-section" aria-label="Calendari degli eventi">
               <div className="events-calendar-intro">
                 <div className="section-kicker mb-1">Il calendario ufficiale · Villa Comunale di Lecce</div>

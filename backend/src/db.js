@@ -400,6 +400,7 @@ La scaletta attraversa decenni di grande musica passando dai Beatles ai Police, 
 ];
 
 const YOGA_GALLERY = [
+  '/eventi/yoga-cristiana-vergari/cover.jpg',
   '/eventi/yoga-cristiana-vergari/holistic-walking.jpg',
   '/eventi/yoga-cristiana-vergari/bosco-gruppo.jpg',
   '/eventi/yoga-cristiana-vergari/bosco-yoga.jpg',
@@ -459,7 +460,7 @@ Instagram: https://www.instagram.com/casaquartastore/`,
   {
     slug: 'cristiana-vergari-yoga-villa-comunale',
     title: 'Cristiana Vergari | Yoga, Pilates, Holistic Yoga Walking & Yoga Bambini',
-    subtitle: 'Tutti i venerdì in Villa Comunale · Benessere, movimento e Yoga Bambini Educational',
+    subtitle: 'Holistic Yoga Walking alla Villa · Yoga, Pilates & Yoga Bambini Educational · Prenota la tua cuffia: 348 85 77 048',
     body: `Ciao, sono Cristiana Vergari, insegnante di Yoga e Pilates, da oltre 23 anni nel mondo del benessere e del movimento.
 
 Sono leccese di origine, ma ho vissuto per tanti anni in Lombardia, dove ho sviluppato il mio percorso professionale, formandomi sia in Italia che all’estero.
@@ -485,13 +486,14 @@ Il mio obiettivo? Far stare bene le persone, a qualsiasi età, attraverso il mov
 Sono davvero felice di far parte di questo bellissimo progetto e di poter condividere la mia esperienza proprio nella mia Lecce!
 
 I miei riferimenti
+Prenota la tua cuffia (Holistic Yoga Walking): 348 85 77 048
 Sito web: www.cristianavergari.com
 Instagram: https://www.instagram.com/cristianavergari_academy?exln=MXBqdjFpdzg5ODE1Yw%3D%3D&utm_source=qr`,
-    cover: '/eventi/yoga-cristiana-vergari/cover.jpg',
+    cover: '/eventi/yoga-cristiana-vergari/locandina-holistic-yoga-walking.jpg',
     gallery: JSON.stringify(YOGA_GALLERY),
     start: null,
     end: null,
-    location: 'Villa Comunale di Lecce · Tutti i venerdì',
+    location: 'Villa Comunale di Lecce',
   },
   {
     slug: 'mercatini-di-natale-in-villa',
@@ -559,24 +561,28 @@ In programma:
   {
     slug: 'laboratorio-cartapesta-e-argilla',
     title: 'Villa Lab · Piccole mani, grandi meraviglie — Laboratori Creativi per Bambini',
-    subtitle: 'Cartapesta, terracotta, argilla, creta e tanta fantasia · Dicembre 2026 e Gennaio 2027',
-    body: `Villa Lab – Piccole mani, grandi meraviglie porta nella Villa Comunale di Lecce il fascino senza tempo delle botteghe artigiane salentine tradotto a misura di bambino: uno spazio accogliente dove giocare, creare e immaginare mettendo letteralmente le mani nella materia, tra cartapesta leccese, terracotta, argilla, creta, colori e tanta fantasia.
+    subtitle: '7, 28 e 29 dicembre 2026 · 4 e 5 gennaio 2027 · Ore 10:00–12:00 e 15:00–17:00 (dai 6 anni)',
+    body: `Villa Lab – Piccole mani, grandi meraviglie porta nella Villa Comunale di Lecce il fascino senza tempo delle botteghe artigiane salentine tradotto a misura di bambino (dai 6 anni), a cura dell’Associazione Culturale Diciottesimomeridiano: uno spazio accogliente dove giocare, creare e immaginare mettendo letteralmente le mani nella materia, tra cartapesta leccese, terracotta, argilla, creta, legno, colori e tanta fantasia.
 
-Accompagnati passo dopo passo nelle attività manuali, bambini e ragazzi scoprono come da materiali semplici e naturali — acqua, carta, colla e terra — possano nascere forme, personaggi natalizi e piccoli manufatti da portare a casa come ricordo vivo dell’esperienza. Un percorso educativo e divertente che unisce manualità, espressione artistica e amore per la tradizione storica di Lecce.
+Accompagnati passo dopo passo nelle attività manuali, bambini e ragazzi scoprono come da materiali semplici e naturali — acqua, carta, colla, legno e terra — possano nascere forme, decorazioni natalizie e piccoli manufatti da portare a casa come ricordo vivo dell’esperienza. Un percorso educativo e divertente che unisce manualità, espressione artistica e amore per la tradizione storica di Lecce.
 
-Appuntamenti in calendario:
-• Dicembre in Villa Comunale: laboratori creativi per bambini di cartapesta e terracotta (inclusi i giorni 23–27 dicembre nel Villaggio di Babbo Natale)
-• 28 – 29 dicembre 2026: Laboratorio dedicato di Cartapesta e Argilla
-• 1 – 3 gennaio 2027: Creatività e musica per il nuovo anno — laboratori di modellazione e costruzione con la creta e attività manuali
-• 4 – 5 gennaio 2027: Laboratorio di Cartapesta e Argilla aspettando l’Epifania`,
+Appuntamenti e orari in calendario:
+• 7 – 28 – 29 dicembre 2026 (ore 10:00 – 12:00 e 15:00 – 17:00): Laboratori Creativi per Bambini (dai 6 anni) di cartapesta, terracotta, pittura e argilla
+• 23 – 27 dicembre 2026: attività laboratoriali nel Villaggio di Babbo Natale
+• 1 – 3 gennaio 2027: Creatività e musica per il nuovo anno — laboratori di modellazione e costruzione con la creta
+• 4 – 5 gennaio 2027 (ore 10:00 – 12:00 e 15:00 – 17:00): Laboratorio di Cartapesta e Argilla aspettando l’Epifania
+
+Info e prenotazioni Villa Lab
+Betty: 328 617 8251`,
     cover: '/eventi/villa-lab/locandina.jpg',
+    video: '/eventi/villa-lab/video-villa-lab.mp4',
     gallery: JSON.stringify([
       '/eventi/natale-in-villa/schede/cartapesta-argilla.jpg',
       '/eventi/natale-in-villa/schede/creativita-nuovo-anno.jpg',
     ]),
-    start: '2026-12-28',
+    start: '2026-12-07',
     end: '2027-01-05',
-    location: 'Villa Comunale di Lecce',
+    location: 'Villa Comunale di Lecce · Ore 10:00–12:00 e 15:00–17:00',
   },
   {
     slug: 'passeggiata-con-i-pony',
@@ -689,8 +695,8 @@ async function ensureDecemberConcerts() {
   for (const item of VILLA_PROGRAM_EVENTS) {
     await queryImpl(
       `INSERT INTO articles
-         (slug, title, subtitle, body, type, status, cover_url, gallery_urls, event_start, event_end, location, published_at)
-       VALUES ($1, $2, $3, $4, 'evento', 'published', $5, $6, $7, $8, $9, NOW() - INTERVAL '2 days')
+         (slug, title, subtitle, body, type, status, cover_url, video_url, gallery_urls, event_start, event_end, location, published_at)
+       VALUES ($1, $2, $3, $4, 'evento', 'published', $5, $6, $7, $8, $9, $10, NOW() - INTERVAL '2 days')
        ON CONFLICT (slug) DO UPDATE
          SET title = EXCLUDED.title,
              subtitle = EXCLUDED.subtitle,
@@ -698,6 +704,7 @@ async function ensureDecemberConcerts() {
              type = 'evento',
              status = 'published',
              cover_url = EXCLUDED.cover_url,
+             video_url = COALESCE(EXCLUDED.video_url, articles.video_url),
              gallery_urls = EXCLUDED.gallery_urls,
              event_start = EXCLUDED.event_start,
              event_end = EXCLUDED.event_end,
@@ -708,6 +715,7 @@ async function ensureDecemberConcerts() {
         item.subtitle,
         item.body,
         item.cover,
+        item.video || null,
         item.gallery,
         item.start,
         item.end,
@@ -718,8 +726,8 @@ async function ensureDecemberConcerts() {
 
   await queryImpl(
     `INSERT INTO articles
-       (slug, title, subtitle, body, type, status, cover_url, gallery_urls, location, event_start, event_end, published_at)
-     VALUES ($1, $2, $3, $4, 'evento', 'published', $5, $6, $7, $8, $9, NOW())
+       (slug, title, subtitle, body, type, status, cover_url, video_url, gallery_urls, location, event_start, event_end, published_at)
+     VALUES ($1, $2, $3, $4, 'evento', 'published', $5, $6, $7, $8, $9, $10, NOW())
      ON CONFLICT (slug) DO UPDATE
        SET title = EXCLUDED.title,
            subtitle = EXCLUDED.subtitle,
@@ -727,6 +735,7 @@ async function ensureDecemberConcerts() {
            type = 'evento',
            status = 'published',
            cover_url = EXCLUDED.cover_url,
+           video_url = EXCLUDED.video_url,
            gallery_urls = EXCLUDED.gallery_urls,
            location = EXCLUDED.location,
            event_start = EXCLUDED.event_start,
@@ -745,6 +754,7 @@ Febbraio 2027 accoglie Lecce Comic, l’appuntamento dedicato al fumetto, all’
 
 Ogni settimana in Villa: tutti i venerdì Yoga, Pilates, Holistic Yoga Walking & Yoga Bambini con Cristiana Vergari; tutte le domeniche la Passeggiata con i Pony.`,
       '/eventi/natale-in-villa/locandina-natale-2026.jpg',
+      '/eventi/natale-in-villa/video-natale-in-villa.mp4',
       JSON.stringify(['/eventi/natale-in-villa/programma-completo.jpg']),
       'Villa Comunale di Lecce',
       '2026-12-05',

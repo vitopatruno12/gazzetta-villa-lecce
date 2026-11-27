@@ -68,6 +68,9 @@ export default function HomePage() {
   const yogaSpotlight = articles.find(
     (article) => article.slug === 'cristiana-vergari-yoga-villa-comunale'
   );
+  const villaLabVideo = articles.find(
+    (article) => article.slug === 'laboratorio-cartapesta-e-argilla' && article.video_url
+  );
   const side = [
     spotlight,
     yogaSpotlight,
@@ -155,6 +158,11 @@ export default function HomePage() {
                 <Link className="home-highlight-more" to={`/articolo/${spotlight.slug}`}>
                   Scopri il programma completo
                 </Link>
+                {spotlight.video_url && (
+                  <Link className="home-highlight-more" to={`/articolo/${spotlight.slug}#video`}>
+                    ▶ Guarda il video
+                  </Link>
+                )}
                 <Link className="home-highlight-more" to="/sezione/evento#calendario">
                   Vai ai calendari →
                 </Link>
@@ -259,6 +267,30 @@ export default function HomePage() {
 
         <Col lg={4} className="home-side">
           <AdSlot code="sidebar-home" variant="panel" className="mb-4" />
+          {spotlight?.video_url && (
+            <section className="sidebar-block mb-4">
+              <h2 className="section-head">Video · Natale in Villa</h2>
+              <p className="aside-video-caption">
+                Un mese pieno di spettacoli · Dal 5 dicembre al 6 gennaio in Villa Comunale
+              </p>
+              <FacebookVideo
+                url={spotlight.video_url}
+                title="Natale in Villa · Un mese pieno di spettacoli"
+              />
+            </section>
+          )}
+          {villaLabVideo?.video_url && (
+            <section className="sidebar-block mb-4">
+              <h2 className="section-head">Video · Villa Lab</h2>
+              <p className="aside-video-caption">
+                Piccole mani, grandi meraviglie · Laboratori creativi per bambini (7, 28, 29 dic · 4, 5 gen)
+              </p>
+              <FacebookVideo
+                url={villaLabVideo.video_url}
+                title="Villa Lab · Piccole mani, grandi meraviglie"
+              />
+            </section>
+          )}
           <section className="sidebar-block">
             <h2 className="section-head">In evidenza</h2>
             <ul className="list-unstyled mb-0">

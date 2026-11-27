@@ -1,6 +1,37 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 
-function embedSrc(url, width) {
+const KNOWN_POSTERS = {
+  '/eventi/natale-in-villa/video-natale-in-villa.mp4':
+    '/eventi/natale-in-villa/video-natale-in-villa-poster.jpg',
+  '/eventi/villa-lab/video-villa-lab.mp4':
+    '/eventi/villa-lab/video-villa-lab-poster.jpg',
+};
+
+function isDirectVideoFile(url) {
+  if (!url) return false;
+  return /\.(mp4|webm|ogg|mov)(\?.*)?$/i.test(String(url));
+}
+
+function parseYouTubeEmbed(url) {
+  if (!url) return null;
+  try {
+    const u = new URL(url, 'https://www.villacomunalelecce.it');
+    const host = u.hostname.replace(/^www\./, '');
+    if (host === 'youtu.be') {
+      const id = u.pathname.slice(1);
+      return id ? `https://www.youtube.com/embed/${id}` : null;
+    }
+    if (host === 'youtube.com' || host === 'm.youtube.com') {
+      const id = u.searchParams.get('v');
+      return id ? `https://www.youtube.com/embed/${id}` : null;
+    }
+  } catch {
+    return null;
+  }
+  return null;
+}
+
+function embedFacebookSrc(url, width) {
   try {
     const parsed = new URL(url);
     const host = parsed.hostname.replace(/^www\./, '');
@@ -13,17 +44,23 @@ function embedSrc(url, width) {
   }
 }
 
-export default function FacebookVideo({ url }) {
+export default function FacebookVideo({ url, poster, title }) {
   const wrapRef = useRef(null);
   const [width, setWidth] = useState(0);
 
+  const directFile = isDirectVideoFile(url);
+  const youtubeEmbed = !directFile ? parseYouTubeEmbed(url) : null;
+  const isFacebook = !directFile && !youtubeEmbed && Boolean(embedFacebookSrc(url, 840));
+
   useLayoutEffect(() => {
+    if (!isFacebook) return;
     if (wrapRef.current) {
       setWidth(wrapRef.current.clientWidth || 840);
     }
-  }, []);
+  }, [isFacebook, url]);
 
   useEffect(() => {
+    if (!isFacebook) return undefined;
     const el = wrapRef.current;
     if (!el || typeof ResizeObserver !== 'function') return undefined;
     let timer = null;
@@ -40,17 +77,51 @@ export default function FacebookVideo({ url }) {
       clearTimeout(timer);
       observer.disconnect();
     };
-  }, []);
+  }, [isFacebook, url]);
 
-  const src = width > 0 ? embedSrc(url, width) : null;
-  if (!embedSrc(url, 840)) return null;
+  if (!url) return null;
+
+  if (directFile) {
+    const resolvedPoster = poster || KNOWN_POSTERS[url] || undefined;
+    return (
+      <div className="native-video-stage">
+        <video
+          className="native-video-player"
+          controls
+          playsInline
+          preload="metadata"
+          poster={resolvedPoster}
+          aria-label={title || 'Video La Villa Comunale di Lecce'}
+        >
+          <source src={url} type="video/mp4" />
+          Il tuo browser non supporta la riproduzione video HTML5.
+        </video>
+      </div>
+    );
+  }
+
+  if (youtubeEmbed) {
+    return (
+      <div className="fb-video">
+        <iframe
+          src={youtubeEmbed}
+          title={title || 'Video YouTube'}
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen
+        />
+      </div>
+    );
+  }
+
+  if (!isFacebook) return null;
+  const src = width > 0 ? embedFacebookSrc(url, width) : null;
 
   return (
     <div ref={wrapRef} className="fb-video">
       {src && (
         <iframe
           src={src}
-          title="Video Facebook"
+          title={title || 'Video Facebook'}
           allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
           allowFullScreen
         />

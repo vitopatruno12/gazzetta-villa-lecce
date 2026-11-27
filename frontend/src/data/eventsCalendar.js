@@ -121,6 +121,15 @@ export const EVENT_CALENDARS = [
         slug: 'nitecity',
       },
       {
+        dates: '7 dicembre',
+        title: 'Villa Lab · Piccole mani, grandi meraviglie — Laboratori Creativi per Bambini',
+        detail:
+          'Prima giornata dei laboratori creativi per bambini (dai 6 anni) a cura di Diciottesimomeridiano nella Villa Comunale: turni 10:00–12:00 e 15:00–17:00 (info e prenotazioni: Betty 328 617 8251).',
+        category: 'laboratori',
+        extraCategories: ['famiglie'],
+        slug: 'laboratorio-cartapesta-e-argilla',
+      },
+      {
         dates: '8 dicembre',
         title: 'Festa dell’Immacolata Concezione',
         detail:
